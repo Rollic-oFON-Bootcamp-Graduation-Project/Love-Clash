@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d7c801b1094a914dadfc144a474e631, type: 3}
-  m_Name: GameSettings
+  m_Script: {fileID: 11500000, guid: 0d7a5f35ea0750845b7d9de07bf2d653, type: 3}
+  m_Name: Enemy
   m_EditorClassIdentifier: 
-  forwardSpeed: 5
-  sideMovementSensivity: 10
+  enemyRange: 0
+  enemyMaterial: {fileID: 0}
