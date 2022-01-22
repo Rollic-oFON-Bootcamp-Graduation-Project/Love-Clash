@@ -6,7 +6,7 @@ using NaughtyAttributes;
 using UnityEditor;
 #endif
 
-public class RoadManager : MonoBehaviour
+public class RoadManager : MonoSingleton<RoadManager>
 
 {
     [BoxGroup("Objects")]
@@ -23,14 +23,6 @@ public class RoadManager : MonoBehaviour
     [BoxGroup("Road Settings"), OnValueChanged(nameof(UpdateRoadCount)), Range(0, 999)]
     public int roadCount;
     private int prevRoadCount;
-
-    private static RoadManager instance;
-    public static RoadManager Instance => instance ?? (instance = instance = FindObjectOfType<RoadManager>());
-    private void Awake()
-    {
-        instance = instance ??= this;
-        Debug.Log(instance);
-    }
 
 #if UNITY_EDITOR
     private void CreateRoad()
@@ -85,4 +77,11 @@ public class RoadManager : MonoBehaviour
         }
     }
 #endif
+
+
+    [Button]
+    void Test()
+    {
+        
+    }
 }

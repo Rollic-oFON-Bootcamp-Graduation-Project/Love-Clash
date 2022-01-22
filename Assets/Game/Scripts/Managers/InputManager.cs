@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InputManager : MonoBehaviour
+public class InputManager : MonoSingleton<InputManager>
 {
     private Vector2 mouseInput;
     private Vector2 rawMouseInput;
@@ -10,12 +10,9 @@ public class InputManager : MonoBehaviour
     public Vector2 RawMouseInput => rawMouseInput;
     private Vector2 previousMousePosition;
     private Vector2 previousRawMousePosition;
-    private static InputManager instance;
-    public static InputManager Instance => instance ?? (instance = instance = FindObjectOfType<InputManager>());
     private void Awake()
     {
-        instance = instance ??= this;
-        Debug.Log(instance);
+        Debug.Log(Instance);
     }
     // Update is called once per frame
     void Update()

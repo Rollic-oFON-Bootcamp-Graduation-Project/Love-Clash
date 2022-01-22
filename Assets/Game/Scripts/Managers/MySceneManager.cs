@@ -3,26 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MySceneManager : MonoBehaviour
+public class MySceneManager : MonoSingleton<MySceneManager>
 {
     private static int currentLevelIndex = (int)SceneIndexes.LEVELS;
     private List<AsyncOperation> scenesUnLoading = new List<AsyncOperation>();
-    private static MySceneManager instance;
-    public static MySceneManager Instance => instance ?? (instance = FindObjectOfType<MySceneManager>());
-   
-    private void Awake()
-    {
-        if (instance != null)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            instance = this;
-            //DontDestroyOnLoad(gameObject);
-        }
-    }
-    // Start is called before the first frame update
+  
     void Start()
     {
         //if (SceneManager.sceneCount != SceneManager.sceneCountInBuildSettings) LoadScenes((int)SceneIndexes.Game);
