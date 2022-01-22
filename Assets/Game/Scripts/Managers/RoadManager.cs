@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class RoadManager : MonoBehaviour
 
@@ -13,12 +16,13 @@ public class RoadManager : MonoBehaviour
     [BoxGroup("Created Objects List")]
     [SerializeField] private List<GameObject> roads;
 
-    [BoxGroup("Road Settings")]
-    public float roadLength = 1f;
-    [BoxGroup("Road Settings")]
-    public float roadWidth = 1f;
-    [BoxGroup("Road Settings")]
+    [BoxGroup("Road Settings"), OnValueChanged(nameof(UpdateRoadFormat))]
+    public int roadLength = 1;
+    [BoxGroup("Road Settings"), OnValueChanged(nameof(UpdateRoadFormat))]
+    public int roadWidth = 1;
+    [BoxGroup("Road Settings"), OnValueChanged(nameof(UpdateRoadCount)), Range(0, 999)]
     public int roadCount;
+    private int prevRoadCount;
 
     private static RoadManager instance;
     public static RoadManager Instance => instance ?? (instance = instance = FindObjectOfType<RoadManager>());
@@ -28,19 +32,18 @@ public class RoadManager : MonoBehaviour
         Debug.Log(instance);
     }
 
-    [Button("Create")]
+#if UNITY_EDITOR
     private void CreateRoad()
     {
         var index = roads.Count == 0 ? 0 : roads.Count;
         var roadPosition = index * (Vector3.forward * roadLength);
         var roadToCreate = myRoad;
         roadToCreate.transform.localScale = new Vector3(roadWidth, 1f, roadLength);
-        var newRoad = Instantiate(roadToCreate, roadPosition, Quaternion.identity, roadParent);
+        var newRoad = PrefabUtility.InstantiatePrefab(roadToCreate, roadParent) as GameObject;
+        newRoad.transform.position = roadPosition;
         roads.Add(newRoad);
     }
-
-    [Button("Update Road")]
-    void UpdateRoad()
+    void UpdateRoadFormat()
     {
         roads[0].transform.localScale = new Vector3(roadWidth, 1f, roadLength);
         for (int i = 1;i< roads.Count; i++)
@@ -49,16 +52,12 @@ public class RoadManager : MonoBehaviour
             roads[i].transform.position = roads[i - 1].transform.position + (Vector3.forward * roadLength);
         }
     }
-
-    [Button("Delete")]
     void DeleteRoad()
     {
         if (roads.Count == 0) return;
         DestroyImmediate(roads[roads.Count - 1]);
         roads.RemoveAt(roads.Count - 1);
     }
-
-    [Button("Delete All")]
     void DeleteAll()
     {
         for (int i = 0; i < roads.Count; i++)
@@ -67,14 +66,23 @@ public class RoadManager : MonoBehaviour
         }
         roads.Clear();
     }
-
-    [Button("Create Multiple")]
-    void CreateMultipleRoad()
+    void UpdateRoadCount()
     {
-        for (int i = 0; i < roadCount; i++)
+        var difference = (roadCount - 1) - roads.Count;
+        if(difference > 0)
         {
-            CreateRoad();
+            for(int i = 0; i < difference; i++)
+            {
+                CreateRoad();
+            }
+        }
+        else if(difference < 0)
+        {
+            for (int i = 0; i < -difference; i++)
+            {
+                DeleteRoad();
+            }
         }
     }
-
+#endif
 }
