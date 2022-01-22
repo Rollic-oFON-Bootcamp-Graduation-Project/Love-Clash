@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class UIManager : MonoSingleton<UIManager>
 {
-    [SerializeField] StartScreen startScreen;
-    [SerializeField] GameOverScreen gameOverScreen;
+    [SerializeField] public StartScreen StartScreen;
+    [SerializeField] public GameOverScreen GameOverScreen;
 
     //THIS WILL ENABLE/DISABLE UI 
 }

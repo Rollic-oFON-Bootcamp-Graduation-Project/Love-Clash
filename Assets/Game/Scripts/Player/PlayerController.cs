@@ -18,6 +18,19 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        HandleMovement();
+        //Not sure if we trigger battle when it collides or in update
+        //HandleBattle();
+    }
+
+    private void HandleBattle()
+    {
+        if (GameManager.Instance.CurrentGameState != GameState.BATTLE) return;
+    }
+
+    private void HandleMovement()
+    {
+        if (GameManager.Instance.CurrentGameState != GameState.GAMEPLAY) return;
         HandleForwardMovement();
         HandleSideMovement();
     }
@@ -34,9 +47,9 @@ public class PlayerController : MonoBehaviour
         pos.x = Mathf.Clamp(pos.x, leftLimitX, rightLimitX);
         sideMovementRoot.localPosition = Vector3.Lerp(sideMovementRoot.localPosition, pos, Time.deltaTime*20f);
 
+
         var moveDirection = Vector3.forward + InputManager.Instance.RawMouseInput.x*Vector3.right;
-        Debug.Log(InputManager.Instance.RawMouseInput.x);
-        var targetRotation = Quaternion.LookRotation(moveDirection.normalized, Vector3.up);
+        var targetRotation = pos.x == leftLimitX || pos.x == rightLimitX ? Quaternion.LookRotation(Vector3.forward, Vector3.up) : Quaternion.LookRotation(moveDirection.normalized, Vector3.up);
         sideMovementRoot.localRotation = Quaternion.Lerp(sideMovementRoot.localRotation, targetRotation, Time.deltaTime*5f);
     }
 }

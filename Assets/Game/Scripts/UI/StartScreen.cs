@@ -5,5 +5,11 @@ using TMPro;
 
 public class StartScreen : UIBase
 {
-  
+
+
+
+    public void StartGame()
+    {
+        GameManager.Instance.StartGame();
+    }
 }
