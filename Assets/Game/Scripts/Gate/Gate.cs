@@ -21,7 +21,7 @@ public class Gate : MonoBehaviour
 
     private void SetGateText()
     {
-        int randValue = Random.Range(0, 10);
+        int randValue = Random.Range(1, 10);
         gateValue = (gateType != GateType.DOWNGRADE) ? randValue : -randValue;
 
         textUI.SetText(gateValue.ToString());
@@ -32,7 +32,7 @@ public class Gate : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             // Upgrade or downgrade weapon
-            Observer.WeaponUpdate?.Invoke(gateType, gateValue);
+            Observer.WeaponUpdate?.Invoke(gateValue);
         }
     }
 }

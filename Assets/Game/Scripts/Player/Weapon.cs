@@ -22,37 +22,14 @@ public class Weapon : MonoBehaviour
         Observer.WeaponUpdate -= UpdateWeapon;
     }
 
-    private void UpdateWeapon(GateType gateType, int gateValue)
+    private void UpdateWeapon(int value)
     {
-        switch (gateType)
-        {
-            case GateType.UPGRADE:
-                UpgradeWeapon(gateValue);
-                break;
-            case GateType.DOWNGRADE:
-                DowngradeWeapon(gateValue);
-                break;
-        }
-        ClampWeaponValue(weaponLevel, fireRate, weaponDamage);
-        Debug.Log($"WeaponLevel{weaponLevel}, FireRate{fireRate}, WeaponDamage{weaponDamage}");
-    }
-
-    private void UpgradeWeapon(int value)
-    {
-        // TODO
-        // change the multiply value (0.5f)
         weaponLevel++;
         fireRate += value * 0.5f;
         weaponDamage += value * 0.5f;
-    }
 
-    private void DowngradeWeapon(int value)
-    {
-        // TODO
-        // change the multiply value (0.5f)
-        weaponLevel--;
-        fireRate -= value * 0.5f;
-        weaponDamage -= value * 0.5f;
+        ClampWeaponValue(weaponLevel, fireRate, weaponDamage);
+        Debug.Log($"WeaponLevel{weaponLevel}, FireRate{fireRate}, WeaponDamage{weaponDamage}");
     }
 
     private void ClampWeaponValue(int level, float rate, float damage)
