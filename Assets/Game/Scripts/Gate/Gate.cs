@@ -8,6 +8,8 @@ public class Gate : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI textUI;
     [SerializeField] private GateType gateType;
+    [SerializeField] private int gateValue;
+
 
     [MinValue(0), MaxValue(10)]
     [SerializeField] private int GateMaxValue;
@@ -20,17 +22,17 @@ public class Gate : MonoBehaviour
     private void SetGateText()
     {
         int randValue = Random.Range(0, 10);
-        var gateText = (gateType != GateType.DOWNGRADE) ? randValue : -randValue;
+        gateValue = (gateType != GateType.DOWNGRADE) ? randValue : -randValue;
 
-        textUI.SetText(gateText.ToString());
+        textUI.SetText(gateValue.ToString());
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            // TODO
             // Upgrade or downgrade weapon
+            Observer.WeaponUpdate?.Invoke(gateType, gateValue);
         }
     }
 }

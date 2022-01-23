@@ -8,4 +8,7 @@ public class SettingsManager : MonoSingleton<SettingsManager>
 
     [SerializeField, Expandable] GameSettings gameSettings;
     public static GameSettings GameSettings => Instance.gameSettings;
+    
+    [SerializeField, Expandable] WeaponSettings weaponSettings;
+    public static WeaponSettings WeaponSettings => Instance.weaponSettings;
 }
