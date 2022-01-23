@@ -24,12 +24,17 @@ public class Weapon : MonoBehaviour
 
     private void UpdateWeapon(int value)
     {
-        weaponLevel++;
+        var level = (value > 0) ? 1 : -1;
+        weaponLevel += level;
+
         fireRate += value * 0.5f;
         weaponDamage += value * 0.5f;
 
         ClampWeaponValue(weaponLevel, fireRate, weaponDamage);
         Debug.Log($"WeaponLevel{weaponLevel}, FireRate{fireRate}, WeaponDamage{weaponDamage}");
+
+        // TODO
+        // Change the projectile settings via updated weapon values
     }
 
     private void ClampWeaponValue(int level, float rate, float damage)
