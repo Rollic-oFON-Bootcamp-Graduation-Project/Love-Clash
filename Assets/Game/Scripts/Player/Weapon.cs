@@ -33,7 +33,7 @@ public class Weapon : MonoBehaviour
                 DowngradeWeapon(gateValue);
                 break;
         }
-        ClampWeaponUpgrade(weaponLevel, fireRate, weaponDamage);
+        ClampWeaponValue(weaponLevel, fireRate, weaponDamage);
         Debug.Log($"WeaponLevel{weaponLevel}, FireRate{fireRate}, WeaponDamage{weaponDamage}");
     }
 
@@ -55,7 +55,7 @@ public class Weapon : MonoBehaviour
         weaponDamage -= value * 0.5f;
     }
 
-    private void ClampWeaponUpgrade(int level, float rate, float damage)
+    private void ClampWeaponValue(int level, float rate, float damage)
     {
         weaponLevel = Mathf.Clamp(weaponLevel, 0, maxWeaponLevel);
         fireRate = Mathf.Clamp(fireRate, 0, maxFireRate);
