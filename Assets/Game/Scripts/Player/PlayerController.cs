@@ -60,7 +60,7 @@ public class PlayerController : MonoBehaviour
             var myCollectable = other.attachedRigidbody.gameObject.GetComponent<Collectable>();
             if (myCollectable.IsCollected) return;
             myCollectable.IsCollected = true;
-            Observer.AddToStack?.Invoke();
+            Observer.AddToStack?.Invoke(myCollectable);
         }
     }
 }

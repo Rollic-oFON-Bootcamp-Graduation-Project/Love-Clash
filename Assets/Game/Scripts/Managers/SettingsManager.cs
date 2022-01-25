@@ -12,7 +12,7 @@ public class SettingsManager : MonoSingleton<SettingsManager>
     [SerializeField, Expandable] WeaponSettings weaponSettings;
     public static WeaponSettings WeaponSettings => Instance.weaponSettings;
 
-    [SerializeField]
+    [SerializeField, Range(0,10)]
     private float stackGap;
     public static float StackGap => Instance.stackGap;
 }
