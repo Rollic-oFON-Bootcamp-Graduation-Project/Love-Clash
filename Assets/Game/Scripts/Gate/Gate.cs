@@ -7,12 +7,11 @@ using NaughtyAttributes;
 public class Gate : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI textUI;
-    [SerializeField] private GateType gateType;
-    [SerializeField] private int gateValue;
-
 
     [MinValue(0), MaxValue(10)]
     [SerializeField] private int GateMaxValue;
+    [SerializeField] private int gateValue;
+
 
     private void Start()
     {
@@ -21,9 +20,7 @@ public class Gate : MonoBehaviour
 
     private void SetGateText()
     {
-        int randValue = Random.Range(1, 10);
-        gateValue = (gateType != GateType.DOWNGRADE) ? randValue : -randValue;
-
+        int gateValue = Random.Range(1, 10);
         textUI.SetText(gateValue.ToString());
     }
 
@@ -33,6 +30,7 @@ public class Gate : MonoBehaviour
         {
             // Upgrade or downgrade weapon
             Observer.WeaponUpdate?.Invoke(gateValue);
+            Observer.PlayerUpdate?.Invoke();
         }
     }
 }

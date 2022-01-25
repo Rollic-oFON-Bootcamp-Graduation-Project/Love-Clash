@@ -7,15 +7,22 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform leftLimit, rightLimit, sideMovementRoot;
     [SerializeField] private Weapon weapon;
     [SerializeField] private PlayerStack stack;
+
+    [SerializeField] private PlayerVisual[] playerVisuals;
+    [SerializeField] private PlayerVisual currentVisual;
+
     private float leftLimitX => leftLimit.localPosition.x;
     private float rightLimitX => rightLimit.localPosition.x;
     private float forwardSpeed => SettingsManager.GameSettings.forwardSpeed;
     private float sideMovementSensivity => SettingsManager.GameSettings.sideMovementSensivity;
 
-    // Start is called before the first frame update
-    void Start()
+    private void OnEnable()
     {
-        
+        Observer.PlayerUpdate += UpgradePlayer;
+    }
+    private void OnDisable()
+    {
+        Observer.PlayerUpdate -= UpgradePlayer;
     }
 
     // Update is called once per frame
@@ -31,12 +38,14 @@ public class PlayerController : MonoBehaviour
     private void HandleBattle()
     {
         if (GameManager.Instance.CurrentGameState != GameState.BATTLE) return;
+        currentVisual.ChangeAnimState("Shooting", true);
         weapon.StartShooting();
     }
 
     private void HandleForwardMovement()
     {
         if (GameManager.Instance.CurrentGameState != GameState.GAMEPLAY) return;
+        currentVisual.ChangeAnimState("Walking", true);
         transform.position += Vector3.forward * (forwardSpeed * Time.deltaTime);
     }
 
@@ -45,12 +54,23 @@ public class PlayerController : MonoBehaviour
         var pos = sideMovementRoot.localPosition;
         pos.x += InputManager.Instance.MouseInput.x * sideMovementSensivity;
         pos.x = Mathf.Clamp(pos.x, leftLimitX, rightLimitX);
-        sideMovementRoot.localPosition = Vector3.Lerp(sideMovementRoot.localPosition, pos, Time.deltaTime*20f);
+        sideMovementRoot.localPosition = Vector3.Lerp(sideMovementRoot.localPosition, pos, Time.deltaTime * 20f);
 
 
-        var moveDirection = Vector3.forward + InputManager.Instance.RawMouseInput.x*Vector3.right;
+        var moveDirection = Vector3.forward + InputManager.Instance.RawMouseInput.x * Vector3.right;
         var targetRotation = pos.x == leftLimitX || pos.x == rightLimitX ? Quaternion.LookRotation(Vector3.forward, Vector3.up) : Quaternion.LookRotation(moveDirection.normalized, Vector3.up);
-        sideMovementRoot.localRotation = Quaternion.Lerp(sideMovementRoot.localRotation, targetRotation, Time.deltaTime*5f);
+        sideMovementRoot.localRotation = Quaternion.Lerp(sideMovementRoot.localRotation, targetRotation, Time.deltaTime * 5f);
+    }
+
+    private void UpgradePlayer()
+    {
+        currentVisual.DisableVisual();
+        currentVisual = playerVisuals[1];
+        
+        currentVisual.EnableVisual();
+        currentVisual.ChangeAnimState("WalkType",1);
+        // TODO : change player visual
+
     }
 
     private void OnTriggerEnter(Collider other)
