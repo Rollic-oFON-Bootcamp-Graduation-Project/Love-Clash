@@ -65,6 +65,7 @@ public class PlayerController : MonoBehaviour
     private void UpgradePlayer()
     {
         playerVisual.ChangeVisual();
+        playerVisual.UpgradeAnimation();
         // TODO : change player visual
     }
 

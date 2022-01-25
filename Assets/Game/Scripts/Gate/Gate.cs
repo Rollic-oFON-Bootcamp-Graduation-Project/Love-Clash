@@ -8,7 +8,7 @@ public class Gate : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI textUI;
 
-    [MinValue(0), MaxValue(10)]
+    [MinValue(1), MaxValue(10)]
     [SerializeField] private int GateMaxValue;
     [SerializeField] private int gateValue;
 
@@ -20,7 +20,7 @@ public class Gate : MonoBehaviour
 
     private void SetGateText()
     {
-        int gateValue = Random.Range(1, 10);
+        gateValue = Random.Range(1, GateMaxValue);
         textUI.SetText(gateValue.ToString());
     }
 
