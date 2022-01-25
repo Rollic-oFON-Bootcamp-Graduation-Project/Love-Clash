@@ -8,9 +8,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Weapon weapon;
     [SerializeField] private PlayerStack stack;
 
-    [SerializeField] private PlayerVisual[] playerVisuals;
-    [SerializeField] private PlayerVisual currentVisual;
-    [SerializeField] private int visualIndex;
+    [SerializeField] private PlayerVisual playerVisual;
+   
 
     private float leftLimitX => leftLimit.localPosition.x;
     private float rightLimitX => rightLimit.localPosition.x;
@@ -39,14 +38,14 @@ public class PlayerController : MonoBehaviour
     private void HandleBattle()
     {
         if (GameManager.Instance.CurrentGameState != GameState.BATTLE) return;
-        currentVisual.ChangeAnimState("Shooting", true);
+        playerVisual.ChangeAnimState("Shooting", true);
         weapon.StartShooting();
     }
 
     private void HandleForwardMovement()
     {
         if (GameManager.Instance.CurrentGameState != GameState.GAMEPLAY) return;
-        currentVisual.ChangeAnimState("Walking", true);
+        playerVisual.ChangeAnimState("Walking", true);
         transform.position += Vector3.forward * (forwardSpeed * Time.deltaTime);
     }
 
@@ -65,14 +64,8 @@ public class PlayerController : MonoBehaviour
 
     private void UpgradePlayer()
     {
-        visualIndex++;
-        currentVisual.DisableVisual();
-        currentVisual = playerVisuals[visualIndex];
-
-        currentVisual.EnableVisual();
-        currentVisual.ChangeAnimState("WalkType", visualIndex);
+        playerVisual.ChangeVisual();
         // TODO : change player visual
-
     }
 
     private void OnTriggerEnter(Collider other)
