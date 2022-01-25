@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private PlayerVisual[] playerVisuals;
     [SerializeField] private PlayerVisual currentVisual;
+    [SerializeField] private int visualIndex;
 
     private float leftLimitX => leftLimit.localPosition.x;
     private float rightLimitX => rightLimit.localPosition.x;
@@ -64,11 +65,12 @@ public class PlayerController : MonoBehaviour
 
     private void UpgradePlayer()
     {
+        visualIndex++;
         currentVisual.DisableVisual();
-        currentVisual = playerVisuals[1];
-        
+        currentVisual = playerVisuals[visualIndex];
+
         currentVisual.EnableVisual();
-        currentVisual.ChangeAnimState("WalkType",1);
+        currentVisual.ChangeAnimState("WalkType", visualIndex);
         // TODO : change player visual
 
     }
