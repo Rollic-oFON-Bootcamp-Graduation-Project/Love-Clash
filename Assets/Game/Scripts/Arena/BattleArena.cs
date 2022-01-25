@@ -27,7 +27,7 @@ public class BattleArena : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Observer.StackHandleBattle?.Invoke(upperLimit.position, bottomLimit.position);
+            Observer.StackHandleBattle?.Invoke(upperLimit.position, bottomLimit.position, collectables);
         }
     }
 }

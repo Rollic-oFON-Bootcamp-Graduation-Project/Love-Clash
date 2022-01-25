@@ -53,4 +53,16 @@ public class Weapon : MonoBehaviour
     {
 
     }
+
+
+
+    private IEnumerator ShootRoutine()
+    {
+        while (true)
+        {
+            if (GameManager.Instance.CurrentGameState != GameState.BATTLE) break;
+            yield return new WaitForSeconds(1 / fireRate);
+            Shoot();
+        }
+    }
 }

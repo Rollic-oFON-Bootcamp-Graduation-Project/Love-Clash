@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour
         pos.x = Mathf.Clamp(pos.x, leftLimitX, rightLimitX);
         sideMovementRoot.localPosition = Vector3.Lerp(sideMovementRoot.localPosition, pos, Time.deltaTime * 20f);
 
-
+        if (GameManager.Instance.CurrentGameState != GameState.GAMEPLAY) return;
         var moveDirection = Vector3.forward + InputManager.Instance.RawMouseInput.x * Vector3.right;
         var targetRotation = pos.x == leftLimitX || pos.x == rightLimitX ? Quaternion.LookRotation(Vector3.forward, Vector3.up) : Quaternion.LookRotation(moveDirection.normalized, Vector3.up);
         sideMovementRoot.localRotation = Quaternion.Lerp(sideMovementRoot.localRotation, targetRotation, Time.deltaTime * 5f);

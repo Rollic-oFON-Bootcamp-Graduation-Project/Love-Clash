@@ -47,22 +47,24 @@ public class PlayerStack : MonoBehaviour
         }
     }
 
-    private void HandleBattlePositions(Vector3 upperLimit, Vector3 bottomLimit)
+    private void HandleBattlePositions(Vector3 upperLimit, Vector3 bottomLimit, List<Collectable> collectables)
     {
         GameManager.Instance.StartBattle();
-        SetCollectablePositions(upperLimit, bottomLimit);
+        SetCollectablePositions(upperLimit, bottomLimit, collectables);
         //SET POSITIONS OF COLLECTABLES BY USING POISSON DISC SAMPLING
         //AND SEND IT AS A VECTOR3 ARRAY TO THE PLAYERSTACK TO HANDLE COLLECTABLE'S POSITIONS
         //WILL USE POISSON DISC SAMPLING HERE BUT NOW IT'S ALL RANDOM
     }
 
-    private void SetCollectablePositions(Vector3 upperLimit, Vector3 bottomLimit)
+    private void SetCollectablePositions(Vector3 upperLimit, Vector3 bottomLimit, List<Collectable> collectables)
     {
-        for(int i = 0; i < stack.Count; i++)
+        for(int i = stack.Count-1; i >= 0; i--)
         {
             var pos = Vector3.Lerp(bottomLimit, upperLimit, Random.value);
             stack[i].IsCollected = false;
             stack[i].transform.position = pos;
+            collectables.Add(stack[i]);
+            stack.RemoveAt(i);
         }
         
     }
