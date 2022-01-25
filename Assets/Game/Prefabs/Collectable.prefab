@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1577558877527092691}
   - component: {fileID: 1577558877527092690}
   - component: {fileID: 1577558877527092685}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Collectable
   m_TagString: Collectable
   m_Icon: {fileID: 0}
@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6803d7e25966be74b80a4bd0648313b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsCollected: 0
 --- !u!54 &1577558877527092685
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -131,6 +132,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: dff273abf9fe0f448ac995aa5e4da060, type: 3}
       propertyPath: m_Name
       value: heart_shape_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: dff273abf9fe0f448ac995aa5e4da060, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dff273abf9fe0f448ac995aa5e4da060, type: 3}

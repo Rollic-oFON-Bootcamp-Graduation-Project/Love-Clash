@@ -16,9 +16,11 @@ public class GameManager : MonoSingleton<GameManager>
         CurrentGameState = GameState.GAMEPLAY;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void StartBattle()
     {
-        
+        //SET POSITIONS OF COLLECTABLES BY USING POISSON DISC SAMPLING
+        //AND SEND IT AS A VECTOR3 ARRAY TO THE PLAYERSTACK TO HANDLE COLLECTABLE'S POSITIONS
+        CurrentGameState = GameState.BATTLE;
     }
+
 }

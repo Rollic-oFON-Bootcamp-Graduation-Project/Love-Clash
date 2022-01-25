@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1518523862867693246}
   - component: {fileID: 1518523862867693245}
   - component: {fileID: 1518523862867693244}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Capsule
   m_TagString: Collectable
   m_Icon: {fileID: 0}
@@ -107,7 +107,7 @@ GameObject:
   - component: {fileID: 1518523863257422562}
   - component: {fileID: 1518523863257422561}
   - component: {fileID: 1518523863257422560}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: CollectableMale
   m_TagString: Collectable
   m_Icon: {fileID: 419385456094870383, guid: 0000000000000000d000000000000000, type: 0}

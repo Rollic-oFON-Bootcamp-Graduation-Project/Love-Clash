@@ -5,10 +5,13 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private Transform leftLimit, rightLimit, sideMovementRoot;
+    [SerializeField] private Weapon weapon;
+    [SerializeField] private PlayerStack stack;
     private float leftLimitX => leftLimit.localPosition.x;
     private float rightLimitX => rightLimit.localPosition.x;
     private float forwardSpeed => SettingsManager.GameSettings.forwardSpeed;
     private float sideMovementSensivity => SettingsManager.GameSettings.sideMovementSensivity;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,7 +21,9 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        HandleMovement();
+        HandleBattle();
+        HandleForwardMovement();
+        HandleSideMovement();
         //Not sure if we trigger battle when it collides or in update
         //HandleBattle();
     }
@@ -26,17 +31,12 @@ public class PlayerController : MonoBehaviour
     private void HandleBattle()
     {
         if (GameManager.Instance.CurrentGameState != GameState.BATTLE) return;
-    }
-
-    private void HandleMovement()
-    {
-        if (GameManager.Instance.CurrentGameState != GameState.GAMEPLAY) return;
-        HandleForwardMovement();
-        HandleSideMovement();
+        weapon.StartShooting();
     }
 
     private void HandleForwardMovement()
     {
+        if (GameManager.Instance.CurrentGameState != GameState.GAMEPLAY) return;
         transform.position += Vector3.forward * (forwardSpeed * Time.deltaTime);
     }
 

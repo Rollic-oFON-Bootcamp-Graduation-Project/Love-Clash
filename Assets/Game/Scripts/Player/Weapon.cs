@@ -7,6 +7,7 @@ public class Weapon : MonoBehaviour
     [SerializeField] private float fireRate;
     [SerializeField] private int weaponLevel = 0;
     [SerializeField] private float weaponDamage = 20;
+    [SerializeField] private Transform shootPoint;
 
     private float maxFireRate => SettingsManager.WeaponSettings.maxFireRate;
     private int maxWeaponLevel => SettingsManager.WeaponSettings.maxWeaponLevel;
@@ -42,5 +43,14 @@ public class Weapon : MonoBehaviour
         weaponLevel = Mathf.Clamp(weaponLevel, 0, maxWeaponLevel);
         fireRate = Mathf.Clamp(fireRate, 0, maxFireRate);
         weaponDamage = Mathf.Clamp(weaponDamage, 0, maxWeaponDamage);
+    }
+    public void StartShooting()
+    {
+
+    }
+
+    private void Shoot()
+    {
+
     }
 }
