@@ -327,6 +327,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameSettings: {fileID: 11400000, guid: 5fac4eacd25dccc4889acb34cb7a3b45, type: 2}
   weaponSettings: {fileID: 11400000, guid: 1cf84a2428c3a22418c2f8aa592b5f7a, type: 2}
+  stackGap: 2
 --- !u!4 &2043036173
 Transform:
   m_ObjectHideFlags: 0

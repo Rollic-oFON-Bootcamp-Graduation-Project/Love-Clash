@@ -52,4 +52,15 @@ public class PlayerController : MonoBehaviour
         var targetRotation = pos.x == leftLimitX || pos.x == rightLimitX ? Quaternion.LookRotation(Vector3.forward, Vector3.up) : Quaternion.LookRotation(moveDirection.normalized, Vector3.up);
         sideMovementRoot.localRotation = Quaternion.Lerp(sideMovementRoot.localRotation, targetRotation, Time.deltaTime*5f);
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Collectable"))
+        {
+            var myCollectable = other.attachedRigidbody.gameObject.GetComponent<Collectable>();
+            if (myCollectable.IsCollected) return;
+            myCollectable.IsCollected = true;
+            Observer.AddToStack?.Invoke();
+        }
+    }
 }
