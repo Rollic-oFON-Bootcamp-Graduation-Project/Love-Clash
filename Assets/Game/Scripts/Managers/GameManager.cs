@@ -14,6 +14,7 @@ public class GameManager : MonoSingleton<GameManager>
     {
         UIManager.Instance.StartScreen.DisablePanel();
         CurrentGameState = GameState.GAMEPLAY;
+        Observer.PlayerAnimationChange?.Invoke();
     }
 
     public void StartBattle()
@@ -21,6 +22,7 @@ public class GameManager : MonoSingleton<GameManager>
         //SET POSITIONS OF COLLECTABLES BY USING POISSON DISC SAMPLING
         //AND SEND IT AS A VECTOR3 ARRAY TO THE PLAYERSTACK TO HANDLE COLLECTABLE'S POSITIONS
         CurrentGameState = GameState.BATTLE;
+        Observer.PlayerAnimationChange?.Invoke();
     }
 
 }

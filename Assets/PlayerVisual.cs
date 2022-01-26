@@ -37,6 +37,14 @@ public class PlayerVisual : MonoBehaviour
         if (name == "Shooting") StartCoroutine(ShootingState());
     }
 
+    public void ShootingAnim()
+    {
+        playerAnimator.SetBool("Shooting", true);
+        Debug.Log(InputManager.Instance.RawMouseInput.normalized.x);
+        playerAnimator.SetFloat("SideDirection", InputManager.Instance.RawMouseInput.normalized.x);
+    }
+
+
     public void ChangeAnimState(string name, int value)
     {
         playerAnimator.SetFloat(name, value);

@@ -19,10 +19,12 @@ public class PlayerController : MonoBehaviour
     private void OnEnable()
     {
         Observer.PlayerUpdate += UpgradePlayer;
+        Observer.PlayerAnimationChange += HandlePlayerAnimation;
     }
     private void OnDisable()
     {
         Observer.PlayerUpdate -= UpgradePlayer;
+        Observer.PlayerAnimationChange -= HandlePlayerAnimation;
     }
 
     // Update is called once per frame
@@ -38,14 +40,15 @@ public class PlayerController : MonoBehaviour
     private void HandleBattle()
     {
         if (GameManager.Instance.CurrentGameState != GameState.BATTLE) return;
-        playerVisual.ChangeAnimState("Shooting", true);
+        //playerVisual.ChangeAnimState("Shooting", true);
+        //playerVisual.ShootingAnim();
         weapon.StartShooting();
     }
 
     private void HandleForwardMovement()
     {
         if (GameManager.Instance.CurrentGameState != GameState.GAMEPLAY) return;
-        playerVisual.ChangeAnimState("Walking", true);
+        //playerVisual.ChangeAnimState("Walking", true);
         transform.position += Vector3.forward * (forwardSpeed * Time.deltaTime);
     }
 
@@ -62,10 +65,25 @@ public class PlayerController : MonoBehaviour
         sideMovementRoot.localRotation = Quaternion.Lerp(sideMovementRoot.localRotation, targetRotation, Time.deltaTime * 5f);
     }
 
+    private void HandlePlayerAnimation()
+    {
+        if (GameManager.Instance.CurrentGameState == GameState.GAMEPLAY) 
+        {
+            playerVisual.ChangeAnimState("Walking", true);
+        } 
+        else if(GameManager.Instance.CurrentGameState == GameState.BATTLE)
+        {
+            playerVisual.ShootingAnim();
+        }
+    }
+
+    
+
     private void UpgradePlayer()
     {
         playerVisual.ChangeVisual();
         playerVisual.UpgradeAnimation();
+        HandlePlayerAnimation();
         // TODO : change player visual
     }
 
