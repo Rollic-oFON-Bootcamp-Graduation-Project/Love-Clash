@@ -47,12 +47,12 @@ public class PlayerVisual : MonoBehaviour
         playerAnimator.SetFloat("SideDirection", InputManager.Instance.RawMouseInput.normalized.x);
     }
 
-    public void UpgradeAnimation()
+    public void GateAnimation()
     {
         transform.DOLocalRotate(new Vector3(0, 360, 0), 1f, RotateMode.FastBeyond360);
     }
 
-    public void ChangeVisual()
+    public void UpgradeVisual()
     {
         visualIndex++;
         currentVisual.SetActive(false);
@@ -63,6 +63,23 @@ public class PlayerVisual : MonoBehaviour
         weapon.transform.SetParent(rightHands[visualIndex]);
 
         ChangeAnimState("WalkType", visualIndex);
+        GateAnimation();
+    }
+
+    public void DowngradeVisual()
+    {
+        visualIndex--;
+        visualIndex = (visualIndex < 0)? 0 : visualIndex;
+
+        currentVisual.SetActive(false);
+        currentVisual = playerVisuals[visualIndex];
+        playerAnimator.avatar = avatars[visualIndex];
+        currentVisual.SetActive(true);
+        weapon.transform.position = rightHands[visualIndex].position;
+        weapon.transform.SetParent(rightHands[visualIndex]);
+
+        ChangeAnimState("WalkType", visualIndex);
+        GateAnimation();
     }
 
 }

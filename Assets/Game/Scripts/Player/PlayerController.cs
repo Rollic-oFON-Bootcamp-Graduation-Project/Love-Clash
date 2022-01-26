@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private PlayerStack stack;
 
     [SerializeField] private PlayerVisual playerVisual;
-   
+
 
     private float leftLimitX => leftLimit.localPosition.x;
     private float rightLimitX => rightLimit.localPosition.x;
@@ -18,12 +18,12 @@ public class PlayerController : MonoBehaviour
 
     private void OnEnable()
     {
-        Observer.PlayerUpdate += UpgradePlayer;
+        Observer.PlayerUpdate += HandlePlayerVisual;
         Observer.PlayerAnimationChange += HandlePlayerAnimation;
     }
     private void OnDisable()
     {
-        Observer.PlayerUpdate -= UpgradePlayer;
+        Observer.PlayerUpdate -= HandlePlayerVisual;
         Observer.PlayerAnimationChange -= HandlePlayerAnimation;
     }
 
@@ -67,22 +67,29 @@ public class PlayerController : MonoBehaviour
 
     private void HandlePlayerAnimation()
     {
-        if (GameManager.Instance.CurrentGameState == GameState.GAMEPLAY) 
+        if (GameManager.Instance.CurrentGameState == GameState.GAMEPLAY)
         {
             playerVisual.ChangeAnimState("Walking", true);
-        } 
-        else if(GameManager.Instance.CurrentGameState == GameState.BATTLE)
+        }
+        else if (GameManager.Instance.CurrentGameState == GameState.BATTLE)
         {
             playerVisual.ShootingAnim();
         }
     }
 
-    
 
-    private void UpgradePlayer()
+
+    private void HandlePlayerVisual(int value)
     {
-        playerVisual.ChangeVisual();
-        playerVisual.UpgradeAnimation();
+        if (value > 0)
+        {
+            playerVisual.UpgradeVisual();
+        }
+        else
+        {
+            playerVisual.DowngradeVisual();
+
+        }
         HandlePlayerAnimation();
         // TODO : change player visual
     }

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class Observer
 {
     public static UnityAction<int> WeaponUpdate;
-    public static UnityAction PlayerUpdate;
+    public static UnityAction<int> PlayerUpdate;
     public static UnityAction PlayerAnimationChange;
 
     public static UnityAction<Collectable> AddToStack;

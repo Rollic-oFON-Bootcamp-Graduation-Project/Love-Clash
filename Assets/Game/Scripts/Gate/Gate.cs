@@ -29,7 +29,7 @@ public class Gate : MonoBehaviour
             // Upgrade or downgrade weapon
             var value = (gateType == GateType.UPGRADE) ? 1 : -1;
             Observer.WeaponUpdate?.Invoke(value);
-            Observer.PlayerUpdate?.Invoke();
+            Observer.PlayerUpdate?.Invoke(value);
         }
     }
 }
