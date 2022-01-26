@@ -33,48 +33,23 @@ public class PlayerVisual : MonoBehaviour
     public void ChangeAnimState(string name, bool value)
     {
         playerAnimator.SetBool(name, value);
-
-        if (name == "Shooting") StartCoroutine(ShootingState());
     }
-
-    public void ShootingAnim()
-    {
-        playerAnimator.SetBool("Shooting", true);
-        Debug.Log(InputManager.Instance.RawMouseInput.normalized.x);
-        playerAnimator.SetFloat("SideDirection", InputManager.Instance.RawMouseInput.normalized.x);
-    }
-
 
     public void ChangeAnimState(string name, int value)
     {
         playerAnimator.SetFloat(name, value);
     }
 
+    public void ShootingAnim()
+    {
+        playerAnimator.SetBool("Shooting", true);
+        playerAnimator.SetLayerWeight(playerAnimator.GetLayerIndex("LowerBody"), 1);
+        playerAnimator.SetFloat("SideDirection", InputManager.Instance.RawMouseInput.normalized.x);
+    }
+
     public void UpgradeAnimation()
     {
         transform.DOLocalRotate(new Vector3(0, 360, 0), 1f, RotateMode.FastBeyond360);
-    }
-    IEnumerator ShootingState()
-    {
-        // TODO : When battle finish we need to stop this coroutine 
-        // while(GameManager.Instance.currentGameState == GameState.BATTLE) is not working!!
-
-        if (InputManager.Instance.RawMouseInput.x != 0)
-        {
-            if (InputManager.Instance.RawMouseInput.x < 0)
-            {
-                playerAnimator.SetFloat("SideDirection", 0);
-                transform.DOLocalRotate(new Vector3(0, 30f, 0), 0.5f, RotateMode.Fast);
-            }
-            else
-            {
-                playerAnimator.SetFloat("SideDirection", 1);
-                transform.DOLocalRotate(new Vector3(0, -30f, 0), 0.5f, RotateMode.Fast);
-
-            }
-        }
-
-        yield return null;
     }
 
     public void ChangeVisual()
