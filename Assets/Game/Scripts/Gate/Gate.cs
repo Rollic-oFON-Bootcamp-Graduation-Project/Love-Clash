@@ -1,27 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
+using UnityEngine.UI;
 using NaughtyAttributes;
 
 public class Gate : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI textUI;
-
-    [MinValue(1), MaxValue(10)]
-    [SerializeField] private int GateMaxValue;
-    [SerializeField] private int gateValue;
-
+    [SerializeField] private Image gateImage;
+    [SerializeField] GateData gateData;
+    [SerializeField] GateType gateType;
 
     private void Start()
     {
-        SetGateText();
+        SetGateSprite();
     }
 
-    private void SetGateText()
+    private void SetGateSprite()
     {
-        gateValue = Random.Range(1, GateMaxValue);
-        textUI.SetText(gateValue.ToString());
+        var sprites = (gateType == GateType.UPGRADE) ? gateData.UpgradeSprites : gateData.DowngradeSprites;
+        var randIndex = Random.Range(0, sprites.Length);
+        gateImage.sprite = sprites[randIndex];
     }
 
     private void OnTriggerEnter(Collider other)
@@ -29,7 +27,8 @@ public class Gate : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             // Upgrade or downgrade weapon
-            Observer.WeaponUpdate?.Invoke(gateValue);
+            var value = (gateType == GateType.UPGRADE) ? 1 : -1;
+            Observer.WeaponUpdate?.Invoke(value);
             Observer.PlayerUpdate?.Invoke();
         }
     }
