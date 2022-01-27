@@ -22,6 +22,7 @@ public class GameManager : MonoSingleton<GameManager>
         //SET POSITIONS OF COLLECTABLES BY USING POISSON DISC SAMPLING
         //AND SEND IT AS A VECTOR3 ARRAY TO THE PLAYERSTACK TO HANDLE COLLECTABLE'S POSITIONS
         CurrentGameState = GameState.BATTLE;
+        CameraManager.Instance.SwitchCam("BattleCam");
         Observer.PlayerAnimationChange?.Invoke();
     }
 

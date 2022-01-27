@@ -7,6 +7,7 @@ public class PlayerStack : MonoBehaviour
 {
     [SerializeField] private Transform playerSideMovementRoot;
     [SerializeField, ReadOnly] private List<Collectable> stack = new List<Collectable>();
+    
     public int StackCount => stack.Count;
     private float stackGap => SettingsManager.StackGap;
     private Vector3 offset;
@@ -47,27 +48,36 @@ public class PlayerStack : MonoBehaviour
         }
     }
 
-    private void HandleBattlePositions(Vector3 upperLimit, Vector3 bottomLimit, List<Collectable> collectables)
+    private void HandleBattlePositions(List<Vector3> positions, List<Collectable> collectables)
     {
         GameManager.Instance.StartBattle();
-        SetCollectablePositions(upperLimit, bottomLimit, collectables);
+        SetCollectablePositions(positions, collectables);
+        
+        
         //SET POSITIONS OF COLLECTABLES BY USING POISSON DISC SAMPLING
-        //AND SEND IT AS A VECTOR3 ARRAY TO THE PLAYERSTACK TO HANDLE COLLECTABLE'S POSITIONS
-        //WILL USE POISSON DISC SAMPLING HERE BUT NOW IT'S ALL RANDOM
+        //AND SEND IT AS A VECTOR3 LIST TO THE PLAYERSTACK TO HANDLE COLLECTABLE'S POSITIONS
     }
 
-    private void SetCollectablePositions(Vector3 upperLimit, Vector3 bottomLimit, List<Collectable> collectables)
+    private void SetCollectablePositions(List<Vector3> positions,  List<Collectable> collectables)
     {
-        for(int i = stack.Count-1; i >= 0; i--)
+        try
         {
-            var pos = Vector3.Lerp(bottomLimit, upperLimit, Random.value);
-            stack[i].IsCollected = false;
-            stack[i].transform.position = pos;
-            collectables.Add(stack[i]);
-            stack.RemoveAt(i);
+            for (int i = stack.Count - 1; i >= 0; i--)
+            {
+                stack[i].IsCollected = false;
+                stack[i].transform.position = positions[i];
+                collectables.Add(stack[i]);
+                stack.RemoveAt(i);
+            }
+
         }
-        
+        catch (System.IndexOutOfRangeException ex)
+        {
+            throw new System.ArgumentException("Index is out of range", nameof(positions.Count), ex);
+        }
     }
+
+
 
     private void AddToStack(Collectable collectable)
     {

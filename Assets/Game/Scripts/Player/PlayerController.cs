@@ -20,11 +20,13 @@ public class PlayerController : MonoBehaviour
     {
         Observer.PlayerUpdate += HandlePlayerVisual;
         Observer.PlayerAnimationChange += HandlePlayerAnimation;
+        Observer.UpdatePlayerLimit += UpdatePlayerLimit;
     }
     private void OnDisable()
     {
         Observer.PlayerUpdate -= HandlePlayerVisual;
         Observer.PlayerAnimationChange -= HandlePlayerAnimation;
+        Observer.UpdatePlayerLimit += UpdatePlayerLimit;
     }
 
     // Update is called once per frame
@@ -75,6 +77,18 @@ public class PlayerController : MonoBehaviour
         {
             playerVisual.ShootingAnim();
         }
+    }
+
+    private void UpdatePlayerLimit(float left, float right)
+    {
+        var tempLeftLimit = leftLimit.localPosition;
+        var tempRightLimit = rightLimit.localPosition;
+
+        tempLeftLimit.x = left;
+        tempRightLimit.x = right;
+
+        leftLimit.localPosition = tempLeftLimit;
+        rightLimit.localPosition = tempRightLimit;
     }
 
 

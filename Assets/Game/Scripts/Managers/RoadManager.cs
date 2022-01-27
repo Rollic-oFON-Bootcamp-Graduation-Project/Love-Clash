@@ -4,7 +4,6 @@ using UnityEngine;
 using NaughtyAttributes;
 #if UNITY_EDITOR
 using UnityEditor;
-#endif
 
 public class RoadManager : MonoSingleton<RoadManager>
 
@@ -24,7 +23,6 @@ public class RoadManager : MonoSingleton<RoadManager>
     public int roadCount;
     private int prevRoadCount;
 
-#if UNITY_EDITOR
     private void CreateRoad()
     {
         var index = roads.Count == 0 ? 0 : roads.Count;
@@ -76,7 +74,7 @@ public class RoadManager : MonoSingleton<RoadManager>
             }
         }
     }
-#endif
+
 
 
     [Button]
@@ -85,3 +83,5 @@ public class RoadManager : MonoSingleton<RoadManager>
         
     }
 }
+
+#endif
