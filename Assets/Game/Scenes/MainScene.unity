@@ -196,6 +196,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e51193a242c73de46a8572817e609ae3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentProjectile: {fileID: 626818171}
+  projectileObject: {fileID: -4067129603421868002, guid: 3962f5df98d6d3f408f855934cbfd9f6, type: 3}
+  pooledProjectiles: []
+  projectilePoolAmount: 20
 --- !u!4 &626818171
 Transform:
   m_ObjectHideFlags: 0

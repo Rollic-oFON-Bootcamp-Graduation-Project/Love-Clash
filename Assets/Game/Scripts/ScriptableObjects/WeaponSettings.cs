@@ -6,6 +6,7 @@ public class WeaponSettings : ScriptableObject
     public int maxWeaponLevel;
     public float maxFireRate;
     public float maxWeaponDamage;
+    public float projectileSpeed;
+    public float projectileMaxTravelDistance;
 
-    
 }

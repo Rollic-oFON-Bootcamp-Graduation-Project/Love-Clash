@@ -79,6 +79,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+
     private void UpdatePlayerLimit(float left, float right)
     {
         var tempLeftLimit = leftLimit.localPosition;
@@ -89,6 +90,13 @@ public class PlayerController : MonoBehaviour
 
         leftLimit.localPosition = tempLeftLimit;
         rightLimit.localPosition = tempRightLimit;
+    }
+
+    private void HandleObstacleHit()
+    {
+        //PLAY PARTICLEC, ANIMATONS ETC
+
+
     }
 
 
@@ -116,6 +124,11 @@ public class PlayerController : MonoBehaviour
             if (myCollectable.IsCollected) return;
             myCollectable.IsCollected = true;
             Observer.AddToStack?.Invoke(myCollectable);
+        } 
+        else if (other.CompareTag("Obstacle"))
+        {
+            HandleObstacleHit();
+            var collectable = Observer.RemoveFromStack?.Invoke();
         }
     }
 }

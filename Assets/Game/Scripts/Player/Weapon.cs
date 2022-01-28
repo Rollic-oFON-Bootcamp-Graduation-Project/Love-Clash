@@ -8,6 +8,8 @@ public class Weapon : MonoBehaviour
     [SerializeField] private int weaponLevel = 0;
     [SerializeField] private float weaponDamage = 20;
     [SerializeField] private Transform shootPoint;
+    private bool IsWeaponShooting = false;
+    private Coroutine shootingRoutine;
 
     private float maxFireRate => SettingsManager.WeaponSettings.maxFireRate;
     private int maxWeaponLevel => SettingsManager.WeaponSettings.maxWeaponLevel;
@@ -46,12 +48,30 @@ public class Weapon : MonoBehaviour
     }
     public void StartShooting()
     {
+        if (!IsWeaponShooting)
+        {
+            shootingRoutine = StartCoroutine(ShootRoutine());
+            IsWeaponShooting = true;
+        }
+        
+    }
 
+    public void StopShooting()
+    {
+        StopCoroutine(shootingRoutine);
+        IsWeaponShooting = false;
     }
 
     private void Shoot()
     {
-
+        var projectile = ObjectPooler.Instance.GetPooledProjectile();
+        if(projectile != null)
+        {
+            Debug.Log("Shoot");
+            projectile.IsShooting = true;
+            projectile.transform.position = shootPoint.position;
+            projectile.gameObject.SetActive(true);
+        }
     }
 
 

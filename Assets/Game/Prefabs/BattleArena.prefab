@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &763241463927141701
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4401244095286252631}
+  m_Layer: 0
+  m_Name: LovePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4401244095286252631
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 763241463927141701}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.21, z: 6.87}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8912889970141818001}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1205198635618176888
 GameObject:
   m_ObjectHideFlags: 0
@@ -383,6 +413,7 @@ Transform:
   - {fileID: 193741262282222792}
   - {fileID: 8726000926475686119}
   - {fileID: 2143604211858070989}
+  - {fileID: 4401244095286252631}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -401,6 +432,8 @@ MonoBehaviour:
   upperLimit: {fileID: 4463431561219904819}
   bottomLimit: {fileID: 4463431560295397241}
   createCenter: {fileID: 4463431561700128517}
+  lovePoint: {fileID: 4401244095286252631}
+  loveTimer: 1
   collectables:
   - {fileID: 3232172773212348728}
   - {fileID: 193741262282222795}
@@ -408,8 +441,8 @@ MonoBehaviour:
   - {fileID: 2143604211858070990}
   radius: 2
   displayRadius: 1
-  pointCount: 17
-  regionSize: {x: 15, y: 0, z: 5}
+  pointCount: 18
+  RegionSize: {x: 15, y: 1, z: 6}
 --- !u!65 &5811419081333832118
 BoxCollider:
   m_ObjectHideFlags: 0

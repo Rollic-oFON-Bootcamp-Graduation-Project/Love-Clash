@@ -15,3 +15,5 @@ MonoBehaviour:
   maxWeaponLevel: 10
   maxFireRate: 20
   maxWeaponDamage: 60
+  projectileSpeed: 5
+  projectileMaxTravelDistance: 12

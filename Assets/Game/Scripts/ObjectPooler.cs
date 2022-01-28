@@ -2,19 +2,44 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectPooler : MonoBehaviour
+public class ObjectPooler : MonoSingleton<ObjectPooler>
 {
-    private static ObjectPooler instance;
-    public static ObjectPooler Instance => instance ?? (instance = FindObjectOfType<ObjectPooler>());
-    private void Awake()
+
+    //TODO GENERALIZE THIS
+    [SerializeField] private Transform parentProjectile;
+    [SerializeField] private Projectile projectileObject;
+    [SerializeField] public List<Projectile> pooledProjectiles;
+    [SerializeField] public int projectilePoolAmount;
+
+
+    private void Start()
     {
-        if (instance != null)
+        CreateProjectiles();
+    }
+    private void CreateProjectiles()
+    {
+        for (int i = 0; i < projectilePoolAmount; i++)
         {
-            Destroy(gameObject);
+            var obj = Instantiate(projectileObject, parentProjectile);
+            pooledProjectiles.Add(obj);
+            obj.gameObject.SetActive(false);
         }
-        else
+    }
+    public Projectile GetPooledProjectile()
+    {
+
+        for (int i = 0; i < pooledProjectiles.Count; i++)
         {
-            instance = this;
+            if (!pooledProjectiles[i].gameObject.activeInHierarchy)
+            {
+                return pooledProjectiles[i];
+            }
         }
+
+        var obj = Instantiate(projectileObject, parentProjectile);
+        pooledProjectiles.Add(obj);
+
+        
+        return obj;
     }
 }

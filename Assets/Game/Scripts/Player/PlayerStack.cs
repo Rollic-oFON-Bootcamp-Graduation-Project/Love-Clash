@@ -17,11 +17,13 @@ public class PlayerStack : MonoBehaviour
     private void OnEnable()
     {
         Observer.AddToStack += AddToStack;
+        Observer.RemoveFromStack += RemoveFromStack;
         Observer.StackHandleBattle += HandleBattlePositions;
     }
     private void OnDisable()
     {
         Observer.AddToStack -= AddToStack;
+        Observer.RemoveFromStack -= RemoveFromStack;
         Observer.StackHandleBattle -= HandleBattlePositions;
     }
 
@@ -69,7 +71,7 @@ public class PlayerStack : MonoBehaviour
             {
                 stack[i].IsCollected = false;
                 stack[i].transform.position = positions[i];
-                stack[i].CollectableVisual.BattleAnimation();
+                //stack[i].CollectableVisual.BattleAnimation();
                 collectables.Add(stack[i]);
                 stack.RemoveAt(i);
             }
@@ -82,7 +84,18 @@ public class PlayerStack : MonoBehaviour
     }
 
 
-
+    private Collectable RemoveFromStack()
+    {
+        Collectable collectable = null;
+        if (stack.Count == 0) 
+        {
+            collectable = null;
+            return null;
+        }
+        collectable = stack[stack.Count - 1];
+        stack.RemoveAt(stack.Count - 1);
+        return collectable;
+    }
     private void AddToStack(Collectable collectable)
     {
         stack.Add(collectable);

@@ -18,4 +18,6 @@ public class SettingsManager : MonoSingleton<SettingsManager>
     private float firstStackGap;
     public static float StackGap => Instance.stackGap;
     public static float FirstStackGap => Instance.firstStackGap;
+
+
 }
