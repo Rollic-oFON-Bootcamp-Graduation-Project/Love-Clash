@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class PoissonDiscSampling 
 {
-    public static List<Vector3> GeneratePoints(float radius, Vector3 regionSize, out int pointCount, Vector3? offset = null, int k = 30)
+    public static List<Vector3> GeneratePoints(float radius, Vector3 regionSize, out int pointCount, Vector3? offset = null, float circleRadius = 0f, int k = 30)
     {
         if(offset == null)
         {
@@ -33,7 +33,7 @@ public static class PoissonDiscSampling
                 var angle = Random.value * Mathf.PI * 2;
                 var dir = new Vector3(Mathf.Sin(angle), 0, Mathf.Cos(angle));
                 var point = spawnCentre + dir * Random.Range(radius, 2 * radius);
-                if (IsValid(point, regionSize, cellSize, radius, points, grid))
+                if (IsValid(point, regionSize, cellSize, radius, points, grid, circleRadius))
                 {
                     points.Add(point);
                     spawnPoints.Add(point);
@@ -53,11 +53,13 @@ public static class PoissonDiscSampling
         }
         return points;
     }
-
-
-    static bool IsValid(Vector3 point, Vector3 regionSize, float cellSize, float radius, List<Vector3> points, int[,] grid)
+    static bool IsValid(Vector3 point, Vector3 regionSize, float cellSize, float radius, List<Vector3> points, int[,] grid, float circleRadius = 0f)
     {
-        if (!(point.x >= 0 && point.x < regionSize.x && point.z >= 0 && point.z < regionSize.z)){
+        //var checkBounds = circleRadius != 0 
+        //    ? (point.x >= 0 && point.x < circleRadius && point.z >= 0 && point.z < circleRadius)
+        //    : (point.x >= 0 && point.x < regionSize.x && point.z >= 0 && point.z < regionSize.z);
+        if (!(point.x >= 0 && point.x < regionSize.x && point.z >= 0 && point.z < regionSize.z))
+        {
             return false;
         }
         for (int i = 0; i < grid.GetLength(0); i++)
@@ -74,8 +76,17 @@ public static class PoissonDiscSampling
                         return false;
                     }
                 }
+            } 
+        }
+        if (circleRadius != 0)
+        {
+            var circleSqrDst = (point - (regionSize / 2)).sqrMagnitude;
+            if (circleSqrDst > circleRadius * circleRadius)
+            {
+                return false;
             }
         }
+
         return true;
     }
 }

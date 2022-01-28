@@ -66,7 +66,7 @@ public class CollectableVisual : MonoBehaviour
 
     private void LoseAnimation()
     {
-        this.transform.DOLocalRotate(Vector3.up * 360f, 1f, RotateMode.Fast).SetEase(Ease.OutSine);
+        //this.transform.DOLocalRotate(Vector3.up * 360f, 1f, RotateMode.Fast).SetEase(Ease.OutSine);
         collectableAnimator.SetFloat("BattleResult", 2);
     }
 }
