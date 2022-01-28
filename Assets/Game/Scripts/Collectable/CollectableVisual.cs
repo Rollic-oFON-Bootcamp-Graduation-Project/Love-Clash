@@ -61,6 +61,7 @@ public class CollectableVisual : MonoBehaviour
     private void WinAnimation()
     {
         collectableAnimator.SetFloat("BattleResult", 1);
+        this.transform.DOLocalRotate(Vector3.zero, 1f, RotateMode.Fast).SetEase(Ease.OutSine);
     }
 
     private void LoseAnimation()
