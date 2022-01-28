@@ -24,6 +24,7 @@ public class GameManager : MonoSingleton<GameManager>
         CurrentGameState = GameState.BATTLE;
         CameraManager.Instance.SwitchCam("BattleCam");
         Observer.PlayerAnimationChange?.Invoke();
+        Observer.PlayerStartBattle?.Invoke();
     }
 
 }

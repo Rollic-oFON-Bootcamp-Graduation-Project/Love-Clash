@@ -43,6 +43,7 @@ public class Projectile : MonoBehaviour
             }
             collectable.IsCollected = true;
             collectable.transform.position = Vector3.zero;
+            collectable.CollectableVisual.SetBattleResult(true);
             Observer.AddToStack?.Invoke(collectable);
             Observer.RemoveFromArena?.Invoke(collectable);
             gameObject.SetActive(false);

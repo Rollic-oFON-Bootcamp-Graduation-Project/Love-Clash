@@ -10,14 +10,14 @@ public class BattleArena : MonoBehaviour
     [SerializeField] private float loveTimer = 2f;
     [SerializeField] private List<Collectable> collectables;
 
-    [SerializeField, Range(1,10)] private float radius = 1f;
+    [SerializeField, Range(1, 10)] private float radius = 1f;
     [SerializeField] private float displayRadius = 1;
     [SerializeField, ReadOnly] private int pointCount;
     private Coroutine battleRoutine;
     public Vector3 RegionSize = Vector3.one;
-    
+
     private Vector3 offset => createCenter.position;
-    
+
     private bool isTriggered = false;
     private List<Vector3> stackPoints;
 
@@ -31,7 +31,7 @@ public class BattleArena : MonoBehaviour
     }
     private void OnValidate()
     {
-        stackPoints = PoissonDiscSampling.GeneratePoints(radius,RegionSize, out pointCount, offset);
+        stackPoints = PoissonDiscSampling.GeneratePoints(radius, RegionSize, out pointCount, offset);
     }
 
     private void OnDrawGizmos()
@@ -70,7 +70,7 @@ public class BattleArena : MonoBehaviour
             if (collectables.Contains(closestCollectable))
             {
                 closestCollectable.IsCollected = true;
-                closestCollectable.CollectableVisual.BattleAnimation();
+                closestCollectable.CollectableVisual.SetBattleResult(false);
                 collectables.Remove(closestCollectable);
             }
         }
@@ -91,7 +91,7 @@ public class BattleArena : MonoBehaviour
 
     private void StartBattle()
     {
-        if(isTriggered) return;
+        if (isTriggered) return;
         isTriggered = true;
         stackPoints = GenerateRandomPoints();
         Observer.StackHandleBattle?.Invoke(stackPoints, collectables);
