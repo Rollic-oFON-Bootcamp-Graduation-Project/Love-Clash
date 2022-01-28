@@ -441,7 +441,7 @@ MonoBehaviour:
   - {fileID: 2143604211858070990}
   radius: 2
   displayRadius: 1
-  pointCount: 18
+  pointCount: 17
   RegionSize: {x: 15, y: 1, z: 6}
 --- !u!65 &5811419081333832118
 BoxCollider:
@@ -454,8 +454,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 15.207002, y: 4.5051804, z: 0.89850426}
-  m_Center: {x: 0.009870052, y: 1.7169744, z: -6.500764}
+  m_Size: {x: 15.207002, y: 4.5051804, z: 1.2218504}
+  m_Center: {x: 0.009870052, y: 1.7169743, z: -8.403484}
 --- !u!1 &8912889971052949806
 GameObject:
   m_ObjectHideFlags: 0
