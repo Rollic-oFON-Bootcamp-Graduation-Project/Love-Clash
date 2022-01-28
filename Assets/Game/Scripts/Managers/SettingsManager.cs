@@ -14,5 +14,8 @@ public class SettingsManager : MonoSingleton<SettingsManager>
 
     [SerializeField, Range(0,10)]
     private float stackGap;
+    [SerializeField, Range(0, 10)]
+    private float firstStackGap;
     public static float StackGap => Instance.stackGap;
+    public static float FirstStackGap => Instance.firstStackGap;
 }

@@ -46,10 +46,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fdd9902a603d7d4c8dc0ae3de39ea7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CollectableVisual: {fileID: 3559277655374979295}
   IsCollected: 0
   maleCollider: {fileID: 5568460163246650255}
   maleParticle: {fileID: 6365209614827169300}
-  maleVisual: {fileID: 3559277655374979295}
 --- !u!54 &5568460162865145811
 Rigidbody:
   m_ObjectHideFlags: 0

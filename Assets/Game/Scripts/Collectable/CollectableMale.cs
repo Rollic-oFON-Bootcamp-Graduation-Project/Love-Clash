@@ -6,7 +6,6 @@ public class CollectableMale : Collectable
 {
     [SerializeField] private CapsuleCollider maleCollider;
     [SerializeField] private ParticleSystem maleParticle;
-    [SerializeField] private CollectableVisual maleVisual;
 
 
     private void OnTriggerEnter(Collider other)
@@ -14,7 +13,7 @@ public class CollectableMale : Collectable
         if (other.CompareTag("Player"))
         {
             maleParticle.Play();
-            maleVisual.StackAnimation();
+            CollectableVisual.StackAnimation();
         }
     }
 

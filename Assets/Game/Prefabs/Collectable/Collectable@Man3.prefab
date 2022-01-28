@@ -106,8 +106,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6693754482867282194}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 30.82}
-  m_LocalScale: {x: 1, y: 0.63, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6693754482745734518}
   - {fileID: 5329481658032901426}
@@ -126,10 +126,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fdd9902a603d7d4c8dc0ae3de39ea7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CollectableVisual: {fileID: 4214233606757834536}
   IsCollected: 0
   maleCollider: {fileID: 6693754482745734513}
   maleParticle: {fileID: 5329481658052288746}
-  maleVisual: {fileID: 4214233606757834536}
 --- !u!54 &6693754482867282221
 Rigidbody:
   m_ObjectHideFlags: 0

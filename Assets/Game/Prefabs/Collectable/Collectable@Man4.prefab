@@ -126,10 +126,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fdd9902a603d7d4c8dc0ae3de39ea7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CollectableVisual: {fileID: 2715478957276111575}
   IsCollected: 0
   maleCollider: {fileID: 8814818989666633639}
   maleParticle: {fileID: 8018208626321969724}
-  maleVisual: {fileID: 2715478957276111575}
 --- !u!54 &8814818989813650427
 Rigidbody:
   m_ObjectHideFlags: 0

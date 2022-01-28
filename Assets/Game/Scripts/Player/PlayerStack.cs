@@ -10,7 +10,9 @@ public class PlayerStack : MonoBehaviour
     
     public int StackCount => stack.Count;
     private float stackGap => SettingsManager.StackGap;
+    private float firstStackGap => SettingsManager.FirstStackGap;
     private Vector3 offset;
+    private Vector3 offsetFirst;
 
     private void OnEnable()
     {
@@ -33,6 +35,7 @@ public class PlayerStack : MonoBehaviour
     private void UpdateOffSet()
     {
         offset = Vector3.back * stackGap;
+        offsetFirst = Vector3.back * firstStackGap;
     }
     private void FollowPlayer()
     {
@@ -41,7 +44,7 @@ public class PlayerStack : MonoBehaviour
     private void HandleStackMovement()
     {
         if (stack.Count == 0 || GameManager.Instance.CurrentGameState != GameState.GAMEPLAY) return;
-        stack[0].transform.position = Vector3.Lerp(transform.position + offset, playerSideMovementRoot.transform.position, 0.8f);
+        stack[0].transform.position = Vector3.Lerp(transform.position + offsetFirst, playerSideMovementRoot.transform.position, 0.8f);
         for(int i = 1; i < stack.Count; i++)
         {
             stack[i].transform.position = Vector3.Lerp(stack[i - 1].transform.position + offset, stack[i].transform.position, 0.8f);
@@ -66,6 +69,7 @@ public class PlayerStack : MonoBehaviour
             {
                 stack[i].IsCollected = false;
                 stack[i].transform.position = positions[i];
+                stack[i].CollectableVisual.BattleAnimation();
                 collectables.Add(stack[i]);
                 stack.RemoveAt(i);
             }
