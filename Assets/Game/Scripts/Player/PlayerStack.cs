@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
+using DG.Tweening;
 
 public class PlayerStack : MonoBehaviour
 {
     [SerializeField] private Transform playerSideMovementRoot;
     [SerializeField, ReadOnly] private List<Collectable> stack = new List<Collectable>();
     
+
     public int StackCount => stack.Count;
     private float stackGap => SettingsManager.StackGap;
     private float firstStackGap => SettingsManager.FirstStackGap;
@@ -55,10 +57,8 @@ public class PlayerStack : MonoBehaviour
 
     private void HandleBattlePositions(List<Vector3> positions, List<Collectable> collectables)
     {
-        GameManager.Instance.StartBattle();
+        //GameManager.Instance.StartBattle();
         SetCollectablePositions(positions, collectables);
-        
-        
         //SET POSITIONS OF COLLECTABLES BY USING POISSON DISC SAMPLING
         //AND SEND IT AS A VECTOR3 LIST TO THE PLAYERSTACK TO HANDLE COLLECTABLE'S POSITIONS
     }
@@ -67,11 +67,14 @@ public class PlayerStack : MonoBehaviour
     {
         try
         {
+            
+            positions.Reverse();
+            
             for (int i = stack.Count - 1; i >= 0; i--)
             {
-                stack[i].IsCollected = false;
-                stack[i].transform.position = positions[i];
-                //stack[i].CollectableVisual.BattleAnimation();
+                stack[i].DisableCollider();
+
+                StartCoroutine(MoveToPosition(stack[i], positions[i]));
                 collectables.Add(stack[i]);
                 stack.RemoveAt(i);
             }
@@ -81,6 +84,24 @@ public class PlayerStack : MonoBehaviour
         {
             throw new System.ArgumentException("Index is out of range", nameof(positions.Count), ex);
         }
+    }
+
+    private IEnumerator MoveToPosition(Collectable collectable, Vector3 newPos)
+    {
+        Debug.Log("start");
+        collectable.DisableCollider();
+        yield return collectable.transform.DOMove(newPos, 2f)
+                .OnComplete(() => OnCompleteMoving(collectable))
+                .WaitForCompletion();
+
+    }
+    private void OnCompleteMoving(Collectable collectable)
+    {
+        Debug.Log("complete");
+        collectable.CollectableVisual.BattleAnimation();
+        collectable.EnableCollider();
+        collectable.IsCollected = false;
+        GameManager.Instance.CollectablesAreReady();
     }
 
 
@@ -99,5 +120,27 @@ public class PlayerStack : MonoBehaviour
     private void AddToStack(Collectable collectable)
     {
         stack.Add(collectable);
+    }
+
+    private IEnumerator MoveCollectableRoutine(Collectable collectable, Vector3 newPos, float value)
+    {
+        collectable.DisableCollider();
+        //STATE ENTER
+        var dist = (collectable.transform.position - newPos).sqrMagnitude;
+        while (true)
+        {
+            //STATE
+            collectable.transform.position = Vector3.MoveTowards(collectable.transform.position, newPos, Time.deltaTime * value);
+            float distanceLeft = (collectable.transform.position - newPos).sqrMagnitude;
+            if (distanceLeft < 0.001f)
+            {
+                break;
+            }
+            yield return null;
+        }
+        collectable.CollectableVisual.BattleAnimation();
+        collectable.EnableCollider();
+
+        //STATE EXIT
     }
 }

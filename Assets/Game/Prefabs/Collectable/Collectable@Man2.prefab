@@ -47,8 +47,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CollectableVisual: {fileID: 3559277655374979295}
+  collectableCollider: {fileID: 5568460163246650255}
   IsCollected: 0
-  maleCollider: {fileID: 5568460163246650255}
   maleParticle: {fileID: 6365209614827169300}
 --- !u!54 &5568460162865145811
 Rigidbody:

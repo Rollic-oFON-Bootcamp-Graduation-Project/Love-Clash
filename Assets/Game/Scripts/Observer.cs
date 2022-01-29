@@ -10,6 +10,8 @@ public class Observer
     public static UnityAction PlayerStartBattle;
     public static UnityAction<float, float> UpdatePlayerLimit;
 
+    public static UnityAction StopBattle;
+    public static UnityAction ArenaStartBattle;
     public static UnityAction<Collectable> RemoveFromArena;
     public static UnityAction<Collectable> AddToStack;
     //public static UnityAction<Collectable> RemoveFromStack;

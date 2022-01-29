@@ -10,16 +10,24 @@ public class CollectableVisual : MonoBehaviour
     private void OnEnable()
     {
         Observer.PlayerStartBattle += BattleAnimation;
+        Observer.StopBattle += StopBattle;
     }
 
     private void OnDisable()
     {
         Observer.PlayerStartBattle -= BattleAnimation;
+        Observer.StopBattle += StopBattle;
     }
 
     private void Start()
     {
         SetRandomIdle();
+    }
+
+    private void StopBattle()
+    {
+        ChangeAnimState("IsBattleState", false);
+        StackAnimation();
     }
 
     public void StackAnimation()
@@ -52,7 +60,7 @@ public class CollectableVisual : MonoBehaviour
         collectableAnimator.SetFloat("IdleType", rand);
     }
 
-    private void BattleAnimation()
+    public void BattleAnimation()
     {
         this.transform.DOLocalRotate(Vector3.up * 180f, 1f, RotateMode.Fast).SetEase(Ease.OutSine);
         ChangeAnimState("IsBattleState", true);

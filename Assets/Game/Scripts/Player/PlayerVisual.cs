@@ -37,6 +37,8 @@ public class PlayerVisual : MonoBehaviour
 
     public void ChangeAnimState(string name, int value)
     {
+        var lowerBodyLayerWeight = GameManager.Instance.CurrentGameState == GameState.BATTLE ? 1 : 0;
+        playerAnimator.SetLayerWeight(playerAnimator.GetLayerIndex("LowerBody"), lowerBodyLayerWeight);
         playerAnimator.SetFloat(name, value);
     }
 

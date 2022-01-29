@@ -24,14 +24,27 @@ public class BattleArena : MonoBehaviour
     private void OnEnable()
     {
         Observer.RemoveFromArena += RemoveFromArenaCollectables;
+        Observer.ArenaStartBattle += StartBattle;
+        Observer.StopBattle += StopBattle;
     }
     private void OnDisable()
     {
         Observer.RemoveFromArena -= RemoveFromArenaCollectables;
+        Observer.ArenaStartBattle -= StartBattle;
+        Observer.StopBattle -= StopBattle;
     }
     private void OnValidate()
     {
         stackPoints = PoissonDiscSampling.GeneratePoints(radius, RegionSize, out pointCount, offset);
+    }
+
+    private void Update()
+    {
+        if (isTriggered && collectables.Count == 0)
+        {
+            //TODO
+            GameManager.Instance.StopBattle();
+        }
     }
 
     private void OnDrawGizmos()
@@ -58,7 +71,8 @@ public class BattleArena : MonoBehaviour
     {
         while (collectables.Count > 0)
         {
-            var closestCollectable = collectables.OrderBy(o => (lovePoint.transform.position - o.transform.position).sqrMagnitude).First();
+            //var closestCollectable = collectables.OrderBy(o => (lovePoint.transform.position - o.transform.position).sqrMagnitude).First();
+            var closestCollectable = collectables[0];
             float timer = 0f;
             while (timer <= loveTimer)
             {
@@ -71,6 +85,7 @@ public class BattleArena : MonoBehaviour
             {
                 closestCollectable.IsCollected = true;
                 closestCollectable.CollectableVisual.SetBattleResult(false);
+                closestCollectable.transform.SetParent(transform);
                 collectables.Remove(closestCollectable);
             }
         }
@@ -83,10 +98,11 @@ public class BattleArena : MonoBehaviour
     }
 
 
-    private void EndBattle()
+    private void StopBattle()
     {
         //SET LIMIT TO OLD POS;
         StopCoroutine(battleRoutine);
+        Destroy(gameObject);
     }
 
     private void StartBattle()
@@ -102,6 +118,7 @@ public class BattleArena : MonoBehaviour
     private List<Vector3> GenerateRandomPoints()
     {
         var generatedPoints = PoissonDiscSampling.GeneratePoints(radius, RegionSize, out pointCount, offset);
+        generatedPoints = generatedPoints.OrderBy(o => (lovePoint.transform.position - o).sqrMagnitude).ToList();
         return generatedPoints;
     }
 
@@ -110,7 +127,7 @@ public class BattleArena : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            StartBattle();
+            GameManager.Instance.StartBattle();
         }
     }
 }

@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d7c801b1094a914dadfc144a474e631, type: 3}
   m_Name: GameSettings
   m_EditorClassIdentifier: 
-  forwardSpeed: 5
+  forwardSpeed: 15
   sideMovementSensivity: 10

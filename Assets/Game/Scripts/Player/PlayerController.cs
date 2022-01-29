@@ -10,29 +10,38 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private PlayerVisual playerVisual;
 
-
+    private float oldLeftLimitX, oldRightLimitX;
     private float leftLimitX => leftLimit.localPosition.x;
     private float rightLimitX => rightLimit.localPosition.x;
     private float forwardSpeed => SettingsManager.GameSettings.forwardSpeed;
     private float sideMovementSensivity => SettingsManager.GameSettings.sideMovementSensivity;
 
+    private void Start()
+    {
+        oldLeftLimitX = leftLimitX;
+        oldRightLimitX = rightLimitX;
+    }
     private void OnEnable()
     {
         Observer.PlayerUpdate += HandlePlayerVisual;
         Observer.PlayerAnimationChange += HandlePlayerAnimation;
         Observer.UpdatePlayerLimit += UpdatePlayerLimit;
+        Observer.PlayerStartBattle += HandleBattle;
+        Observer.StopBattle += StopBattle;
     }
     private void OnDisable()
     {
         Observer.PlayerUpdate -= HandlePlayerVisual;
         Observer.PlayerAnimationChange -= HandlePlayerAnimation;
         Observer.UpdatePlayerLimit += UpdatePlayerLimit;
+        Observer.PlayerStartBattle -= HandleBattle;
+        Observer.StopBattle -= StopBattle;
     }
 
     // Update is called once per frame
     void Update()
     {
-        HandleBattle();
+        //HandleBattle();
         HandleForwardMovement();
         HandleSideMovement();
         //Not sure if we trigger battle when it collides or in update
@@ -44,7 +53,15 @@ public class PlayerController : MonoBehaviour
         if (GameManager.Instance.CurrentGameState != GameState.BATTLE) return;
         //playerVisual.ChangeAnimState("Shooting", true);
         //playerVisual.ShootingAnim();
+        
         weapon.StartShooting();
+    }
+
+    private void StopBattle()
+    {
+        UpdatePlayerLimit(oldLeftLimitX, oldRightLimitX);
+        HandlePlayerAnimation();
+        weapon.StopShooting();
     }
 
     private void HandleForwardMovement()
@@ -118,7 +135,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Collectable"))
+        if (other.CompareTag("Collectable") && GameManager.Instance.CurrentGameState == GameState.GAMEPLAY)
         {
             var myCollectable = other.attachedRigidbody.gameObject.GetComponent<Collectable>();
             if (myCollectable.IsCollected) return;
