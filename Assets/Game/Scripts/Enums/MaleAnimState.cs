@@ -4,6 +4,6 @@ public enum MaleAnimState
     WALKING,
     ONBATTLE,
     OFFBATTLE,
-    LOVE,
-    HATE
+    TAKEN,
+    WIN
 }

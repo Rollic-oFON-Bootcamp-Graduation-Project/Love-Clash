@@ -45,7 +45,7 @@ public class GameManager : MonoSingleton<GameManager>
     private IEnumerator StartBattleRoutine()
     {
         //PRE BATTLE
-        Observer.ArenaSetPositions?.Invoke();
+        Observer.PreBattle?.Invoke();
         while (true)
         {
             //BATTLE WILL START WHEN COLLECTABLES ARE IN POSITION
@@ -53,9 +53,6 @@ public class GameManager : MonoSingleton<GameManager>
             yield return null;
         }
         //BATTLE STARTING
-        //Observer.ArenaStartShooting?.Invoke();
-        //Observer.PlayerAnimationChange?.Invoke();
-        //Observer.PlayerStartBattle?.Invoke();
         Observer.StartBattle?.Invoke();
     }
 

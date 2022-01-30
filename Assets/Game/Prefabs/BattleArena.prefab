@@ -439,6 +439,9 @@ MonoBehaviour:
   - {fileID: 193741262282222795}
   - {fileID: 8726000926475686116}
   - {fileID: 2143604211858070990}
+  playerCollectablePoints:
+  - {x: 65530, y: 4.97e-43, z: 0}
+  boints: {fileID: 0}
   radius: 2
   displayRadius: 1
   pointCount: 17

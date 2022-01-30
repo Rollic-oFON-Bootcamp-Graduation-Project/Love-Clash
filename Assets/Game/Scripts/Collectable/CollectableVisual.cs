@@ -8,15 +8,9 @@ public class CollectableVisual : MonoBehaviour
     [SerializeField] private Animator collectableAnimator;
     [SerializeField] private MaleAnimState currentState;
 
-
-    private void OnDisable()
+    public void UpdateAnimState(MaleAnimState newState, HitType type = HitType.OBSTACLE)
     {
-        Observer.StartBattle -= PlayBattle;
-        Observer.StopBattle -= StopBattle;
-    }
-
-    public void UpdateAnimState(MaleAnimState newState)
-    {
+        if (currentState == newState) return;
         currentState = newState;
         switch (newState)
         {
@@ -24,25 +18,25 @@ public class CollectableVisual : MonoBehaviour
                 PlayRandomIdle();
                 break;
             case MaleAnimState.WALKING:
-                ChangeAnimState("IsWalking", true);
-                break;
-            case MaleAnimState.ONBATTLE:
-                ChangeAnimState("IsBattleState", true);
-                break;
-            case MaleAnimState.OFFBATTLE:
-                ChangeAnimState("IsBattleState", false);
                 StackAnimation();
                 break;
-            case MaleAnimState.LOVE:
-                PlayLoveAnim();
+            case MaleAnimState.ONBATTLE:
+                ChangeAnimState("Battle", true);
                 break;
-            case MaleAnimState.HATE:
-                PlayHateAnim();
+            case MaleAnimState.OFFBATTLE:
+                ChangeAnimState("Battle", false);
+                break;
+            case MaleAnimState.TAKEN:
+                ChangeAnimState("Taken", true);
+                PlayTakenAnim(type);
+                break;
+            case MaleAnimState.WIN:
+                ChangeAnimState("Win", true);
                 break;
             default:
-                Debug.LogError(this);
                 break;
         }
+
     }
     private void Start()
     {
@@ -54,7 +48,7 @@ public class CollectableVisual : MonoBehaviour
         if (this.gameObject.activeSelf)
         {
             this.transform.DOLocalRotate(Vector3.zero, 1f, RotateMode.Fast);
-            ChangeAnimState("IsWalking", true);
+            ChangeAnimState("Walking", true);
         }
     }
 
@@ -74,6 +68,22 @@ public class CollectableVisual : MonoBehaviour
         collectableAnimator.SetFloat("BattleResult", 1);
     }
 
+    private void PlayTakenAnim(HitType type)
+    {
+        switch (type)
+        {
+            case HitType.OBSTACLE:
+                collectableAnimator.SetFloat("TakenType", 0);
+                break;
+            case HitType.ARENA:
+                collectableAnimator.SetFloat("TakenType", 1);
+                break;
+            default:
+                break;
+        }
+
+    }
+
     private void PlayHateAnim()
     {
         this.transform.DOLocalRotate(Vector3.zero, 1f, RotateMode.Fast)
@@ -82,7 +92,7 @@ public class CollectableVisual : MonoBehaviour
     }
     public void PlayBattle()
     {
-        UpdateAnimState(MaleAnimState.ONBATTLE);
+        //UpdateAnimState(MaleAnimState.ONBATTLE);
     }
     public void StopBattle()
     {

@@ -9,7 +9,6 @@ public class BattleArena : MonoBehaviour
     [SerializeField] private Transform upperLimit, bottomLimit, createCenter, lovePoint;
     [SerializeField] private float loveTimer = 2f;
     [SerializeField] private List<Collectable> collectables;
-
     [SerializeField, Range(1, 10)] private float radius = 1f;
     [SerializeField] private float displayRadius = 1;
     [SerializeField, ReadOnly] private int pointCount;
@@ -20,10 +19,10 @@ public class BattleArena : MonoBehaviour
 
     private bool isTriggered = false;
     private List<Vector3> stackPoints;
-    private void OnDisable()
+    private void OnDestroy()
     {
         Observer.RemoveFromArena -= RemoveFromArenaCollectables;
-        Observer.ArenaSetPositions -= SetCollectablePositions;
+        Observer.PreBattle -= SetCollectablePositions;
         Observer.StopBattle -= StopBattle;
         Observer.StartBattle -= StartShooting;
     }
@@ -67,9 +66,10 @@ public class BattleArena : MonoBehaviour
 
             if (collectables.Contains(closestCollectable))
             {
-                closestCollectable.IsCollected = true;
-                closestCollectable.CollectableVisual.UpdateAnimState(MaleAnimState.HATE);
-                closestCollectable.CollectableParticle.UpdateParticle(ParticleType.HATE);
+                //closestCollectable.IsCollected = true;
+                //closestCollectable.CollectableVisual.UpdateAnimState(MaleAnimState.HATE);
+                //closestCollectable.CollectableParticle.UpdateParticle(ParticleType.HATE);
+                closestCollectable.TakenByEnemy(HitType.ARENA);
                 closestCollectable.transform.SetParent(transform);
                 collectables.Remove(closestCollectable);
             }
@@ -127,7 +127,7 @@ public class BattleArena : MonoBehaviour
         {
             Observer.RemoveFromArena += RemoveFromArenaCollectables;
             Observer.StartBattle += StartShooting;
-            Observer.ArenaSetPositions += SetCollectablePositions;
+            Observer.PreBattle += SetCollectablePositions;
             Observer.StopBattle += StopBattle;
             GameManager.Instance.StartBattle();
         }

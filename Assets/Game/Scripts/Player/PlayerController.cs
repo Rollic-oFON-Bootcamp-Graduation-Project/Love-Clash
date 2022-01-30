@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class PlayerController : MonoBehaviour
 {
@@ -122,6 +123,11 @@ public class PlayerController : MonoBehaviour
     {
         //PLAY PARTICLEC, ANIMATONS ETC
 
+        transform.DOMove(Vector3.back * 5f, 1f)
+            .SetEase(Ease.OutExpo)
+            .SetRelative();
+        
+
 
     }
 
@@ -146,14 +152,13 @@ public class PlayerController : MonoBehaviour
         if (other.CompareTag("Collectable") && GameManager.Instance.CurrentGameState == GameState.GAMEPLAY)
         {
             var myCollectable = other.attachedRigidbody.gameObject.GetComponent<Collectable>();
-            if (myCollectable.IsCollected) return;
-            myCollectable.IsCollected = true;
-            Observer.AddToStack?.Invoke(myCollectable);
+            myCollectable.AddToStack();
         } 
         else if (other.CompareTag("Obstacle"))
         {
+            var myCollectable = Observer.RemoveFromStack?.Invoke();
+            myCollectable.TakenByEnemy(HitType.OBSTACLE);
             HandleObstacleHit();
-            var collectable = Observer.RemoveFromStack?.Invoke();
         }
     }
 }

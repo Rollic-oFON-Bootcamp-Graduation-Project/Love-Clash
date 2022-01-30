@@ -47,12 +47,9 @@ public class Projectile : MonoBehaviour
                 gameObject.SetActive(false);
                 return;
             }
-            collectable.IsCollected = true;
-            collectable.transform.position = Vector3.zero;
-            collectable.CollectableVisual.UpdateAnimState(MaleAnimState.LOVE);
-            collectable.CollectableParticle.UpdateParticle(ParticleType.LOVE);
-            Observer.AddToStack?.Invoke(collectable);
-            Observer.RemoveFromArena?.Invoke(collectable);
+            var newPos = Vector3.zero;
+            collectable.ShotWithProjectile((Vector3)newPos);
+            
             gameObject.SetActive(false);
         }
     }

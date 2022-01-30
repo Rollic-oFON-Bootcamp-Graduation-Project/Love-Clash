@@ -16,7 +16,7 @@ public class Observer
     //Event that occurs when ending the battle.
     public static UnityAction StopBattle;
     //This is for setting random collectable positions on arena.
-    public static UnityAction ArenaSetPositions;
+    public static UnityAction PreBattle;
 
     //Removes collectable from arena's reach.
     public static UnityAction<Collectable> RemoveFromArena;

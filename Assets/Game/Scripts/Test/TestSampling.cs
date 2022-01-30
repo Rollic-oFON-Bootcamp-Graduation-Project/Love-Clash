@@ -6,7 +6,7 @@ using NaughtyAttributes;
 public class TestSampling : MonoBehaviour
 {
 
-    [SerializeField] private Transform pointParent;
+    [SerializeField] private Points pointParent;
     public float radius = 1;
     public Vector3 regionSize = Vector3.one;
     public int rejectionSamples = 30;
@@ -20,7 +20,7 @@ public class TestSampling : MonoBehaviour
 
     private void OnValidate()
     {
-        points = PoissonDiscSampling.GeneratePoints(radius, regionSize, out pointCount, Vector3.zero, circleRadius);
+        points = PoissonDiscSampling.GeneratePoints(radius, regionSize, out pointCount, pointParent.transform.position, circleRadius);
     }
 
     [Button]
@@ -28,7 +28,11 @@ public class TestSampling : MonoBehaviour
     {
         for(int i = 0; i < points.Count; i++)
         {
-            Instantiate(newObj, points[i], Quaternion.identity, pointParent);
+            var node = new GameObject().transform;
+            node.SetParent(pointParent.transform);
+            node.position = points[i];
+            pointParent.PointList.Add(node.position);
+            pointParent.IsTaken.Add(false);
         }
     }
     void OnDrawGizmos()

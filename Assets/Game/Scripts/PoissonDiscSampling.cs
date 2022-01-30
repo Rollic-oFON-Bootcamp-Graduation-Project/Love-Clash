@@ -89,4 +89,46 @@ public static class PoissonDiscSampling
 
         return true;
     }
+    
+    //todo
+    public static Vector3 GetAPoint(float radius, Vector3 regionSize, List<Vector3> points, Vector3? offset = null, int k = 30)
+    {
+        if(offset == null)
+        {
+            offset = Vector3.zero;
+        }
+        float cellSize = radius / Mathf.Sqrt(2);
+
+        int[,] grid = new int[Mathf.CeilToInt(regionSize.x / cellSize), Mathf.CeilToInt(regionSize.z / cellSize)];
+        List<Vector3> spawnPoints = new List<Vector3>();
+
+        //Select the initial sample
+        //Center of the region size
+        spawnPoints.Add(regionSize / 2);
+
+        while (spawnPoints.Count > 0)
+        {
+            int spawnIndex = Random.Range(0, spawnPoints.Count);
+            var spawnCentre = spawnPoints[spawnIndex];
+            bool isAccepted = false;
+
+            for (int i = 0; i < k; i++)
+            {
+                var angle = Random.value * Mathf.PI * 2;
+                var dir = new Vector3(Mathf.Sin(angle), 0, Mathf.Cos(angle));
+                var point = spawnCentre + dir * Random.Range(radius, 2 * radius);
+                if (IsValid(point, regionSize, cellSize, radius, points, grid))
+                {
+                    points.Add(point);
+                    spawnPoints.Add(point);
+                    grid[(int)(point.x / cellSize), (int)(point.z / cellSize)] = points.Count;
+                    isAccepted = true;
+                    return point;
+                }
+            }
+            if (!isAccepted) spawnPoints.RemoveAt(spawnIndex);
+        }
+
+        return Vector3.zero;
+    }
 }

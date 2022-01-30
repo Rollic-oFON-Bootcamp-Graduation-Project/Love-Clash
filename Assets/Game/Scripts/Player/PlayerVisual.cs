@@ -16,12 +16,12 @@ public class PlayerVisual : MonoBehaviour
 
     private void OnEnable()
     {
-        Observer.ArenaSetPositions += PlayPreBattleState;
+        Observer.PreBattle += PlayPreBattleState;
     }
 
     private void OnDisable()
     {
-        Observer.ArenaSetPositions -= PlayPreBattleState;
+        Observer.PreBattle -= PlayPreBattleState;
     }
 
     private void Start()

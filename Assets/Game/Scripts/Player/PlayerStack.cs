@@ -122,25 +122,25 @@ public class PlayerStack : MonoBehaviour
         stack.Add(collectable);
     }
 
-    private IEnumerator MoveCollectableRoutine(Collectable collectable, Vector3 newPos, float value)
-    {
-        collectable.DisableCollider();
-        //STATE ENTER
-        var dist = (collectable.transform.position - newPos).sqrMagnitude;
-        while (true)
-        {
-            //STATE
-            collectable.transform.position = Vector3.MoveTowards(collectable.transform.position, newPos, Time.deltaTime * value);
-            float distanceLeft = (collectable.transform.position - newPos).sqrMagnitude;
-            if (distanceLeft < 0.001f)
-            {
-                break;
-            }
-            yield return null;
-        }
-        collectable.CollectableVisual.UpdateAnimState(MaleAnimState.ONBATTLE);
-        collectable.EnableCollider();
-
-        //STATE EXIT
-    }
+    //private IEnumerator MoveCollectableRoutine(Collectable collectable, Vector3 newPos, float value)
+    //{
+    //    collectable.DisableCollider();
+    //    //STATE ENTER
+    //    var dist = (collectable.transform.position - newPos).sqrMagnitude;
+    //    while (true)
+    //    {
+    //        //STATE
+    //        collectable.transform.position = Vector3.MoveTowards(collectable.transform.position, newPos, Time.deltaTime * value);
+    //        float distanceLeft = (collectable.transform.position - newPos).sqrMagnitude;
+    //        if (distanceLeft < 0.001f)
+    //        {
+    //            break;
+    //        }
+    //        yield return null;
+    //    }
+    //    collectable.CollectableVisual.UpdateAnimState(MaleAnimState.ONBATTLE);
+    //    collectable.EnableCollider();
+    //
+    //    //STATE EXIT
+    //}
 }
