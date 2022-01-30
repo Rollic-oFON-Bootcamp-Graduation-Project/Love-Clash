@@ -14,6 +14,16 @@ public class PlayerVisual : MonoBehaviour
 
     [SerializeField] private int visualIndex = 0;
 
+    private void OnEnable()
+    {
+        Observer.ArenaSetPositions += PlayPreBattleState;
+    }
+
+    private void OnDisable()
+    {
+        Observer.ArenaSetPositions -= PlayPreBattleState;
+    }
+
     private void Start()
     {
         weapon.transform.position = rightHands[visualIndex].position;
@@ -42,7 +52,12 @@ public class PlayerVisual : MonoBehaviour
         playerAnimator.SetFloat(name, value);
     }
 
-    public void ShootingAnim()
+    private void PlayPreBattleState()
+    {
+        playerAnimator.SetTrigger("PreBattle");
+    }
+
+    public void PlayShooting()
     {
         playerAnimator.SetBool("Shooting", true);
         playerAnimator.SetLayerWeight(playerAnimator.GetLayerIndex("LowerBody"), 1);

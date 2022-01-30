@@ -101,7 +101,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (GameManager.Instance.CurrentGameState == GameState.BATTLE)
         {
-            playerVisual.ShootingAnim();
+            playerVisual.PlayShooting();
         }
     }
 
