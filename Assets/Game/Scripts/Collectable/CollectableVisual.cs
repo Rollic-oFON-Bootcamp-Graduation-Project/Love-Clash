@@ -32,21 +32,26 @@ public class CollectableVisual : MonoBehaviour
 
     public void StackAnimation()
     {
-        this.transform.DOLocalRotate(Vector3.zero, 1f, RotateMode.Fast);
-        ChangeAnimState("IsWalking", true);
+        if (this.gameObject.activeSelf)
+        {
+            this.transform.DOLocalRotate(Vector3.zero, 1f, RotateMode.Fast);
+            ChangeAnimState("IsWalking", true);
+        }
     }
 
     public void SetBattleResult(bool IsWin)
     {
-        if (IsWin)
+        if (this.gameObject.activeSelf)
         {
-            WinAnimation();
+            if (IsWin)
+            {
+                WinAnimation();
+            }
+            else
+            {
+                LoseAnimation();
+            }
         }
-        else
-        {
-            LoseAnimation();
-        }
-
     }
 
     private void ChangeAnimState(string name, bool value)
@@ -62,19 +67,18 @@ public class CollectableVisual : MonoBehaviour
 
     public void BattleAnimation()
     {
-        this.transform.DOLocalRotate(Vector3.up * 180f, 1f, RotateMode.Fast).SetEase(Ease.OutSine);
         ChangeAnimState("IsBattleState", true);
     }
 
     private void WinAnimation()
     {
         collectableAnimator.SetFloat("BattleResult", 1);
-        this.transform.DOLocalRotate(Vector3.zero, 1f, RotateMode.Fast).SetEase(Ease.OutSine);
     }
 
     private void LoseAnimation()
     {
-        //this.transform.DOLocalRotate(Vector3.up * 360f, 1f, RotateMode.Fast).SetEase(Ease.OutSine);
-        collectableAnimator.SetFloat("BattleResult", 2);
+        this.transform.DOLocalRotate(Vector3.zero, 1f, RotateMode.Fast)
+            .SetEase(Ease.OutSine)
+            .OnComplete(() => collectableAnimator.SetFloat("BattleResult", 2));
     }
 }

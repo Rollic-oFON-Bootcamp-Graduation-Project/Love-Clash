@@ -54,6 +54,12 @@ public class PlayerVisual : MonoBehaviour
         transform.DOLocalRotate(new Vector3(0, 360, 0), 1f, RotateMode.FastBeyond360);
     }
 
+    public void StopShooting()
+    {
+        playerAnimator.SetLayerWeight(playerAnimator.GetLayerIndex("LowerBody"), 0);
+        ChangeAnimState("Shooting", false);
+        ChangeAnimState("Walking", true);
+    }
     public void UpgradeVisual()
     {
         visualIndex++;
@@ -71,7 +77,7 @@ public class PlayerVisual : MonoBehaviour
     public void DowngradeVisual()
     {
         visualIndex--;
-        visualIndex = (visualIndex < 0)? 0 : visualIndex;
+        visualIndex = (visualIndex < 0) ? 0 : visualIndex;
 
         currentVisual.SetActive(false);
         currentVisual = playerVisuals[visualIndex];

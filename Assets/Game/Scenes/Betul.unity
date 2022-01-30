@@ -2475,6 +2475,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5062531345587538433, guid: befedab4bcbb26c41956e5ac176ffc60, type: 3}
   m_PrefabInstance: {fileID: 1028317020}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1037659100 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 688741026336692169, guid: ba4525ac489d43241a6446cb7486b483, type: 3}
+  m_PrefabInstance: {fileID: 1200750465}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1123879796
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2750,14 +2755,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1881523851045422630, guid: ba4525ac489d43241a6446cb7486b483, type: 3}
+      propertyPath: enemyWoman
+      value: 
+      objectReference: {fileID: 1492295504}
     - target: {fileID: 5423104094954067392, guid: ba4525ac489d43241a6446cb7486b483, type: 3}
       propertyPath: loveTimer
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5423104094954067392, guid: ba4525ac489d43241a6446cb7486b483, type: 3}
       propertyPath: pointCount
-      value: 19
+      value: 18
       objectReference: {fileID: 0}
+    - target: {fileID: 5755182948616648698, guid: ba4525ac489d43241a6446cb7486b483, type: 3}
+      propertyPath: enemyWoman
+      value: 
+      objectReference: {fileID: 1037659100}
+    - target: {fileID: 7040312331737643529, guid: ba4525ac489d43241a6446cb7486b483, type: 3}
+      propertyPath: enemyWoman
+      value: 
+      objectReference: {fileID: 1037659100}
     - target: {fileID: 8912889970141818000, guid: ba4525ac489d43241a6446cb7486b483, type: 3}
       propertyPath: m_Name
       value: BattleArena
@@ -2806,6 +2823,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9132144221757115148, guid: ba4525ac489d43241a6446cb7486b483, type: 3}
+      propertyPath: enemyWoman
+      value: 
+      objectReference: {fileID: 1492295504}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ba4525ac489d43241a6446cb7486b483, type: 3}
 --- !u!1001 &1233586858
@@ -3374,6 +3395,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1492295504 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3634519428249111397, guid: ba4525ac489d43241a6446cb7486b483, type: 3}
+  m_PrefabInstance: {fileID: 1200750465}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1507738510
 PrefabInstance:
   m_ObjectHideFlags: 0

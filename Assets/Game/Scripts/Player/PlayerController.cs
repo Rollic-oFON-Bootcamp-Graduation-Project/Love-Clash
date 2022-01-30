@@ -50,24 +50,20 @@ public class PlayerController : MonoBehaviour
 
     private void HandleBattle()
     {
-        if (GameManager.Instance.CurrentGameState != GameState.BATTLE) return;
-        //playerVisual.ChangeAnimState("Shooting", true);
-        //playerVisual.ShootingAnim();
-        
+        if (GameManager.Instance.CurrentGameState != GameState.BATTLE) return;     
         weapon.StartShooting();
     }
 
     private void StopBattle()
     {
         UpdatePlayerLimit(oldLeftLimitX, oldRightLimitX);
-        HandlePlayerAnimation();
+        playerVisual.StopShooting();
         weapon.StopShooting();
     }
 
     private void HandleForwardMovement()
     {
         if (GameManager.Instance.CurrentGameState != GameState.GAMEPLAY) return;
-        //playerVisual.ChangeAnimState("Walking", true);
         transform.position += Vector3.forward * (forwardSpeed * Time.deltaTime);
     }
 
@@ -130,7 +126,6 @@ public class PlayerController : MonoBehaviour
 
         }
         HandlePlayerAnimation();
-        // TODO : change player visual
     }
 
     private void OnTriggerEnter(Collider other)
