@@ -19,5 +19,4 @@ public class Observer
     public delegate Collectable RemoveFromStackDelegate();
     public static RemoveFromStackDelegate RemoveFromStack;
 
-
 }

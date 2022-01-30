@@ -98,7 +98,7 @@ public class PlayerStack : MonoBehaviour
     private void OnCompleteMoving(Collectable collectable)
     {
         Debug.Log("complete");
-        collectable.CollectableVisual.BattleAnimation();
+        collectable.CollectableVisual.UpdateAnimState(MaleAnimState.ONBATTLE);
         collectable.EnableCollider();
         collectable.IsCollected = false;
         GameManager.Instance.CollectablesAreReady();
@@ -138,7 +138,7 @@ public class PlayerStack : MonoBehaviour
             }
             yield return null;
         }
-        collectable.CollectableVisual.BattleAnimation();
+        collectable.CollectableVisual.UpdateAnimState(MaleAnimState.ONBATTLE);
         collectable.EnableCollider();
 
         //STATE EXIT

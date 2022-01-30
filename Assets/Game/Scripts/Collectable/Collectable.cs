@@ -6,6 +6,7 @@ using DG.Tweening;
 public class Collectable : MonoBehaviour
 {
     [SerializeField] public CollectableVisual CollectableVisual;
+    [SerializeField] public CollectableParticle CollectableParticle;
     [SerializeField] private CapsuleCollider collectableCollider;
     public bool IsCollected = false;
     public void DisableCollider()

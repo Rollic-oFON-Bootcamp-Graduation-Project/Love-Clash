@@ -43,7 +43,8 @@ public class Projectile : MonoBehaviour
             }
             collectable.IsCollected = true;
             collectable.transform.position = Vector3.zero;
-            collectable.CollectableVisual.SetBattleResult(true);
+            collectable.CollectableVisual.UpdateAnimState(MaleAnimState.LOVE);
+            collectable.CollectableParticle.UpdateParticle(ParticleType.LOVE);
             Observer.AddToStack?.Invoke(collectable);
             Observer.RemoveFromArena?.Invoke(collectable);
             gameObject.SetActive(false);

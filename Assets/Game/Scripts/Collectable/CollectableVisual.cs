@@ -6,28 +6,51 @@ using DG.Tweening;
 public class CollectableVisual : MonoBehaviour
 {
     [SerializeField] private Animator collectableAnimator;
+    [SerializeField] private MaleAnimState currentState;
 
     private void OnEnable()
     {
-        Observer.PlayerStartBattle += BattleAnimation;
+        Observer.PlayerStartBattle += PlayBattle;
         Observer.StopBattle += StopBattle;
     }
-
     private void OnDisable()
     {
-        Observer.PlayerStartBattle -= BattleAnimation;
-        Observer.StopBattle += StopBattle;
+        Observer.PlayerStartBattle -= PlayBattle;
+        Observer.StopBattle -= StopBattle;
     }
 
+    public void UpdateAnimState(MaleAnimState newState)
+    {
+        currentState = newState;
+        switch (newState)
+        {
+            case MaleAnimState.IDLE:
+                PlayRandomIdle();
+                break;
+            case MaleAnimState.WALKING:
+                ChangeAnimState("IsWalking", true);
+                break;
+            case MaleAnimState.ONBATTLE:
+                ChangeAnimState("IsBattleState", true);
+                break;
+            case MaleAnimState.OFFBATTLE:
+                ChangeAnimState("IsBattleState", false);
+                StackAnimation();
+                break;
+            case MaleAnimState.LOVE:
+                PlayLoveAnim();
+                break;
+            case MaleAnimState.HATE:
+                PlayHateAnim();
+                break;
+            default:
+                Debug.LogError(this);
+                break;
+        }
+    }
     private void Start()
     {
-        SetRandomIdle();
-    }
-
-    private void StopBattle()
-    {
-        ChangeAnimState("IsBattleState", false);
-        StackAnimation();
+        PlayRandomIdle();
     }
 
     public void StackAnimation()
@@ -39,46 +62,34 @@ public class CollectableVisual : MonoBehaviour
         }
     }
 
-    public void SetBattleResult(bool IsWin)
-    {
-        if (this.gameObject.activeSelf)
-        {
-            if (IsWin)
-            {
-                WinAnimation();
-            }
-            else
-            {
-                LoseAnimation();
-            }
-        }
-    }
-
     private void ChangeAnimState(string name, bool value)
     {
         collectableAnimator.SetBool(name, value);
     }
 
-    private void SetRandomIdle()
+    private void PlayRandomIdle()
     {
         var rand = Random.Range(0, 4);
         collectableAnimator.SetFloat("IdleType", rand);
     }
 
-    public void BattleAnimation()
-    {
-        ChangeAnimState("IsBattleState", true);
-    }
-
-    private void WinAnimation()
+    private void PlayLoveAnim()
     {
         collectableAnimator.SetFloat("BattleResult", 1);
     }
 
-    private void LoseAnimation()
+    private void PlayHateAnim()
     {
         this.transform.DOLocalRotate(Vector3.zero, 1f, RotateMode.Fast)
             .SetEase(Ease.OutSine)
             .OnComplete(() => collectableAnimator.SetFloat("BattleResult", 2));
+    }
+    private void PlayBattle()
+    {
+        UpdateAnimState(MaleAnimState.ONBATTLE);
+    }
+    private void StopBattle()
+    {
+        UpdateAnimState(MaleAnimState.OFFBATTLE);
     }
 }

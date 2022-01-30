@@ -84,7 +84,8 @@ public class BattleArena : MonoBehaviour
             if (collectables.Contains(closestCollectable))
             {
                 closestCollectable.IsCollected = true;
-                closestCollectable.CollectableVisual.SetBattleResult(false);
+                closestCollectable.CollectableVisual.UpdateAnimState(MaleAnimState.HATE);
+                closestCollectable.CollectableParticle.UpdateParticle(ParticleType.HATE);
                 closestCollectable.transform.SetParent(transform);
                 collectables.Remove(closestCollectable);
             }

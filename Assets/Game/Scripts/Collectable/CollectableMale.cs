@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class CollectableMale : Collectable
 {
-    [SerializeField] private ParticleSystem maleParticle;
-
-   
+    [SerializeField] private CollectableParticle maleParticle;
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            maleParticle.Play();
             CollectableVisual.StackAnimation();
+            CollectableParticle.UpdateParticle(ParticleType.LOVE);
         }
     }
 }
