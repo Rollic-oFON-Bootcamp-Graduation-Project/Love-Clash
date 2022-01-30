@@ -11,6 +11,7 @@ public class Projectile : MonoBehaviour
     private void OnEnable()
     {
         shootingRoutine = StartCoroutine(LifeTimeRoutine());
+        Observer.StopBattle += StopBattle;
     }
     private void OnDisable()
     {
@@ -23,6 +24,11 @@ public class Projectile : MonoBehaviour
         {
             transform.position += Time.deltaTime * projectileSpeed * Vector3.forward;
         }
+    }
+
+    private void StopBattle()
+    {
+        gameObject.SetActive(false);
     }
 
     private IEnumerator LifeTimeRoutine()

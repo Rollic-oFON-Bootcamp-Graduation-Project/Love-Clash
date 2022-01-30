@@ -15,7 +15,7 @@ public class GameManager : MonoSingleton<GameManager>
     {
         UIManager.Instance.StartScreen.DisablePanel();
         CurrentGameState = GameState.GAMEPLAY;
-        Observer.PlayerAnimationChange?.Invoke();
+        Observer.StartGame?.Invoke();
     }
 
     public void StartBattle()
@@ -36,6 +36,7 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void StopBattle()
     {
+        areCollectablesInPositions = false;
         CurrentGameState = GameState.GAMEPLAY;
         CameraManager.Instance.SwitchCam("PlayerCam");
         Observer.StopBattle?.Invoke();
@@ -44,7 +45,7 @@ public class GameManager : MonoSingleton<GameManager>
     private IEnumerator StartBattleRoutine()
     {
         //PRE BATTLE
-        Observer.ArenaStartBattle?.Invoke();
+        Observer.ArenaSetPositions?.Invoke();
         while (true)
         {
             //BATTLE WILL START WHEN COLLECTABLES ARE IN POSITION
@@ -52,8 +53,10 @@ public class GameManager : MonoSingleton<GameManager>
             yield return null;
         }
         //BATTLE STARTING
-        Observer.PlayerAnimationChange?.Invoke();
-        Observer.PlayerStartBattle?.Invoke();
+        //Observer.ArenaStartShooting?.Invoke();
+        //Observer.PlayerAnimationChange?.Invoke();
+        //Observer.PlayerStartBattle?.Invoke();
+        Observer.StartBattle?.Invoke();
     }
 
 }

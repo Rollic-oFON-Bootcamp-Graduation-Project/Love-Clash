@@ -20,33 +20,17 @@ public class BattleArena : MonoBehaviour
 
     private bool isTriggered = false;
     private List<Vector3> stackPoints;
-
-    private void OnEnable()
-    {
-        Observer.RemoveFromArena += RemoveFromArenaCollectables;
-        Observer.ArenaStartBattle += StartBattle;
-        Observer.StopBattle += StopBattle;
-    }
     private void OnDisable()
     {
         Observer.RemoveFromArena -= RemoveFromArenaCollectables;
-        Observer.ArenaStartBattle -= StartBattle;
+        Observer.ArenaSetPositions -= SetCollectablePositions;
         Observer.StopBattle -= StopBattle;
+        Observer.StartBattle -= StartShooting;
     }
     private void OnValidate()
     {
         stackPoints = PoissonDiscSampling.GeneratePoints(radius, RegionSize, out pointCount, offset);
     }
-
-    private void Update()
-    {
-        if (isTriggered && collectables.Count == 0)
-        {
-            //TODO
-            GameManager.Instance.StopBattle();
-        }
-    }
-
     private void OnDrawGizmos()
     {
         var gizmoColor = Color.red;
@@ -90,6 +74,13 @@ public class BattleArena : MonoBehaviour
                 collectables.Remove(closestCollectable);
             }
         }
+
+        //STATE EXIT
+        if (isTriggered && collectables.Count == 0)
+        {
+            //TODO
+            GameManager.Instance.StopBattle();
+        }
     }
 
     private void RemoveFromArenaCollectables(Collectable collectable)
@@ -106,13 +97,19 @@ public class BattleArena : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void StartBattle()
+    private void SetCollectablePositions()
     {
         if (isTriggered) return;
         isTriggered = true;
         stackPoints = GenerateRandomPoints();
         Observer.StackHandleBattle?.Invoke(stackPoints, collectables);
-        Observer.UpdatePlayerLimit?.Invoke(-bottomLimit.localPosition.x, bottomLimit.localPosition.x);
+        //Observer.UpdatePlayerLimit?.Invoke(-bottomLimit.localPosition.x, bottomLimit.localPosition.x);
+        
+    }
+
+    private void StartShooting()
+    {
+        Debug.Log("arena started shooting");
         battleRoutine = StartCoroutine(GetCollectableFromPlayer());
     }
 
@@ -128,6 +125,10 @@ public class BattleArena : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            Observer.RemoveFromArena += RemoveFromArenaCollectables;
+            Observer.StartBattle += StartShooting;
+            Observer.ArenaSetPositions += SetCollectablePositions;
+            Observer.StopBattle += StopBattle;
             GameManager.Instance.StartBattle();
         }
     }

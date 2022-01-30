@@ -8,14 +8,10 @@ public class CollectableVisual : MonoBehaviour
     [SerializeField] private Animator collectableAnimator;
     [SerializeField] private MaleAnimState currentState;
 
-    private void OnEnable()
-    {
-        Observer.PlayerStartBattle += PlayBattle;
-        Observer.StopBattle += StopBattle;
-    }
+
     private void OnDisable()
     {
-        Observer.PlayerStartBattle -= PlayBattle;
+        Observer.StartBattle -= PlayBattle;
         Observer.StopBattle -= StopBattle;
     }
 
@@ -84,11 +80,11 @@ public class CollectableVisual : MonoBehaviour
             .SetEase(Ease.OutSine)
             .OnComplete(() => collectableAnimator.SetFloat("BattleResult", 2));
     }
-    private void PlayBattle()
+    public void PlayBattle()
     {
         UpdateAnimState(MaleAnimState.ONBATTLE);
     }
-    private void StopBattle()
+    public void StopBattle()
     {
         UpdateAnimState(MaleAnimState.OFFBATTLE);
     }

@@ -9,6 +9,8 @@ public class CollectableMale : Collectable
     {
         if (other.CompareTag("Player"))
         {
+            Observer.StartBattle += CollectableVisual.PlayBattle;
+            Observer.StopBattle += CollectableVisual.StopBattle;
             CollectableVisual.StackAnimation();
             CollectableParticle.UpdateParticle(ParticleType.LOVE);
         }

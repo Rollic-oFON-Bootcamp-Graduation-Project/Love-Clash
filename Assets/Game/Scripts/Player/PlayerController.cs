@@ -24,33 +24,46 @@ public class PlayerController : MonoBehaviour
     private void OnEnable()
     {
         Observer.PlayerUpdate += HandlePlayerVisual;
-        Observer.PlayerAnimationChange += HandlePlayerAnimation;
-        Observer.UpdatePlayerLimit += UpdatePlayerLimit;
-        Observer.PlayerStartBattle += HandleBattle;
+        //Observer.PlayerAnimationChange += HandlePlayerAnimation;
+        //Observer.UpdatePlayerLimit += UpdatePlayerLimit;
+        //Observer.PlayerStartBattle += HandleBattle;
         Observer.StopBattle += StopBattle;
+        Observer.StartBattle += StartBattle;
+        Observer.StartGame += StartGame;
     }
     private void OnDisable()
     {
         Observer.PlayerUpdate -= HandlePlayerVisual;
-        Observer.PlayerAnimationChange -= HandlePlayerAnimation;
-        Observer.UpdatePlayerLimit += UpdatePlayerLimit;
-        Observer.PlayerStartBattle -= HandleBattle;
+        //Observer.PlayerAnimationChange -= HandlePlayerAnimation;
+        //Observer.UpdatePlayerLimit += UpdatePlayerLimit;
+        //Observer.PlayerStartBattle -= HandleBattle;
         Observer.StopBattle -= StopBattle;
+        Observer.StartBattle -= StartBattle;
+        Observer.StartGame -= StartGame;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //HandleBattle();
         HandleForwardMovement();
         HandleSideMovement();
-        //Not sure if we trigger battle when it collides or in update
-        //HandleBattle();
+    }
+
+    private void StartGame()
+    {
+        HandlePlayerAnimation();
+    }
+
+    private void StartBattle()
+    {
+        HandleBattle();
+        UpdatePlayerLimit(SettingsManager.ArenaLeftLimitX, SettingsManager.ArenaRightLimitX);
     }
 
     private void HandleBattle()
     {
-        if (GameManager.Instance.CurrentGameState != GameState.BATTLE) return;     
+        if (GameManager.Instance.CurrentGameState != GameState.BATTLE) return;
+        HandlePlayerAnimation();
         weapon.StartShooting();
     }
 

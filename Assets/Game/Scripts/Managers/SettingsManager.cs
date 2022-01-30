@@ -13,11 +13,13 @@ public class SettingsManager : MonoSingleton<SettingsManager>
     public static WeaponSettings WeaponSettings => Instance.weaponSettings;
 
     [SerializeField, Range(0,10)]
-    private float stackGap;
-    [SerializeField, Range(0, 10)]
-    private float firstStackGap;
+    private float stackGap, firstStackGap;
     public static float StackGap => Instance.stackGap;
     public static float FirstStackGap => Instance.firstStackGap;
+
+    [SerializeField] private float arenaLeftLimitX, arenaRightLimitX;
+    public static float ArenaLeftLimitX => Instance.arenaLeftLimitX;
+    public static float ArenaRightLimitX => Instance.arenaRightLimitX;
 
 
 }

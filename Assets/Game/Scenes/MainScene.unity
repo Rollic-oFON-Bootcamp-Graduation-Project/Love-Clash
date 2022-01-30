@@ -333,6 +333,8 @@ MonoBehaviour:
   weaponSettings: {fileID: 11400000, guid: 1cf84a2428c3a22418c2f8aa592b5f7a, type: 2}
   stackGap: 1
   firstStackGap: 10
+  arenaLeftLimitX: -7.5
+  arenaRightLimitX: 7.5
 --- !u!4 &2043036173
 Transform:
   m_ObjectHideFlags: 0
