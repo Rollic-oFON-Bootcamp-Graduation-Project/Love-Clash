@@ -26,8 +26,8 @@ public class PlayerVisual : MonoBehaviour
 
     private void Start()
     {
-        weapon.transform.position = rightHands[visualIndex].position;
-        weapon.transform.SetParent(rightHands[visualIndex]);
+        //weapon.transform.position = rightHands[visualIndex].position;
+        //weapon.transform.SetParent(rightHands[visualIndex]);
     }
 
     public void EnableVisual()
@@ -82,8 +82,8 @@ public class PlayerVisual : MonoBehaviour
         currentVisual = playerVisuals[visualIndex];
         playerAnimator.avatar = avatars[visualIndex];
         currentVisual.SetActive(true);
-        weapon.transform.position = rightHands[visualIndex].position;
-        weapon.transform.SetParent(rightHands[visualIndex]);
+        //weapon.transform.position = rightHands[visualIndex].position;
+        //weapon.transform.SetParent(rightHands[visualIndex]);
 
         ChangeAnimState("WalkType", visualIndex);
         GateAnimation();
@@ -98,8 +98,8 @@ public class PlayerVisual : MonoBehaviour
         currentVisual = playerVisuals[visualIndex];
         playerAnimator.avatar = avatars[visualIndex];
         currentVisual.SetActive(true);
-        weapon.transform.position = rightHands[visualIndex].position;
-        weapon.transform.SetParent(rightHands[visualIndex]);
+        //weapon.transform.position = rightHands[visualIndex].position;
+        //weapon.transform.SetParent(rightHands[visualIndex]);
 
         ChangeAnimState("WalkType", visualIndex);
         GateAnimation();

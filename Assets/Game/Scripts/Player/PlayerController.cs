@@ -126,9 +126,6 @@ public class PlayerController : MonoBehaviour
         transform.DOMove(Vector3.back * 5f, 1f)
             .SetEase(Ease.OutExpo)
             .SetRelative();
-        
-
-
     }
 
 
