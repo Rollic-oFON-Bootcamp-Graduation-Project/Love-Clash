@@ -13,17 +13,21 @@ public class GameManager : MonoSingleton<GameManager>
     private void Awake()
     {
         CurrentGameState = GameState.MENU;
+        Debug.Log("awake game manager");
     }
 
     public void StartGame()
     {
+        CameraManager.Instance.SwitchCam("PlayerCam");
         UIManager.Instance.StartScreen.DisablePanel();
+        Debug.Log(CameraManager.Instance.GetInstanceID());
         CurrentGameState = GameState.GAMEPLAY;
         Observer.StartGame?.Invoke();
     }
 
     public void StartBattle(BattleArena arena)
     {
+        CanEnterBattle = false;
         //CHANGE STATE TO BATTLE
         //CHANGE CAMERA POSITION
         //START ROUTINE UNTIL COLLECTABLES MOVES INTO THEIR POSITIONS THEN START THE BATTLE
@@ -59,6 +63,7 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void GameOver()
     {
+        activeArena = null;
         UIManager.Instance.GameOverScreen.EnablePanel();
         CurrentGameState = GameState.MENU;
     }

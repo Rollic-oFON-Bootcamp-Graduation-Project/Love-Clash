@@ -110,12 +110,12 @@ public class PlayerStack : MonoBehaviour
         Collectable collectable = null;
         if (stack.Count == 0) 
         {
-            GameManager.Instance.CanEnterBattle = false;
             collectable = null;
             return null;
         }
         collectable = stack[stack.Count - 1];
         stack.RemoveAt(stack.Count - 1);
+        GameManager.Instance.CanEnterBattle = StackCount == 0 ? false : true;
         return collectable;
     }
     private void AddToStack(Collectable collectable)

@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 
-public class CameraManager : MonoSingleton<CameraManager>
+public class CameraManager : SceneBasedMonoSingleton<CameraManager>
 {
     [SerializeField] private CinemachineVirtualCamera playerCam;
     [SerializeField] private CinemachineVirtualCamera battleCam;
     //[SerializeField] private CinemachineVirtualCamera finalPlayerCam;
+    [SerializeField] private CinemachineVirtualCamera activeCam => CameraSwitcher.GetActiveCamera();
     private void OnEnable()
     {
+        Debug.Log(activeCam);
         CameraSwitcher.AddCamera(playerCam);
         CameraSwitcher.AddCamera(battleCam);
     }

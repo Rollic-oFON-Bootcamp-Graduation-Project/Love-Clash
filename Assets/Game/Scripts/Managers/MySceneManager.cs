@@ -18,7 +18,7 @@ public class MySceneManager : MonoSingleton<MySceneManager>
         LoadScenes(currentLevelIndex);
     }
 
-    private void UnloadActiveScene()
+    private void UnloadActiveScene(bool isRestartScene = false)
     {
         //RESET UI, GAMEMANAGER ETC
         scenesUnLoading.Add(SceneManager.UnloadSceneAsync(currentLevelIndex));
