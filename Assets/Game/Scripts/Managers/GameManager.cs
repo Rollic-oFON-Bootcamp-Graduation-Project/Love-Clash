@@ -6,6 +6,7 @@ public class GameManager : MonoSingleton<GameManager>
 {
     public GameState CurrentGameState;
     private bool areCollectablesInPositions = false;
+    [SerializeField] private BattleArena activeArena;
     private void Awake()
     {
         CurrentGameState = GameState.MENU;
@@ -18,20 +19,44 @@ public class GameManager : MonoSingleton<GameManager>
         Observer.StartGame?.Invoke();
     }
 
-    public void StartBattle()
+    public void StartBattle(BattleArena arena)
     {
         //CHANGE STATE TO BATTLE
         //CHANGE CAMERA POSITION
         //START ROUTINE UNTIL COLLECTABLES MOVES INTO THEIR POSITIONS THEN START THE BATTLE
+        activeArena = arena;
         CurrentGameState = GameState.BATTLE;
         CameraManager.Instance.SwitchCam("BattleCam");
         StartCoroutine(StartBattleRoutine());
-        
+    }
+
+    public Vector3 GetAPointFromActiveArena()
+    {
+        Debug.Log("Get a point");
+        for (int i = 0; i < activeArena.PlayerCollectablePositions.Count; i++)
+        {
+            if (!activeArena.IsPositionTakenByCollectable[i])
+            {
+                activeArena.IsPositionTakenByCollectable[i] = true;
+                return activeArena.PlayerCollectablePositions[i].position;
+            }
+        }
+        return Vector3.zero;
+    }
+    public void SetActiveArena(BattleArena arena)
+    {
+        activeArena = arena;
     }
 
     public void CollectablesAreReady()
     {
         areCollectablesInPositions = true;
+    }
+
+    public void GameOver()
+    {
+        UIManager.Instance.GameOverScreen.EnablePanel();
+        CurrentGameState = GameState.MENU;
     }
 
     public void StopBattle()

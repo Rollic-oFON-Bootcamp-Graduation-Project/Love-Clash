@@ -414,6 +414,7 @@ Transform:
   - {fileID: 8726000926475686119}
   - {fileID: 2143604211858070989}
   - {fileID: 4401244095286252631}
+  - {fileID: 6699874790892427664}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -439,12 +440,10 @@ MonoBehaviour:
   - {fileID: 193741262282222795}
   - {fileID: 8726000926475686116}
   - {fileID: 2143604211858070990}
-  playerCollectablePoints:
-  - {x: 65530, y: 4.97e-43, z: 0}
-  boints: {fileID: 0}
   radius: 2
   displayRadius: 1
-  pointCount: 17
+  pointCount: 21
+  playerPoints: {fileID: 6699874790078734286}
   RegionSize: {x: 15, y: 1, z: 6}
 --- !u!65 &5811419081333832118
 BoxCollider:
@@ -844,5 +843,78 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5fdd9902a603d7d4c8dc0ae3de39ea7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1001 &9217228613545535327
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 8912889970141818001}
+    m_Modifications:
+    - target: {fileID: 2526677760312508110, guid: 58135e9ad5f3d1c4b8b9e08e1f4b3319, type: 3}
+      propertyPath: m_Name
+      value: PointsCenter
+      objectReference: {fileID: 0}
+    - target: {fileID: 2526677760312508111, guid: 58135e9ad5f3d1c4b8b9e08e1f4b3319, type: 3}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 2526677760312508111, guid: 58135e9ad5f3d1c4b8b9e08e1f4b3319, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2526677760312508111, guid: 58135e9ad5f3d1c4b8b9e08e1f4b3319, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2526677760312508111, guid: 58135e9ad5f3d1c4b8b9e08e1f4b3319, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -14.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 2526677760312508111, guid: 58135e9ad5f3d1c4b8b9e08e1f4b3319, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2526677760312508111, guid: 58135e9ad5f3d1c4b8b9e08e1f4b3319, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2526677760312508111, guid: 58135e9ad5f3d1c4b8b9e08e1f4b3319, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2526677760312508111, guid: 58135e9ad5f3d1c4b8b9e08e1f4b3319, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2526677760312508111, guid: 58135e9ad5f3d1c4b8b9e08e1f4b3319, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2526677760312508111, guid: 58135e9ad5f3d1c4b8b9e08e1f4b3319, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2526677760312508111, guid: 58135e9ad5f3d1c4b8b9e08e1f4b3319, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 58135e9ad5f3d1c4b8b9e08e1f4b3319, type: 3}
+--- !u!4 &6699874790892427664 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2526677760312508111, guid: 58135e9ad5f3d1c4b8b9e08e1f4b3319, type: 3}
+  m_PrefabInstance: {fileID: 9217228613545535327}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6699874790078734286 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2526677759515588753, guid: 58135e9ad5f3d1c4b8b9e08e1f4b3319, type: 3}
+  m_PrefabInstance: {fileID: 9217228613545535327}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b96d17bda0d0c3458f1225af746b355, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

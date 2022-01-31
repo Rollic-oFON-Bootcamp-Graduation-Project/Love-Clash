@@ -18,6 +18,8 @@ public class Observer
     //This is for setting random collectable positions on arena.
     public static UnityAction PreBattle;
 
+
+    public static UnityAction SetActiveArena;
     //Removes collectable from arena's reach.
     public static UnityAction<Collectable> RemoveFromArena;
     //Event for adding a collectable to the stack.

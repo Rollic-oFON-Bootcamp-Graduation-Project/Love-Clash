@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
+using System.Linq;
 
 public class TestSampling : MonoBehaviour
 {
 
     [SerializeField] private Points pointParent;
+    [SerializeField] private Transform topPoint;
     public float radius = 1;
     public Vector3 regionSize = Vector3.one;
     public int rejectionSamples = 30;
@@ -20,7 +22,7 @@ public class TestSampling : MonoBehaviour
 
     private void OnValidate()
     {
-        points = PoissonDiscSampling.GeneratePoints(radius, regionSize, out pointCount, pointParent.transform.position, circleRadius);
+        points = PoissonDiscSampling.GeneratePoints(radius, regionSize, out pointCount, Vector3.zero, circleRadius);
     }
 
     [Button]
@@ -31,9 +33,11 @@ public class TestSampling : MonoBehaviour
             var node = new GameObject().transform;
             node.SetParent(pointParent.transform);
             node.position = points[i];
-            pointParent.PointList.Add(node.position);
+            pointParent.PointList.Add(node);
             pointParent.IsTaken.Add(false);
         }
+
+        pointParent.PointList = pointParent.PointList.OrderBy(o => (topPoint.transform.position - o.position).sqrMagnitude).ToList();
     }
     void OnDrawGizmos()
 	{

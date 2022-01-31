@@ -12,9 +12,12 @@ public class BattleArena : MonoBehaviour
     [SerializeField, Range(1, 10)] private float radius = 1f;
     [SerializeField] private float displayRadius = 1;
     [SerializeField, ReadOnly] private int pointCount;
+    [SerializeField] private Points playerPoints;
     private Coroutine battleRoutine;
     public Vector3 RegionSize = Vector3.one;
 
+    public List<Transform> PlayerCollectablePositions => playerPoints.PointList;
+    public List<bool> IsPositionTakenByCollectable => playerPoints.IsTaken;
     private Vector3 offset => createCenter.position;
 
     private bool isTriggered = false;
@@ -120,7 +123,6 @@ public class BattleArena : MonoBehaviour
         return generatedPoints;
     }
 
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -129,7 +131,7 @@ public class BattleArena : MonoBehaviour
             Observer.StartBattle += StartShooting;
             Observer.PreBattle += SetCollectablePositions;
             Observer.StopBattle += StopBattle;
-            GameManager.Instance.StartBattle();
+            GameManager.Instance.StartBattle(this);
         }
     }
 }

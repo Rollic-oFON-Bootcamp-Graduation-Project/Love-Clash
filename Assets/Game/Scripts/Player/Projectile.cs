@@ -47,8 +47,10 @@ public class Projectile : MonoBehaviour
                 gameObject.SetActive(false);
                 return;
             }
-            var newPos = Vector3.zero;
-            collectable.ShotWithProjectile((Vector3)newPos);
+            //var newPos = Vector3.zero;
+            Vector3 newPos = GameManager.Instance.GetAPointFromActiveArena();
+            
+            collectable.ShotWithProjectile(newPos);
             
             gameObject.SetActive(false);
         }

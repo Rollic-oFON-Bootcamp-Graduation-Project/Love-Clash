@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Points : MonoBehaviour
 {
-    public List<Vector3> PointList;
+    public List<Transform> PointList;
     public List<bool> IsTaken;
     [SerializeField] private float displayRadius = 1;
 
@@ -14,9 +14,11 @@ public class Points : MonoBehaviour
         Gizmos.color = gizmoColor;
         if (PointList != null)
         {
+            Vector3 offset;
             for (int i = 0; i < PointList.Count; i++)
             {
-                Gizmos.DrawSphere(transform.position+PointList[i], displayRadius);
+                offset = PointList[i].position - transform.position;
+                Gizmos.DrawSphere(transform.position+ offset, displayRadius);
             }
         }
     }
