@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
 using System.Linq;
+using DG.Tweening;
 
 public class BattleArena : MonoBehaviour
 {
     [SerializeField] private Transform upperLimit, bottomLimit, createCenter, lovePoint;
+    [SerializeField] private BoxCollider arenaCollider;
     [SerializeField] private float loveTimer = 2f;
     [SerializeField] private List<Collectable> collectables;
     [SerializeField, Range(1, 10)] private float radius = 1f;
@@ -82,6 +84,7 @@ public class BattleArena : MonoBehaviour
         if (isTriggered && collectables.Count == 0)
         {
             //TODO
+
             GameManager.Instance.StopBattle();
         }
     }
@@ -95,9 +98,12 @@ public class BattleArena : MonoBehaviour
 
     private void StopBattle()
     {
-        //SET LIMIT TO OLD POS;
+        arenaCollider.enabled = false;
+        transform.DOScale(Vector3.zero, 1f)
+            .SetEase(Ease.InBounce)
+            .OnComplete(()=>Destroy(gameObject));
         StopCoroutine(battleRoutine);
-        Destroy(gameObject);
+        //Destroy(gameObject);
     }
 
     private void SetCollectablePositions()
@@ -127,6 +133,11 @@ public class BattleArena : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            if (!GameManager.Instance.CanEnterBattle)
+            {
+                GameManager.Instance.GameOver();
+                return;
+            } 
             Observer.RemoveFromArena += RemoveFromArenaCollectables;
             Observer.StartBattle += StartShooting;
             Observer.PreBattle += SetCollectablePositions;

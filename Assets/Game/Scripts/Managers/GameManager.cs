@@ -5,7 +5,10 @@ using UnityEngine;
 public class GameManager : MonoSingleton<GameManager>
 {
     public GameState CurrentGameState;
+    public bool CanEnterBattle = false;
+    private PlayerStack playerStack;
     private bool areCollectablesInPositions = false;
+    
     [SerializeField] private BattleArena activeArena;
     private void Awake()
     {
@@ -47,6 +50,7 @@ public class GameManager : MonoSingleton<GameManager>
     {
         activeArena = arena;
     }
+
 
     public void CollectablesAreReady()
     {

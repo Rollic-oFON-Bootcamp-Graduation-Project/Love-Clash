@@ -110,6 +110,7 @@ public class PlayerStack : MonoBehaviour
         Collectable collectable = null;
         if (stack.Count == 0) 
         {
+            GameManager.Instance.CanEnterBattle = false;
             collectable = null;
             return null;
         }
@@ -119,6 +120,7 @@ public class PlayerStack : MonoBehaviour
     }
     private void AddToStack(Collectable collectable)
     {
+        GameManager.Instance.CanEnterBattle = true;
         stack.Add(collectable);
     }
 

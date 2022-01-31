@@ -25,6 +25,7 @@ public class CollectableVisual : MonoBehaviour
                 break;
             case MaleAnimState.OFFBATTLE:
                 ChangeAnimState("Battle", false);
+                ChangeAnimState("Win", false);
                 break;
             case MaleAnimState.TAKEN:
                 ChangeAnimState("Taken", true);

@@ -83,6 +83,8 @@ public class PlayerController : MonoBehaviour
 
     private void HandleSideMovement()
     {
+        if (GameManager.Instance.CurrentGameState != GameState.GAMEPLAY &&
+            GameManager.Instance.CurrentGameState != GameState.BATTLE) return;
         var pos = sideMovementRoot.localPosition;
         pos.x += InputManager.Instance.MouseInput.x * sideMovementSensivity;
         pos.x = Mathf.Clamp(pos.x, leftLimitX, rightLimitX);
@@ -154,7 +156,7 @@ public class PlayerController : MonoBehaviour
         else if (other.CompareTag("Obstacle"))
         {
             var myCollectable = Observer.RemoveFromStack?.Invoke();
-            myCollectable.TakenByEnemy(HitType.OBSTACLE);
+            myCollectable?.TakenByEnemy(HitType.OBSTACLE);
             HandleObstacleHit();
         }
     }

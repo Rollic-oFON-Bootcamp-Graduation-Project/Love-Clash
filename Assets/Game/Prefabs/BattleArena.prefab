@@ -434,6 +434,7 @@ MonoBehaviour:
   bottomLimit: {fileID: 4463431560295397241}
   createCenter: {fileID: 4463431561700128517}
   lovePoint: {fileID: 4401244095286252631}
+  arenaCollider: {fileID: 5811419081333832118}
   loveTimer: 1
   collectables:
   - {fileID: 3232172773212348728}
@@ -442,7 +443,7 @@ MonoBehaviour:
   - {fileID: 2143604211858070990}
   radius: 2
   displayRadius: 1
-  pointCount: 21
+  pointCount: 18
   playerPoints: {fileID: 6699874790078734286}
   RegionSize: {x: 15, y: 1, z: 6}
 --- !u!65 &5811419081333832118
@@ -456,8 +457,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 15.207002, y: 4.5051804, z: 1.2218504}
-  m_Center: {x: 0.009870052, y: 1.7169743, z: -8.403484}
+  m_Size: {x: 15.207002, y: 4.5051804, z: 1.2996893}
+  m_Center: {x: 0.009870052, y: 1.7169743, z: -7.588713}
 --- !u!1 &8912889971052949806
 GameObject:
   m_ObjectHideFlags: 0
