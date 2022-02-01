@@ -1,5 +1,5 @@
 public enum ParticleType
 {
-    LOVE,
-    HATE,
+    LOVE = 0,
+    HATE = 1,
 }

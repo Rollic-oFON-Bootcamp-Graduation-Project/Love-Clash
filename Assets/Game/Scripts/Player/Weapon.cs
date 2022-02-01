@@ -36,8 +36,6 @@ public class Weapon : MonoBehaviour
         ClampWeaponValue(weaponLevel, fireRate, weaponDamage);
         Debug.Log($"WeaponLevel{weaponLevel}, FireRate{fireRate}, WeaponDamage{weaponDamage}");
 
-        // TODO
-        // Change the projectile settings via updated weapon values
     }
 
     private void ClampWeaponValue(int level, float rate, float damage)
@@ -64,13 +62,12 @@ public class Weapon : MonoBehaviour
 
     private void Shoot()
     {
-        var projectile = ObjectPooler.Instance.GetPooledProjectile();
+        var projectile = MyObjectPooler.Instance.GetProjectileFromPool(weaponLevel.ToString());
         if(projectile != null)
         {
             Debug.Log("Shoot");
             projectile.IsShooting = true;
             projectile.transform.position = shootPoint.position;
-            projectile.gameObject.SetActive(true);
         }
     }
 

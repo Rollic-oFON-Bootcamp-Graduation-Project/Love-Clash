@@ -5,21 +5,29 @@ using UnityEngine;
 public class CollectableParticle : MonoBehaviour
 {
     [SerializeField] public ParticleSystem[] particles;
-    public void PlayCollected()
-    {
-        particles[0].Play();
-    }
-
+    [SerializeField] private ParticleSystem defaultParticle;
+    
     public void UpdateParticle(ParticleType type)
     {
         switch (type)
         {
             case ParticleType.LOVE:
-                particles[0].Play();
+                StopParticle(defaultParticle);
+                PlayParticle(particles[(int)type]);
                 break;
             case ParticleType.HATE:
-                particles[1].Play();
+                PlayParticle(particles[(int)type]);
                 break;
         }
+    }
+
+    public void StopParticle(ParticleSystem particle)
+    {
+        particle.gameObject.SetActive(false);
+        particle.Stop(true);
+    }
+    public void PlayParticle(ParticleSystem particle)
+    {
+        particle.Play();
     }
 }

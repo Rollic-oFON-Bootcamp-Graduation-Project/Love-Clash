@@ -46,11 +46,10 @@ public class CollectableVisual : MonoBehaviour
 
     public void StackAnimation()
     {
-        if (this.gameObject.activeSelf)
-        {
-            this.transform.DOLocalRotate(Vector3.zero, 1f, RotateMode.Fast);
-            ChangeAnimState("Walking", true);
-        }
+
+        this.transform.DOLocalRotate(Vector3.zero, 1f, RotateMode.Fast);
+        ChangeAnimState("Walking", true);
+
     }
 
     private void ChangeAnimState(string name, bool value)
