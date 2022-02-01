@@ -68,7 +68,7 @@ public class PlayerStack : MonoBehaviour
         try
         {
             
-            positions.Reverse();
+            //positions.Reverse();
             
             for (int i = stack.Count - 1; i >= 0; i--)
             {
@@ -113,15 +113,15 @@ public class PlayerStack : MonoBehaviour
             collectable = null;
             return null;
         }
-        collectable = stack[stack.Count - 1];
-        stack.RemoveAt(stack.Count - 1);
+        collectable = stack[0];
+        stack.RemoveAt(0);
         GameManager.Instance.CanEnterBattle = StackCount == 0 ? false : true;
         return collectable;
     }
     private void AddToStack(Collectable collectable)
     {
         GameManager.Instance.CanEnterBattle = true;
-        stack.Add(collectable);
+        stack.Insert(0, collectable);
     }
 
     //private IEnumerator MoveCollectableRoutine(Collectable collectable, Vector3 newPos, float value)

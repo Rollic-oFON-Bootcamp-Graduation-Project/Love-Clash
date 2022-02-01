@@ -31,6 +31,7 @@ public class Collectable : MonoBehaviour
 
     public void ShotWithProjectile(Vector3 newPos)
     {
+        if (transform.parent != null) transform.parent = null;
         transform.position = newPos;
         CollectableVisual.UpdateAnimState(MaleAnimState.WIN);
         AddToStack();
@@ -38,14 +39,24 @@ public class Collectable : MonoBehaviour
         
     }
 
-    public void TakenByEnemy(HitType type)
+    private void HandleObstacleHit(Vector3 hitPoint)
     {
+        var direction = new Vector3(-Random.value, 0, Random.value);
+
+        var newPos = hitPoint + direction;
+        newPos.x = Mathf.Clamp(newPos.x ,SettingsManager.ArenaLeftLimitX, SettingsManager.ArenaRightLimitX);
+    }
+
+    public void TakenByEnemy(HitType type, Vector3? position = null)
+    {
+        position ??= Vector3.zero; 
         IsCollected = true;
         switch (type)
         {
             case HitType.OBSTACLE:
                 CollectableVisual.UpdateAnimState(MaleAnimState.TAKEN, type);
                 CollectableParticle.UpdateParticle(ParticleType.HATE);
+                HandleObstacleHit((Vector3)position);
                 //SET DEAD ANIMATION
                 break;
             case HitType.ARENA:
