@@ -396,8 +396,32 @@ BlendTree:
     m_DirectBlendParameter: IdleType
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: 786f545dae73ef544a160e4f6de9ff78, type: 2}
+    m_Motion: {fileID: 7400000, guid: 54d3c9d46b99655469ca9ced212550a6, type: 2}
     m_Threshold: 1
+    m_Position: {x: 0, y: 0}
+    m_TimeScale: 1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: IdleType
+    m_Mirror: 0
+  - serializedVersion: 2
+    m_Motion: {fileID: 7400000, guid: 0db1b278b491deb4aa8aa51ac072d548, type: 2}
+    m_Threshold: 2
+    m_Position: {x: 0, y: 0}
+    m_TimeScale: 1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: IdleType
+    m_Mirror: 0
+  - serializedVersion: 2
+    m_Motion: {fileID: 7400000, guid: 0ca5b7aaeea28f74a9006690b93cb773, type: 2}
+    m_Threshold: 3
+    m_Position: {x: 0, y: 0}
+    m_TimeScale: 1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: IdleType
+    m_Mirror: 0
+  - serializedVersion: 2
+    m_Motion: {fileID: 7400000, guid: 786f545dae73ef544a160e4f6de9ff78, type: 2}
+    m_Threshold: 4
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0
@@ -406,7 +430,7 @@ BlendTree:
   m_BlendParameter: TakenType
   m_BlendParameterY: IdleType
   m_MinThreshold: 0
-  m_MaxThreshold: 1
+  m_MaxThreshold: 4
   m_UseAutomaticThresholds: 0
   m_NormalizedBlendValues: 0
   m_BlendType: 0

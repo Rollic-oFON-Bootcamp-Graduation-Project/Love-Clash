@@ -12,7 +12,6 @@ public class CollectableParticle : MonoBehaviour
         switch (type)
         {
             case ParticleType.LOVE:
-                StopParticle(defaultParticle);
                 PlayParticle(particles[(int)type]);
                 break;
             case ParticleType.HATE:
@@ -28,6 +27,7 @@ public class CollectableParticle : MonoBehaviour
     }
     public void PlayParticle(ParticleSystem particle)
     {
+        if(defaultParticle.isPlaying) StopParticle(defaultParticle);
         particle.Play();
     }
 }

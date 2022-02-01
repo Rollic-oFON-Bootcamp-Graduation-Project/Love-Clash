@@ -73,10 +73,11 @@ public class CollectableVisual : MonoBehaviour
         switch (type)
         {
             case HitType.OBSTACLE:
-                collectableAnimator.SetFloat("TakenType", 0);
+                var randType = Random.Range(0, 4);
+                collectableAnimator.SetFloat("TakenType", randType);
                 break;
             case HitType.ARENA:
-                collectableAnimator.SetFloat("TakenType", 1);
+                collectableAnimator.SetFloat("TakenType", 4);
                 break;
             default:
                 break;
