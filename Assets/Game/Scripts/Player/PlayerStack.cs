@@ -48,10 +48,10 @@ public class PlayerStack : MonoBehaviour
     private void HandleStackMovement()
     {
         if (stack.Count == 0 || GameManager.Instance.CurrentGameState != GameState.GAMEPLAY) return;
-        stack[0].transform.position = Vector3.Lerp(transform.position + offsetFirst, playerSideMovementRoot.transform.position, 0.8f);
-        for(int i = 1; i < stack.Count; i++)
+        stack[StackCount -1].transform.position = Vector3.Lerp(transform.position + offsetFirst, playerSideMovementRoot.transform.position, 0.8f);
+        for(int i = StackCount-2; i >= 0; i--)
         {
-            stack[i].transform.position = Vector3.Lerp(stack[i - 1].transform.position + offset, stack[i].transform.position, 0.8f);
+            stack[i].transform.position = Vector3.Lerp(stack[i +1].transform.position + offset, stack[i].transform.position, 0.8f);
         }
     }
 
@@ -113,15 +113,15 @@ public class PlayerStack : MonoBehaviour
             collectable = null;
             return null;
         }
-        collectable = stack[0];
-        stack.RemoveAt(0);
+        collectable = stack[stack.Count - 1];
+        stack.RemoveAt(stack.Count - 1);
         GameManager.Instance.CanEnterBattle = StackCount == 0 ? false : true;
         return collectable;
     }
     private void AddToStack(Collectable collectable)
     {
         GameManager.Instance.CanEnterBattle = true;
-        stack.Insert(0, collectable);
+        stack.Add(collectable);
     }
 
     //private IEnumerator MoveCollectableRoutine(Collectable collectable, Vector3 newPos, float value)
