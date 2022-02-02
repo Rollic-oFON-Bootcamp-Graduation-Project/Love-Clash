@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using NaughtyAttributes;
 
 public class MySceneManager : MonoSingleton<MySceneManager>
 {
@@ -16,6 +17,7 @@ public class MySceneManager : MonoSingleton<MySceneManager>
     {
         //if (SceneManager.sceneCount != SceneManager.sceneCountInBuildSettings) FirstLoad();
     }
+    [Button]
     public void RestartActiveScene()
     {
         UnloadCurrentLevel();
@@ -23,6 +25,7 @@ public class MySceneManager : MonoSingleton<MySceneManager>
         StartCoroutine(WaitForAllScenes(sceneToLoad));
     }
 
+    [Button]
     public void LoadNextLevel()
     {
         UnloadCurrentLevel();
@@ -31,10 +34,11 @@ public class MySceneManager : MonoSingleton<MySceneManager>
         StartCoroutine(WaitForAllScenes(sceneToLoad));
     }
 
-    private void UnloadCurrentLevel(bool isRestartScene = false)
+    private void UnloadCurrentLevel(bool restartEnv = false)
     {
         //RESET UI, GAMEMANAGER ETC
         scenesLoading.Add(SceneManager.UnloadSceneAsync(currentLevelIndex));
+        scenesLoading.Add(SceneManager.UnloadSceneAsync((int)SceneIndexes.ENVIRONMENT));
         
     }
     private AsyncOperation LoadLevel(int index)
@@ -42,6 +46,8 @@ public class MySceneManager : MonoSingleton<MySceneManager>
         //SETUP UI, GAMEMANAGER ETC
         AsyncOperation asyncLoadScene = SceneManager.LoadSceneAsync(index, LoadSceneMode.Additive);
         scenesLoading.Add(asyncLoadScene);
+        scenesLoading.Add(SceneManager.LoadSceneAsync((int)SceneIndexes.ENVIRONMENT, LoadSceneMode.Additive));
+
         return asyncLoadScene;
         //StartCoroutine(WaitForSceneLoad(asyncLoadScene));
     }
