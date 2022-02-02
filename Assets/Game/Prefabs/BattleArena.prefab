@@ -338,7 +338,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4463431561219904816}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.5, y: 0, z: 2.5}
+  m_LocalPosition: {x: -7.5, y: 0, z: 3.17}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8912889970141818001}
@@ -368,7 +368,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4463431561700128522}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.27, y: 0, z: 0}
+  m_LocalPosition: {x: -6.79, y: 0, z: -4.87}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8912889970141818001}
@@ -441,11 +441,11 @@ MonoBehaviour:
   - {fileID: 193741262282222795}
   - {fileID: 8726000926475686116}
   - {fileID: 2143604211858070990}
-  radius: 2
+  radius: 1.47
   displayRadius: 1
-  pointCount: 18
+  pointCount: 31
   playerPoints: {fileID: 6699874790078734286}
-  RegionSize: {x: 15, y: 1, z: 6}
+  RegionSize: {x: 12, y: 1, z: 8}
 --- !u!65 &5811419081333832118
 BoxCollider:
   m_ObjectHideFlags: 0

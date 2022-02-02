@@ -156,7 +156,7 @@ public class PlayerController : MonoBehaviour
         else if (other.CompareTag("Obstacle"))
         {
             var myCollectable = Observer.RemoveFromStack?.Invoke();
-            myCollectable?.TakenByEnemy(HitType.OBSTACLE);
+            myCollectable?.TakenByEnemy(HitType.OBSTACLE, other.transform.position);
             HandleObstacleHit();
         }
     }

@@ -49,7 +49,8 @@ public class BattleArena : MonoBehaviour
         {
             for (int i = 0; i < stackPoints.Count; i++)
             {
-                Gizmos.DrawSphere(stackPoints[i], displayRadius);
+                var drawOffset = stackPoints[i]-offset;
+                Gizmos.DrawSphere(offset+drawOffset, displayRadius);
             }
         }
     }
