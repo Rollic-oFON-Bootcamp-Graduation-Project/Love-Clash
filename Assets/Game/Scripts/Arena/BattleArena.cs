@@ -66,6 +66,7 @@ public class BattleArena : MonoBehaviour
             {
                 //UPDATE COLLECTABLE BAR
                 timer += Time.deltaTime;
+                LoveBar.Instance.UpdateLoveBar(timer);
                 yield return null;
             }
 
