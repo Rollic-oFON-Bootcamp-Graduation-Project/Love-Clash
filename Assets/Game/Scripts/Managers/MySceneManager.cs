@@ -5,55 +5,80 @@ using UnityEngine.SceneManagement;
 
 public class MySceneManager : MonoSingleton<MySceneManager>
 {
+    //Will change later
+    [SerializeField] private GameObject loadingScreen;
+    [SerializeField] private ProgressBar progressBar;
     private static int currentLevelIndex = (int)SceneIndexes.LEVELS;
     private List<AsyncOperation> scenesUnLoading = new List<AsyncOperation>();
-  
+    private List<AsyncOperation> scenesLoading = new List<AsyncOperation>();
+
     void Start()
     {
-        //if (SceneManager.sceneCount != SceneManager.sceneCountInBuildSettings) LoadScenes((int)SceneIndexes.Game);
+        //if (SceneManager.sceneCount != SceneManager.sceneCountInBuildSettings) FirstLoad();
     }
     public void RestartActiveScene()
     {
-        UnloadActiveScene();
-        LoadScenes(currentLevelIndex);
+        UnloadCurrentLevel();
+        var sceneToLoad = LoadLevel(currentLevelIndex);
+        StartCoroutine(WaitForAllScenes(sceneToLoad));
     }
 
-    private void UnloadActiveScene(bool isRestartScene = false)
+    public void LoadNextLevel()
+    {
+        UnloadCurrentLevel();
+        currentLevelIndex++;
+        var sceneToLoad = LoadLevel(currentLevelIndex);
+        StartCoroutine(WaitForAllScenes(sceneToLoad));
+    }
+
+    private void UnloadCurrentLevel(bool isRestartScene = false)
     {
         //RESET UI, GAMEMANAGER ETC
-        scenesUnLoading.Add(SceneManager.UnloadSceneAsync(currentLevelIndex));
-        StartCoroutine(WaitForSceneUnload());
+        scenesLoading.Add(SceneManager.UnloadSceneAsync(currentLevelIndex));
+        
     }
-    private void LoadScenes(int index)
+    private AsyncOperation LoadLevel(int index)
     {
         //SETUP UI, GAMEMANAGER ETC
         AsyncOperation asyncLoadScene = SceneManager.LoadSceneAsync(index, LoadSceneMode.Additive);
-        StartCoroutine(WaitForSceneLoad(asyncLoadScene));
+        scenesLoading.Add(asyncLoadScene);
+        return asyncLoadScene;
+        //StartCoroutine(WaitForSceneLoad(asyncLoadScene));
     }
     private void FirstLoad()
     {
-        SceneManager.LoadSceneAsync(currentLevelIndex, LoadSceneMode.Additive);
-        AsyncOperation asyncLoadScene =  SceneManager.LoadSceneAsync((int)SceneIndexes.UI, LoadSceneMode.Additive);
-        StartCoroutine(WaitForSceneLoad(asyncLoadScene));
+        var gameScene = SceneManager.LoadSceneAsync(currentLevelIndex, LoadSceneMode.Additive);
+        var uiScene = SceneManager.LoadSceneAsync((int)SceneIndexes.UI, LoadSceneMode.Additive);
+
+        scenesLoading.Add(gameScene);
+        scenesLoading.Add(uiScene);
+        //var mainScene = SceneManager.LoadSceneAsync((int)SceneIndexes.MAINSCENE, LoadSceneMode.Additive);
+
+        StartCoroutine(WaitForAllScenes(gameScene));
     }
-    public IEnumerator WaitForSceneLoad(AsyncOperation scene)
+
+    private IEnumerator WaitForAllScenes(AsyncOperation sceneToSetActive)
     {
-        while (!scene.isDone)
+        float totalSceneProgress = 0;
+
+        loadingScreen.SetActive(true);
+        for(int i = 0;i < scenesLoading.Count; i++)
         {
-            yield return null;
-        }
-        Debug.Log("Setting active scene..");
-        SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex(currentLevelIndex));
-    }
-    public IEnumerator WaitForSceneUnload()
-    {
-        for (int i = 0; i < scenesUnLoading.Count; i++)
-        {
-            while (!scenesUnLoading[i].isDone)
+            while (!scenesLoading[i].isDone)
             {
+                totalSceneProgress = 0;
+                foreach(AsyncOperation operation in scenesLoading)
+                {
+                    totalSceneProgress += operation.progress;
+                }
+                totalSceneProgress = (totalSceneProgress / scenesLoading.Count) * 100f;
+                progressBar.SetCurrentFill(Mathf.RoundToInt(totalSceneProgress));
                 yield return null;
             }
         }
+        loadingScreen.SetActive(false);
+        Debug.Log("Setting active scene..");
+        SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex(currentLevelIndex));
     }
 }
 
