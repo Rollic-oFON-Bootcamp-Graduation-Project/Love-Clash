@@ -5,23 +5,11 @@ using UnityEngine;
 public class CollectableUI : MonoBehaviour
 {
     [SerializeField] private LoveBar loveBar;
-
-    private void OnEnable()
-    {
-        Observer.StartBattle += StartBattleUI;
-        Observer.StopBattle += StopBattleUI;
-    }
-
-    private void OnDisable()
-    {
-        Observer.StartBattle -= StartBattleUI;
-        Observer.StopBattle -= StopBattleUI;
-    }
-    private void StartBattleUI()
+    public void StartBattleUI()
     {
         SetActiveUI(UIType.LOVEBAR, true);
     }
-    private void StopBattleUI()
+    public void StopBattleUI()
     {
         SetActiveUI(UIType.LOVEBAR, false);
     }

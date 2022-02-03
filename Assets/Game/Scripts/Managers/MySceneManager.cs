@@ -9,6 +9,7 @@ public class MySceneManager : MonoSingleton<MySceneManager>
     //Will change later
     [SerializeField] private GameObject loadingScreen;
     [SerializeField] private ProgressBar progressBar;
+    public int CurrentLevel => (currentLevelIndex-(int)SceneIndexes.LEVELS) + 1;
     private static int currentLevelIndex = (int)SceneIndexes.LEVELS;
     private List<AsyncOperation> scenesUnLoading = new List<AsyncOperation>();
     private List<AsyncOperation> scenesLoading = new List<AsyncOperation>();

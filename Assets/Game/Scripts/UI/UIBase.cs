@@ -6,13 +6,13 @@ public class UIBase :  MonoBehaviour
 {
     //BASE CLASS FOR EVERY UI PANEL
     [SerializeField] protected CanvasGroup canvasGroup;
-    public void DisablePanel()
+    public virtual void DisablePanel()
     {
         canvasGroup.interactable = canvasGroup.blocksRaycasts = false;
         canvasGroup.alpha = 0f;
     }
 
-    public void EnablePanel()
+    public virtual void EnablePanel()
     {
         canvasGroup.interactable = canvasGroup.blocksRaycasts = true;
         canvasGroup.alpha = 1f;

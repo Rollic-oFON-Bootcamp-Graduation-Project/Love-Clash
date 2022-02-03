@@ -19,12 +19,20 @@ public class Collectable : MonoBehaviour
         collectableCollider.enabled = true;
     }
 
+    //Subscribes CollectableUI to battle
+    private void SubscribeToBattleEvent()
+    {
+        Observer.StartBattle += CollectableVisual.PlayBattle;
+        Observer.StopBattle += CollectableVisual.StopBattle;
+    }
+
     public void AddToStack()
     {
         if (IsCollected) return;
         IsCollected = true;
-        Observer.StartBattle += CollectableVisual.PlayBattle;
-        Observer.StopBattle += CollectableVisual.StopBattle;
+        //Subscribes to the start and end event for the collectables that 
+        //enter the battle not every collectable
+        SubscribeToBattleEvent();
         CollectableVisual.StackAnimation();
         CollectableParticle.UpdateParticle(ParticleType.LOVE);
         Observer.AddToStack?.Invoke(this);

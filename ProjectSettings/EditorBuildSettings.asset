@@ -18,9 +18,9 @@ EditorBuildSettings:
     path: Assets/Game/Scenes/Development Scenes/GameScene.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
-    path: Assets/Game/Scenes/Development Scenes/GameScene02.unity
-    guid: 1e07ed31ffc58c340bb5a8f44cc498a1
-  - enabled: 0
-    path: Assets/Game/Scenes/Betul.unity
-    guid: 4aafa60ec5e67854dabeb30a273f5e03
+    path: Assets/Game/Scenes/Development Scenes/GameScene 1.unity
+    guid: 8f22fadf9ef5d154d86f97ebadaf819a
+  - enabled: 1
+    path: Assets/Game/Scenes/Development Scenes/GameScene 2.unity
+    guid: 3daedd5a542d3bb478f0bc9045959d0f
   m_configObjects: {}

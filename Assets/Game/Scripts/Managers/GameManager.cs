@@ -24,8 +24,9 @@ public class GameManager : MonoSingleton<GameManager>
     private IEnumerator StartGameRoutine()
     {
         CameraManager.Instance.SwitchCam("PlayerCam");
-        yield return new WaitForSeconds(2);
         UIManager.Instance.StartScreen.DisablePanel();
+        UIManager.Instance.InGameScreen.EnablePanel();
+        yield return new WaitForSeconds(2);
         Debug.Log(CameraManager.Instance.GetInstanceID());
         CurrentGameState = GameState.GAMEPLAY;
         Observer.StartGame?.Invoke();
@@ -70,6 +71,7 @@ public class GameManager : MonoSingleton<GameManager>
     public void GameOver()
     {
         activeArena = null;
+        UIManager.Instance.InGameScreen.DisablePanel();
         UIManager.Instance.GameOverScreen.EnablePanel();
         CurrentGameState = GameState.MENU;
     }

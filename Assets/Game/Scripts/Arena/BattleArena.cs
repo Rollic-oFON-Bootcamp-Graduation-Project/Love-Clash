@@ -29,7 +29,11 @@ public class BattleArena : MonoBehaviour
         Observer.RemoveFromArena -= RemoveFromArenaCollectables;
         Observer.PreBattle -= SetCollectablePositions;
         Observer.StopBattle -= StopBattle;
-        Observer.StartBattle -= StartShooting;
+        Observer.StartBattle -= StartBattle;
+    }
+
+    private void Start()
+    {
     }
     private void OnValidate()
     {
@@ -63,6 +67,7 @@ public class BattleArena : MonoBehaviour
             //var closestCollectable = collectables.OrderBy(o => (lovePoint.transform.position - o.transform.position).sqrMagnitude).First();
             var closestCollectable = collectables[0];
             closestCollectable.CollectableUI.SetMaxLove(loveTimer);
+            closestCollectable.CollectableUI.StartBattleUI();
             float timer = 0f;
             while (timer <= loveTimer)
             {
@@ -70,7 +75,7 @@ public class BattleArena : MonoBehaviour
                 //UPDATE COLLECTABLE BAR
                 timer += Time.deltaTime;
                 closestCollectable.CollectableUI.UpdateLoveBar(timer);
-                //if (!collectables.Contains(closestCollectable)) break;
+                if (!collectables.Contains(closestCollectable)) break;
                 yield return null;
             }
             if (collectables.Contains(closestCollectable))
@@ -116,6 +121,10 @@ public class BattleArena : MonoBehaviour
         //Observer.UpdatePlayerLimit?.Invoke(-bottomLimit.localPosition.x, bottomLimit.localPosition.x);
 
     }
+    private void StartBattle()
+    {
+        StartShooting();
+    }
 
     private void StartShooting()
     {
@@ -140,7 +149,7 @@ public class BattleArena : MonoBehaviour
                 return;
             }
             Observer.RemoveFromArena += RemoveFromArenaCollectables;
-            Observer.StartBattle += StartShooting;
+            Observer.StartBattle += StartBattle;
             Observer.PreBattle += SetCollectablePositions;
             Observer.StopBattle += StopBattle;
             GameManager.Instance.StartBattle(this);

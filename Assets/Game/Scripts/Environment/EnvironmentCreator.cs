@@ -33,7 +33,6 @@ public class EnvironmentCreator : MonoBehaviour
         //TODO
         for(int i= 0;i< envPoints.Count; i++)
         {
-            Debug.Log(-roadWidth/2);
             if((envPoints[i].x >= -roadBound && envPoints[i].x <= roadBound))
             {
                 continue;
