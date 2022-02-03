@@ -30,7 +30,7 @@ public class LoveBar : MonoSingleton<LoveBar>
     {
         loveBar.SetActive(true);
     }
-    private void DeActiveLoveBar()
+    public void DeActiveLoveBar()
     {
         loveBar.SetActive(false);
     }
@@ -39,9 +39,10 @@ public class LoveBar : MonoSingleton<LoveBar>
     {
         currLove += value;
 
-        if (currLove > maxLove) currLove = maxLove;
+        // if (currLove > maxLove) currLove = maxLove;
+        currLove = Mathf.Clamp(currLove, 0, maxLove);
         var loveAmount = currLove / maxLove;
-        Debug.Log($"Changed love: {loveAmount}");
+        // Debug.Log($"Changed love: {loveAmount}");
 
         heartFill.fillAmount = loveAmount;
     }

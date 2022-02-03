@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f643aba55abf9a740b38d436084bd48e, type: 3}
   m_Name: WeaponSettings
   m_EditorClassIdentifier: 
-  maxWeaponLevel: 10
+  maxWeaponLevel: 4
   maxFireRate: 20
   maxWeaponDamage: 60
   projectileSpeed: 8

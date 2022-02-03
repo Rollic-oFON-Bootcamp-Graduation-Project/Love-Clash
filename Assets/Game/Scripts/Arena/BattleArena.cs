@@ -70,7 +70,7 @@ public class BattleArena : MonoBehaviour
                 LoveBar.Instance.UpdateLoveBar(timer);
                 yield return null;
             }
-
+            LoveBar.Instance.DeActiveLoveBar();
             if (collectables.Contains(closestCollectable))
             {
                 //closestCollectable.IsCollected = true;
