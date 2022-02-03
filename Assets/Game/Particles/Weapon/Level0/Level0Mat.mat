@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Level2Mat
+  m_Name: Level0Mat
   m_Shader: {fileID: 4800000, guid: 881c73b45dda42d4ba29f8c7742329be, type: 3}
   m_ShaderKeywords: _MK_LIGHTMODEL_LAMBERT _MK_LIGHTTYPE_CEL_SHADE_SIMPLE _MK_RIM
     _USERIM_ON
@@ -133,12 +133,12 @@ Material:
     - _Parallax: 0.02
     - _ReflectIntensity: 0.5
     - _ReflectSmoothness: 0
-    - _RimIntensity: 0.72
-    - _RimSize: 0.37
-    - _RimSmoothness: 0.52
+    - _RimIntensity: 0.59
+    - _RimSize: 0.84
+    - _RimSmoothness: 0.68
     - _Roughness: 1
     - _Saturation: 1
-    - _ShadowIntensity: 0.3
+    - _ShadowIntensity: 0.28
     - _Shininess: 0.275
     - _SketchScale: 16
     - _SketchToneMax: 1
@@ -160,15 +160,15 @@ Material:
     - _UseTranslucent: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 0.666667, g: 0, b: 1, a: 1}
+    - _Color: {r: 0, g: 0.73333335, b: 1, a: 1}
     - _DetailColor: {r: 1, g: 1, b: 1, a: 1}
     - _DissolveColor: {r: 1, g: 1, b: 1, a: 0.5}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _HighlightColor: {r: 1, g: 1, b: 1, a: 1}
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _ReflectColor: {r: 1, g: 1, b: 1, a: 0.5}
-    - _RimColor: {r: 0.8352941, g: 0, b: 1, a: 1}
-    - _ShadowColor: {r: 0.59587216, g: 0.15977214, b: 0.6415094, a: 1}
+    - _RimColor: {r: 0.5294118, g: 0.8117647, b: 0.9137255, a: 1}
+    - _ShadowColor: {r: 0.39232686, g: 0.10973653, b: 0.4245283, a: 1}
     - _SpecColor: {r: 1, g: 1, b: 1, a: 0.5}
     - _TranslucentColor: {r: 1, g: 1, b: 1, a: 0.5}
   m_BuildTextureStacks: []

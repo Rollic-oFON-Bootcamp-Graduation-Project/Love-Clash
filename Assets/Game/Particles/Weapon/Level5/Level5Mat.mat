@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Level2Mat
+  m_Name: Level5Mat
   m_Shader: {fileID: 4800000, guid: 881c73b45dda42d4ba29f8c7742329be, type: 3}
   m_ShaderKeywords: _MK_LIGHTMODEL_LAMBERT _MK_LIGHTTYPE_CEL_SHADE_SIMPLE _MK_RIM
     _USERIM_ON
@@ -121,8 +121,8 @@ Material:
     - _MKEditorShowOutlineBehavior: 0
     - _MKEditorShowReflectionBehavior: 0
     - _MKEditorShowRenderBehavior: 0
-    - _MKEditorShowRimBehavior: 1
-    - _MKEditorShowShadowBehavior: 1
+    - _MKEditorShowRimBehavior: 0
+    - _MKEditorShowShadowBehavior: 0
     - _MKEditorShowSketchBehavior: 0
     - _MKEditorShowSpecularBehavior: 0
     - _MKEditorShowTranslucentBehavior: 0
@@ -134,7 +134,7 @@ Material:
     - _ReflectIntensity: 0.5
     - _ReflectSmoothness: 0
     - _RimIntensity: 0.72
-    - _RimSize: 0.37
+    - _RimSize: 0.71
     - _RimSmoothness: 0.52
     - _Roughness: 1
     - _Saturation: 1
@@ -160,14 +160,14 @@ Material:
     - _UseTranslucent: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 0.666667, g: 0, b: 1, a: 1}
+    - _Color: {r: 1, g: 0, b: 0.009589672, a: 1}
     - _DetailColor: {r: 1, g: 1, b: 1, a: 1}
     - _DissolveColor: {r: 1, g: 1, b: 1, a: 0.5}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _HighlightColor: {r: 1, g: 1, b: 1, a: 1}
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _ReflectColor: {r: 1, g: 1, b: 1, a: 0.5}
-    - _RimColor: {r: 0.8352941, g: 0, b: 1, a: 1}
+    - _RimColor: {r: 0.764151, g: 0.111018136, b: 0.111018136, a: 1}
     - _ShadowColor: {r: 0.59587216, g: 0.15977214, b: 0.6415094, a: 1}
     - _SpecColor: {r: 1, g: 1, b: 1, a: 0.5}
     - _TranslucentColor: {r: 1, g: 1, b: 1, a: 0.5}

@@ -134,7 +134,7 @@ Material:
     - _ReflectIntensity: 0.5
     - _ReflectSmoothness: 0
     - _RimIntensity: 0.72
-    - _RimSize: 0.37
+    - _RimSize: 0.34
     - _RimSmoothness: 0.52
     - _Roughness: 1
     - _Saturation: 1
@@ -160,14 +160,14 @@ Material:
     - _UseTranslucent: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 1, g: 0, b: 0.8146653, a: 1}
+    - _Color: {r: 0, g: 0.25, b: 1, a: 1}
     - _DetailColor: {r: 1, g: 1, b: 1, a: 1}
     - _DissolveColor: {r: 1, g: 1, b: 1, a: 0.5}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _HighlightColor: {r: 1, g: 1, b: 1, a: 1}
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _ReflectColor: {r: 1, g: 1, b: 1, a: 0.5}
-    - _RimColor: {r: 0.7803922, g: 0, b: 0.7058824, a: 1}
+    - _RimColor: {r: 0, g: 0.09411765, b: 1, a: 1}
     - _ShadowColor: {r: 0.59587216, g: 0.15977214, b: 0.6415094, a: 1}
     - _SpecColor: {r: 1, g: 1, b: 1, a: 0.5}
     - _TranslucentColor: {r: 1, g: 1, b: 1, a: 0.5}
