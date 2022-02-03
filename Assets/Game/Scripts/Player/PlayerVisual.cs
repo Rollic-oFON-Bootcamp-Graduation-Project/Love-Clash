@@ -78,6 +78,8 @@ public class PlayerVisual : MonoBehaviour
     public void UpgradeVisual()
     {
         visualIndex++;
+        visualIndex = Mathf.Clamp(visualIndex, 0, 4);
+
         currentVisual.SetActive(false);
         currentVisual = playerVisuals[visualIndex];
         playerAnimator.avatar = avatars[visualIndex];
@@ -92,7 +94,7 @@ public class PlayerVisual : MonoBehaviour
     public void DowngradeVisual()
     {
         visualIndex--;
-        visualIndex = (visualIndex < 0) ? 0 : visualIndex;
+        visualIndex = Mathf.Clamp(visualIndex, 0, 4);
 
         currentVisual.SetActive(false);
         currentVisual = playerVisuals[visualIndex];

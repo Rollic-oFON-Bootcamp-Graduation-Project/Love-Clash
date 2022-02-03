@@ -41,8 +41,8 @@ public class Weapon : MonoBehaviour
     private void ClampWeaponValue(int level, float rate, float damage)
     {
         weaponLevel = Mathf.Clamp(weaponLevel, 0, maxWeaponLevel);
-        fireRate = Mathf.Clamp(fireRate, 0, maxFireRate);
-        weaponDamage = Mathf.Clamp(weaponDamage, 0, maxWeaponDamage);
+        fireRate = Mathf.Clamp(fireRate, 1, maxFireRate);
+        weaponDamage = Mathf.Clamp(weaponDamage, 1, maxWeaponDamage);
     }
     public void StartShooting()
     {
