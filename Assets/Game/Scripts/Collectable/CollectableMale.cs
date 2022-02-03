@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class CollectableMale : Collectable
 {
-    [SerializeField] private CollectableParticle maleParticle;
+    
 }

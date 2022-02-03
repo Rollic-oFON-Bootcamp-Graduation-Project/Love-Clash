@@ -49,8 +49,8 @@ public class BattleArena : MonoBehaviour
         {
             for (int i = 0; i < stackPoints.Count; i++)
             {
-                var drawOffset = stackPoints[i]-offset;
-                Gizmos.DrawSphere(offset+drawOffset, displayRadius);
+                var drawOffset = stackPoints[i] - offset;
+                Gizmos.DrawSphere(offset + drawOffset, displayRadius);
             }
         }
     }
@@ -67,10 +67,9 @@ public class BattleArena : MonoBehaviour
             {
                 //UPDATE COLLECTABLE BAR
                 timer += Time.deltaTime;
-                LoveBar.Instance.UpdateLoveBar(timer);
+                closestCollectable.CollectableUI.UpdateLoveBar(timer);
                 yield return null;
             }
-            LoveBar.Instance.DeActiveLoveBar();
             if (collectables.Contains(closestCollectable))
             {
                 //closestCollectable.IsCollected = true;
@@ -103,7 +102,7 @@ public class BattleArena : MonoBehaviour
         arenaCollider.enabled = false;
         transform.DOScale(Vector3.zero, 1f)
             .SetEase(Ease.InBounce)
-            .OnComplete(()=>Destroy(gameObject));
+            .OnComplete(() => Destroy(gameObject));
         StopCoroutine(battleRoutine);
         //Destroy(gameObject);
     }
@@ -115,7 +114,7 @@ public class BattleArena : MonoBehaviour
         stackPoints = GenerateRandomPoints();
         Observer.StackHandleBattle?.Invoke(stackPoints, collectables);
         //Observer.UpdatePlayerLimit?.Invoke(-bottomLimit.localPosition.x, bottomLimit.localPosition.x);
-        
+
     }
 
     private void StartShooting()
@@ -139,7 +138,7 @@ public class BattleArena : MonoBehaviour
             {
                 GameManager.Instance.GameOver();
                 return;
-            } 
+            }
             Observer.RemoveFromArena += RemoveFromArenaCollectables;
             Observer.StartBattle += StartShooting;
             Observer.PreBattle += SetCollectablePositions;

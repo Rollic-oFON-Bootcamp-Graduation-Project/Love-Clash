@@ -1,0 +1,5 @@
+public enum UIType
+{
+    LOVEBAR,
+    
+}

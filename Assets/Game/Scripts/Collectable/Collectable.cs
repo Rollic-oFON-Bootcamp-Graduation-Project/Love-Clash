@@ -7,6 +7,7 @@ public class Collectable : MonoBehaviour
 {
     [SerializeField] public CollectableVisual CollectableVisual;
     [SerializeField] public CollectableParticle CollectableParticle;
+    [SerializeField] public CollectableUI CollectableUI;
     [SerializeField] private CapsuleCollider collectableCollider;
     public bool IsCollected = false;
     public void DisableCollider()
@@ -20,7 +21,7 @@ public class Collectable : MonoBehaviour
 
     public void AddToStack()
     {
-        if (IsCollected) return; 
+        if (IsCollected) return;
         IsCollected = true;
         Observer.StartBattle += CollectableVisual.PlayBattle;
         Observer.StopBattle += CollectableVisual.StopBattle;
@@ -36,7 +37,7 @@ public class Collectable : MonoBehaviour
         CollectableVisual.UpdateAnimState(MaleAnimState.WIN);
         AddToStack();
         Observer.RemoveFromArena?.Invoke(this);
-        
+
     }
 
     private void HandleObstacleHit(Vector3 hitPoint)
@@ -44,13 +45,15 @@ public class Collectable : MonoBehaviour
         var direction = new Vector3(-Random.value, 0, Random.value);
 
         var newPos = hitPoint + direction;
-        newPos.x = Mathf.Clamp(newPos.x ,SettingsManager.ArenaLeftLimitX, SettingsManager.ArenaRightLimitX);
+        newPos.x = Mathf.Clamp(newPos.x, SettingsManager.ArenaLeftLimitX, SettingsManager.ArenaRightLimitX);
     }
 
     public void TakenByEnemy(HitType type, Vector3? position = null)
     {
-        position ??= Vector3.zero; 
+        position ??= Vector3.zero;
         IsCollected = true;
+        CollectableUI.SetActiveUI(UIType.LOVEBAR, false);
+
         switch (type)
         {
             case HitType.OBSTACLE:

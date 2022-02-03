@@ -112,7 +112,7 @@ Transform:
   m_Children:
   - {fileID: 6693754482745734518}
   - {fileID: 8184699713152457002}
-  - {fileID: 3554738501633787603}
+  - {fileID: 4884527687572593633}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -130,9 +130,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CollectableVisual: {fileID: 4214233606757834536}
   CollectableParticle: {fileID: 7285263719197015724}
+  CollectableUI: {fileID: 4204941258147595400}
   collectableCollider: {fileID: 6693754482745734513}
   IsCollected: 0
-  maleParticle: {fileID: 7285263719197015724}
 --- !u!54 &6693754482867282221
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -266,7 +266,7 @@ ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 3576761642555599832, guid: 8f3c9b358178ba343b815b5811a90baf, type: 3}
   m_PrefabInstance: {fileID: 1203645811369873887}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &3727249782538002005
+--- !u!1001 &4694011083022533479
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -275,7 +275,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 210875578664687749, guid: 4309cd93daf1b654a9f1d8292d902738, type: 3}
       propertyPath: m_Name
-      value: Canvas@Man
+      value: UI
       objectReference: {fileID: 0}
     - target: {fileID: 210875578664687750, guid: 4309cd93daf1b654a9f1d8292d902738, type: 3}
       propertyPath: m_Pivot.x
@@ -363,11 +363,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4309cd93daf1b654a9f1d8292d902738, type: 3}
---- !u!224 &3554738501633787603 stripped
+--- !u!224 &4884527687572593633 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 210875578664687750, guid: 4309cd93daf1b654a9f1d8292d902738, type: 3}
-  m_PrefabInstance: {fileID: 3727249782538002005}
+  m_PrefabInstance: {fileID: 4694011083022533479}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4204941258147595400 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8898701639591626735, guid: 4309cd93daf1b654a9f1d8292d902738, type: 3}
+  m_PrefabInstance: {fileID: 4694011083022533479}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee24ddc2029e4ac41828302d8cdeccef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5329481657013229677
 PrefabInstance:
   m_ObjectHideFlags: 0
