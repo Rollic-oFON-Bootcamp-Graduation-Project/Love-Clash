@@ -35,6 +35,7 @@ public class Collectable : MonoBehaviour
         if (transform.parent != null) transform.parent = null;
         transform.position = newPos;
         CollectableVisual.UpdateAnimState(MaleAnimState.WIN);
+        CollectableUI.SetActiveUI(UIType.LOVEBAR, false);
         AddToStack();
         Observer.RemoveFromArena?.Invoke(this);
 
