@@ -16,6 +16,7 @@ public class Projectile : MonoBehaviour
     private void OnDisable()
     {
         StopCoroutine(shootingRoutine);
+        Observer.StopBattle -= StopBattle;
         IsShooting = false;
     }
     void Update()

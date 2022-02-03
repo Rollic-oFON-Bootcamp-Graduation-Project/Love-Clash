@@ -17,7 +17,7 @@ public class ProgressBar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        SetCurrentFill(_current);
+        //SetCurrentFill(_current);
     }
 
     public void SetCurrentFill(float current)

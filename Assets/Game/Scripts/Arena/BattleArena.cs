@@ -62,19 +62,19 @@ public class BattleArena : MonoBehaviour
         {
             //var closestCollectable = collectables.OrderBy(o => (lovePoint.transform.position - o.transform.position).sqrMagnitude).First();
             var closestCollectable = collectables[0];
+            closestCollectable.CollectableUI.SetMaxLove(loveTimer);
             float timer = 0f;
             while (timer <= loveTimer)
             {
+                
                 //UPDATE COLLECTABLE BAR
                 timer += Time.deltaTime;
                 closestCollectable.CollectableUI.UpdateLoveBar(timer);
+                //if (!collectables.Contains(closestCollectable)) break;
                 yield return null;
             }
             if (collectables.Contains(closestCollectable))
             {
-                //closestCollectable.IsCollected = true;
-                //closestCollectable.CollectableVisual.UpdateAnimState(MaleAnimState.HATE);
-                //closestCollectable.CollectableParticle.UpdateParticle(ParticleType.HATE);
                 closestCollectable.TakenByEnemy(HitType.ARENA);
                 closestCollectable.transform.SetParent(transform);
                 collectables.Remove(closestCollectable);

@@ -36,6 +36,11 @@ public class CollectableUI : MonoBehaviour
         }
     }
 
+    public void SetMaxLove(float value)
+    {
+        loveBar.SetMaxLove(value);
+    }
+
     public void UpdateLoveBar(float value)
     {
         loveBar.UpdateLoveBar(value);

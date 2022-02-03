@@ -10,14 +10,26 @@ public class LoveBar : MonoBehaviour
     // TODO
     // CREATE DATA FOR THIS
     [SerializeField] private float currLove;
-    [SerializeField] private float maxLove = 2f;
-
+    private float maxLove = 3f;
+    private void OnDisable()
+    {
+        ResetLoveBar();
+    }
     public void UpdateLoveBar(float value)
     {
-        currLove += value;
-        currLove = Mathf.Clamp(currLove, 0, maxLove);
-        var loveAmount = currLove / maxLove;
+        //value *= maxLove;
+        currLove = (float)value / (float)maxLove;
+        //currLove = Mathf.Clamp(currLove, 0, maxLove);
+        var loveAmount = ((float)value / (float)maxLove);
 
         heart.fillAmount = loveAmount;
+    }
+    public void SetMaxLove(float value)
+    {
+        maxLove = value;
+    }
+    public void ResetLoveBar()
+    {
+        heart.fillAmount = 0;
     }
 }
