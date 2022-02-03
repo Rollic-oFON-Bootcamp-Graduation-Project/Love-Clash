@@ -4,21 +4,23 @@ using UnityEngine;
 using NaughtyAttributes;
 #if UNITY_EDITOR
 using UnityEditor;
-
-public class RoadManager : MonoSingleton<RoadManager>
-
+#endif
+public class RoadManager : SceneBasedMonoSingleton<RoadManager>
 {
+    [BoxGroup("Created Objects List")]
+    [SerializeField] private List<GameObject> roads;
+    [BoxGroup("Road Settings"), OnValueChanged(nameof(UpdateRoadFormat))]
+    private int roadLength = 1;
+    [BoxGroup("Road Settings"), OnValueChanged(nameof(UpdateRoadFormat))]
+    private int roadWidth = 1;
+    public int RoadCount => roads.Count;
+    public int RoadWidth => roadWidth;
+#if UNITY_EDITOR
     [BoxGroup("Objects")]
     [SerializeField] private GameObject myRoad;
     [BoxGroup("Parent")]
     [SerializeField] private Transform roadParent;
-    [BoxGroup("Created Objects List")]
-    [SerializeField] private List<GameObject> roads;
-
-    [BoxGroup("Road Settings"), OnValueChanged(nameof(UpdateRoadFormat))]
-    public int roadLength = 1;
-    [BoxGroup("Road Settings"), OnValueChanged(nameof(UpdateRoadFormat))]
-    public int roadWidth = 1;
+    
     [BoxGroup("Road Settings"), OnValueChanged(nameof(UpdateRoadCount)), Range(0, 999)]
     public int roadCount;
     private int prevRoadCount;
@@ -74,14 +76,8 @@ public class RoadManager : MonoSingleton<RoadManager>
             }
         }
     }
+#endif
 
 
-
-    [Button]
-    void Test()
-    {
-        
-    }
 }
 
-#endif
