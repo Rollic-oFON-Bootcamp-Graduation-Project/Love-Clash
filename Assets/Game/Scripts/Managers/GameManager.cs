@@ -18,7 +18,13 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void StartGame()
     {
+        StartCoroutine(StartGameRoutine());
+    }
+
+    private IEnumerator StartGameRoutine()
+    {
         CameraManager.Instance.SwitchCam("PlayerCam");
+        yield return new WaitForSeconds(2);
         UIManager.Instance.StartScreen.DisablePanel();
         Debug.Log(CameraManager.Instance.GetInstanceID());
         CurrentGameState = GameState.GAMEPLAY;
