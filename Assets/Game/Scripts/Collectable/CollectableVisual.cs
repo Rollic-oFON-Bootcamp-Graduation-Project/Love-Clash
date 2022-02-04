@@ -34,6 +34,9 @@ public class CollectableVisual : MonoBehaviour
             case MaleAnimState.WIN:
                 ChangeAnimState("Win", true);
                 break;
+            case MaleAnimState.FINAL:
+                ChangeAnimState("Final", true);
+                break;
             default:
                 break;
         }

@@ -5,5 +5,6 @@ public enum MaleAnimState
     ONBATTLE,
     OFFBATTLE,
     TAKEN,
-    WIN
+    WIN,
+    FINAL
 }
