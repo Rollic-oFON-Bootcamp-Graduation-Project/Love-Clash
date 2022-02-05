@@ -3,16 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
 using System.Linq;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class FinalPathGenerator : MonoBehaviour
 {
-    [SerializeField] List<FinalPlatform> platforms;
-    [SerializeField] List<Transform> finalPath;
-    [SerializeField] FinalPlatform prefabFinalPlatform;
-    [SerializeField] CollectableMale prefabCollectableMale;
-    int test = 0;
+    [SerializeField] private List<FinalPlatform> platforms;
+    [SerializeField] private Transform platformParent, pathParent;
+    [SerializeField] private List<Transform> finalPath;
+    [SerializeField] private FinalPlatform prefabFinalPlatform;
+    [SerializeField] private CollectableMale prefabCollectableMale;
+    [BoxGroup("Road Settings"), OnValueChanged(nameof(UpdatePlatformCount)), Range(0, 10)]
+    public int platformCount;
+    private int prevPlatformCount;
 
-    public Vector3[] PathPoints => finalPath.Select(o => (o.position +Vector3.up * 0.3f)).ToArray();
+    public Vector3[] FinalPath => finalPath.Select(o => (o.position +Vector3.up * 0.3f)).ToArray();
     private float nodeDistance = 2.2f;
     private Transform pencil;
 
@@ -24,7 +30,7 @@ public class FinalPathGenerator : MonoBehaviour
         {
             var currentNode = finalPath[i];
             var pos = currentNode.position;
-            Gizmos.DrawSphere(pos, 0.1f);
+            Gizmos.DrawSphere(pos, 1f);
             if (i < finalPath.Count - 1)
             {
                 var nextNode = finalPath[i + 1];
@@ -37,70 +43,87 @@ public class FinalPathGenerator : MonoBehaviour
     }
     private void Awake()
     {
-        GenerateFromToPath();
-    }
-
-    public void GeneratePath(Transform from, Transform to)
-    {
-        var dir = (to.position - from.position);
-        var sqrDistance = dir.sqrMagnitude;
-
-        var nodeCount = ((int)dir.magnitude / (int)(nodeDistance));
-        Debug.Log(nodeCount);
-        var node = CreateNode();
-
-        for (int i = 0; i < nodeCount; i++)
-        {
-           
-            var obj = Instantiate(prefabCollectableMale);     
-            node = CreateNode();
-            obj.transform.position = node.position + (dir.normalized*(nodeDistance/2)) + Vector3.up*0.3f;
-            //obj.transform.rotation = Quaternion.LookRotation(dir.normalized, Vector3.up);
-            finalPath.Add(node);
-            pencil.position += dir.normalized * nodeDistance;
-            pencil.rotation = Quaternion.LookRotation(dir.normalized, Vector3.up);
-        }
+        //GenerateFromToPath();
     }
 
     [Button]
     private void GenerateFromToPath()
     {
         pencil = new GameObject("Pencil").transform;
-        pencil.SetParent(transform);
+        pencil.SetParent(pathParent);
         pencil.position = platforms[0].TopPoint.position;
         pencil.rotation = platforms[0].TopPoint.rotation;
-        for(int i = 0; i < platforms.Count-1; i++)
+        for (int i = 0; i < platforms.Count - 1; i++)
         {
             var from = platforms[i].TopPoint;
-            var to = platforms[i+1].BottomPoint;
+            var to = platforms[i + 1].BottomPoint;
             GeneratePath(from, to);
-            pencil.position = platforms[i+1].TopPoint.position;
-            pencil.rotation = platforms[i+1].TopPoint.rotation;
+            pencil.position = platforms[i + 1].TopPoint.position;
+            pencil.rotation = platforms[i + 1].TopPoint.rotation;
         }
-        
-    }
 
-    [Button]
-    private void GeneratePlatform()
+        finalPath.Add(pencil);
+
+    }
+    private void GeneratePath(Transform from, Transform to)
+    {
+        var dir = (to.position - from.position);
+
+        var nodeCount = ((int)dir.magnitude / (int)(nodeDistance));
+        Debug.Log(nodeCount);
+        var node = CreateNode();
+        //finalPath.Add(node);
+
+        for (int i = 0; i < nodeCount; i++)
+        {
+            node = CreateNode();
+            finalPath.Add(node);
+            pencil.position += dir.normalized * nodeDistance;
+            pencil.rotation = Quaternion.LookRotation(dir.normalized, Vector3.up);
+        }
+    }
+    private void CreatePlatform()
     {
         var index = platforms.Count == 0 ? 0 : platforms.Count;
-        var offset = (nodeDistance*test)*Vector3.forward;
-        test++;
-        var position = index * (Vector3.forward * (8f));
-        Debug.Log(offset + position);
-        var obj = Instantiate(prefabFinalPlatform, position, Quaternion.identity);
+        var platformPos = transform.position + (Vector3.forward * (8f)) * index;
+        var offset = (Vector3.forward * (8f)) + (nodeDistance * index) * Vector3.forward;
+        var obj = PrefabUtility.InstantiatePrefab(prefabFinalPlatform, platformParent) as FinalPlatform;
+        obj.transform.position = index !=0 ? platforms[index-1].transform.position+offset : platformPos;
         platforms.Add(obj);
+    }
+    private void DeletePlatform()
+    {
 
+        if (platforms.Count == 0) return;
+        DestroyImmediate(platforms[platforms.Count - 1].gameObject);
+        platforms.RemoveAt(platforms.Count - 1);
     }
 
     private Transform CreateNode()
     {
         var node = new GameObject().transform;
-        node.SetParent(transform);
+        node.SetParent(pathParent);
         node.position = pencil.position;
         node.rotation = pencil.rotation;
-        Debug.Log($"point created {pencil.position}");
 
         return node;
+    }
+    private void UpdatePlatformCount()
+    {
+        var difference = (platformCount) - platforms.Count;
+        if (difference > 0)
+        {
+            for (int i = 0; i < difference; i++)
+            {
+                CreatePlatform();
+            }
+        }
+        else if (difference < 0)
+        {
+            for (int i = 0; i < -difference; i++)
+            {
+                DeletePlatform();
+            }
+        }
     }
 }

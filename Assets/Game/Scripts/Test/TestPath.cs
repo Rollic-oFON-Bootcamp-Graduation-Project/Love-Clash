@@ -9,13 +9,13 @@ public class TestPath : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        transform.DOPath(finalpath.PathPoints, 25f)
-            .SetEase(Ease.Linear);
+        //transform.DOPath(finalpath.FinalPath, 25f)
+        //    .SetEase(Ease.Linear);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        transform.position += Vector3.forward * Time.deltaTime * 7f;
     }
 }

@@ -9,9 +9,9 @@ public class RoadManager : SceneBasedMonoSingleton<RoadManager>
 {
     [BoxGroup("Created Objects List")]
     [SerializeField] private List<GameObject> roads;
-    [BoxGroup("Road Settings"), OnValueChanged(nameof(UpdateRoadFormat))]
+    [SerializeField, BoxGroup("Road Settings"), OnValueChanged(nameof(UpdateRoadFormat))]
     private int roadLength = 1;
-    [BoxGroup("Road Settings"), OnValueChanged(nameof(UpdateRoadFormat))]
+    [SerializeField, BoxGroup("Road Settings"), OnValueChanged(nameof(UpdateRoadFormat))]
     private int roadWidth = 1;
     public int RoadCount => roads.Count;
     public int RoadWidth => roadWidth;
@@ -20,6 +20,7 @@ public class RoadManager : SceneBasedMonoSingleton<RoadManager>
     [SerializeField] private GameObject myRoad;
     [BoxGroup("Parent")]
     [SerializeField] private Transform roadParent;
+    [SerializeField] private FinalRoad finalRoad;
     
     [BoxGroup("Road Settings"), OnValueChanged(nameof(UpdateRoadCount)), Range(0, 999)]
     public int roadCount;
@@ -34,8 +35,9 @@ public class RoadManager : SceneBasedMonoSingleton<RoadManager>
         var newRoad = PrefabUtility.InstantiatePrefab(roadToCreate, roadParent) as GameObject;
         newRoad.transform.position = roadPosition;
         roads.Add(newRoad);
+        MoveFinal();
     }
-    void UpdateRoadFormat()
+    private void UpdateRoadFormat()
     {
         roads[0].transform.localScale = new Vector3(roadWidth, 1f, roadLength);
         for (int i = 1;i< roads.Count; i++)
@@ -44,13 +46,14 @@ public class RoadManager : SceneBasedMonoSingleton<RoadManager>
             roads[i].transform.position = roads[i - 1].transform.position + (Vector3.forward * roadLength);
         }
     }
-    void DeleteRoad()
+    private void DeleteRoad()
     {
         if (roads.Count == 0) return;
         DestroyImmediate(roads[roads.Count - 1]);
         roads.RemoveAt(roads.Count - 1);
+        MoveFinal();
     }
-    void DeleteAll()
+    private void DeleteAll()
     {
         for (int i = 0; i < roads.Count; i++)
         {
@@ -58,7 +61,7 @@ public class RoadManager : SceneBasedMonoSingleton<RoadManager>
         }
         roads.Clear();
     }
-    void UpdateRoadCount()
+    private void UpdateRoadCount()
     {
         var difference = (roadCount - 1) - roads.Count;
         if(difference > 0)
@@ -75,6 +78,11 @@ public class RoadManager : SceneBasedMonoSingleton<RoadManager>
                 DeleteRoad();
             }
         }
+    }
+
+    private void MoveFinal()
+    {
+        finalRoad.transform.position = (Vector3.forward * roadLength)+ roads[roads.Count - 1].transform.position;
     }
 #endif
 
