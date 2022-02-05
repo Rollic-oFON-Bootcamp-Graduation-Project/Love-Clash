@@ -7,7 +7,7 @@ using NaughtyAttributes;
 public class Gate : MonoBehaviour
 {
     [SerializeField] private Image gateImage;
-    [SerializeField] GateData gateData;
+    [SerializeField, Expandable] GateData gateData;
     [SerializeField] GateType gateType;
 
     private void Start()

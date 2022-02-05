@@ -6,6 +6,8 @@ public class PlayerParticle : MonoBehaviour
 {
     [SerializeField] private ParticleSystem[] downgradeParticles;
     [SerializeField] private ParticleSystem[] upgradeParticles;
+    [SerializeField] private ParticleSystem[] hitParticles;
+
 
     private void OnEnable()
     {
@@ -20,5 +22,10 @@ public class PlayerParticle : MonoBehaviour
         var particles = (value > 0) ? upgradeParticles : downgradeParticles;
         particles[0].Play();
         particles[1].Play();
+    }
+    public void PlayHitParticle()
+    {
+        var hitParticle = hitParticles[Random.Range(0, hitParticles.Length)];
+        hitParticle.Play();
     }
 }

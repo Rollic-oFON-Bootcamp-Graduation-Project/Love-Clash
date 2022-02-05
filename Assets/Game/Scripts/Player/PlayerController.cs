@@ -8,8 +8,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform leftLimit, rightLimit, sideMovementRoot;
     [SerializeField] private Weapon weapon;
     [SerializeField] private PlayerStack stack;
-
     [SerializeField] private PlayerVisual playerVisual;
+    [SerializeField] private PlayerParticle playerParticle;
+
 
     private float oldLeftLimitX, oldRightLimitX;
     private float leftLimitX => leftLimit.localPosition.x;
@@ -152,10 +153,11 @@ public class PlayerController : MonoBehaviour
         {
             var myCollectable = other.attachedRigidbody.gameObject.GetComponent<Collectable>();
             myCollectable.AddToStack();
-        } 
+        }
         else if (other.CompareTag("Obstacle"))
         {
             var myCollectable = Observer.RemoveFromStack?.Invoke();
+            playerParticle.PlayHitParticle();
             myCollectable?.TakenByEnemy(HitType.OBSTACLE, other.transform.position);
             HandleObstacleHit();
         }

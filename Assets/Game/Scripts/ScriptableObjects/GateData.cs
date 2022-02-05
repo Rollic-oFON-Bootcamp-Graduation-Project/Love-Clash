@@ -7,4 +7,7 @@ public class GateData : ScriptableObject
 {
     public Sprite[] UpgradeSprites;
     public Sprite[] DowngradeSprites;
+    public string[] UpgradeFeedback;
+    public string[] DowngradeFeedback;
+    
 }
