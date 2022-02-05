@@ -37,6 +37,9 @@ public class CollectableVisual : MonoBehaviour
             case MaleAnimState.FINAL:
                 ChangeAnimState("Final", true);
                 break;
+            case MaleAnimState.HITREACTION:
+                StartCoroutine(PlayHitReaction());
+                break;
             default:
                 break;
         }
@@ -46,13 +49,18 @@ public class CollectableVisual : MonoBehaviour
     {
         PlayRandomIdle();
     }
+    private IEnumerator PlayHitReaction()
+    {
+        ChangeAnimState("ObstacleHit", true);
+        yield return new WaitForSeconds(0.1f);
+        ChangeAnimState("ObstacleHit", false);
+        UpdateAnimState(MaleAnimState.WALKING);
+    }
 
     public void StackAnimation()
     {
-
         this.transform.DOLocalRotate(Vector3.zero, 1f, RotateMode.Fast);
         ChangeAnimState("Walking", true);
-
     }
 
     private void ChangeAnimState(string name, bool value)
@@ -94,10 +102,12 @@ public class CollectableVisual : MonoBehaviour
             .SetEase(Ease.OutSine)
             .OnComplete(() => collectableAnimator.SetFloat("BattleResult", 2));
     }
+
     public void PlayBattle()
     {
-        //UpdateAnimState(MaleAnimState.ONBATTLE);
+
     }
+
     public void StopBattle()
     {
         UpdateAnimState(MaleAnimState.OFFBATTLE);

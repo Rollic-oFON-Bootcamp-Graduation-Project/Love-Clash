@@ -8,7 +8,7 @@ public class PlayerStack : MonoBehaviour
 {
     [SerializeField] private Transform playerSideMovementRoot;
     [SerializeField, ReadOnly] private List<Collectable> stack = new List<Collectable>();
-    
+
 
     public int StackCount => stack.Count;
     private float stackGap => SettingsManager.StackGap;
@@ -48,10 +48,10 @@ public class PlayerStack : MonoBehaviour
     private void HandleStackMovement()
     {
         if (stack.Count == 0 || GameManager.Instance.CurrentGameState != GameState.GAMEPLAY) return;
-        stack[StackCount -1].transform.position = Vector3.Lerp(transform.position + offsetFirst, playerSideMovementRoot.transform.position, 0.8f);
-        for(int i = StackCount-2; i >= 0; i--)
+        stack[StackCount - 1].transform.position = Vector3.Lerp(transform.position + offsetFirst, playerSideMovementRoot.transform.position, 0.8f);
+        for (int i = StackCount - 2; i >= 0; i--)
         {
-            stack[i].transform.position = Vector3.Lerp(stack[i +1].transform.position + offset, stack[i].transform.position, 0.8f);
+            stack[i].transform.position = Vector3.Lerp(stack[i + 1].transform.position + offset, stack[i].transform.position, 0.8f);
         }
     }
 
@@ -63,13 +63,13 @@ public class PlayerStack : MonoBehaviour
         //AND SEND IT AS A VECTOR3 LIST TO THE PLAYERSTACK TO HANDLE COLLECTABLE'S POSITIONS
     }
 
-    private void SetCollectablePositions(List<Vector3> positions,  List<Collectable> collectables)
+    private void SetCollectablePositions(List<Vector3> positions, List<Collectable> collectables)
     {
         try
         {
-            
+
             //positions.Reverse();
-            
+
             for (int i = stack.Count - 1; i >= 0; i--)
             {
                 stack[i].DisableCollider();
@@ -108,7 +108,7 @@ public class PlayerStack : MonoBehaviour
     private Collectable RemoveFromStack()
     {
         Collectable collectable = null;
-        if (stack.Count == 0) 
+        if (stack.Count == 0)
         {
             collectable = null;
             return null;
@@ -116,12 +116,21 @@ public class PlayerStack : MonoBehaviour
         collectable = stack[stack.Count - 1];
         stack.RemoveAt(stack.Count - 1);
         GameManager.Instance.CanEnterBattle = StackCount == 0 ? false : true;
+        ActiveObstacleHitReaction();
         return collectable;
+        
     }
     private void AddToStack(Collectable collectable)
     {
         GameManager.Instance.CanEnterBattle = true;
         stack.Add(collectable);
+    }
+    private void ActiveObstacleHitReaction()
+    {
+        foreach (Collectable collectable in stack)
+        {
+            collectable.CollectableVisual.UpdateAnimState(MaleAnimState.HITREACTION);
+        }
     }
 
     //private IEnumerator MoveCollectableRoutine(Collectable collectable, Vector3 newPos, float value)
