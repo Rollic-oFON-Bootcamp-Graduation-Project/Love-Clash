@@ -26,9 +26,7 @@ public class PlayerController : MonoBehaviour
     private void OnEnable()
     {
         Observer.PlayerUpdate += HandlePlayerVisual;
-        //Observer.PlayerAnimationChange += HandlePlayerAnimation;
-        //Observer.UpdatePlayerLimit += UpdatePlayerLimit;
-        //Observer.PlayerStartBattle += HandleBattle;
+        Observer.HandlePlayerFinalPath += FinalGame;
         Observer.StopBattle += StopBattle;
         Observer.StartBattle += StartBattle;
         Observer.StartGame += StartGame;
@@ -36,9 +34,7 @@ public class PlayerController : MonoBehaviour
     private void OnDisable()
     {
         Observer.PlayerUpdate -= HandlePlayerVisual;
-        //Observer.PlayerAnimationChange -= HandlePlayerAnimation;
-        //Observer.UpdatePlayerLimit += UpdatePlayerLimit;
-        //Observer.PlayerStartBattle -= HandleBattle;
+        Observer.HandlePlayerFinalPath -= FinalGame;
         Observer.StopBattle -= StopBattle;
         Observer.StartBattle -= StartBattle;
         Observer.StartGame -= StartGame;
@@ -131,6 +127,15 @@ public class PlayerController : MonoBehaviour
             .SetRelative();
     }
 
+    private void FinalGame(List<Vector3> path)
+    {
+        var pathToFollow = path.ToArray();
+        var duration = 1f * pathToFollow.Length;
+        transform.DOPath(pathToFollow, duration)
+            .SetEase(Ease.Linear)
+            .OnComplete(() => UIManager.Instance.WinScreen.EnablePanel());
+    }
+
 
 
     private void HandlePlayerVisual(int value)
@@ -160,6 +165,10 @@ public class PlayerController : MonoBehaviour
             playerParticle.PlayHitParticle();
             myCollectable?.TakenByEnemy(HitType.OBSTACLE, other.transform.position);
             HandleObstacleHit();
+        }
+        else if (other.CompareTag("Final"))
+        {
+            GameManager.Instance.FinalGame();
         }
     }
 }

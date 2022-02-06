@@ -7,6 +7,7 @@ public class UIManager : MonoSingleton<UIManager>
     [SerializeField] public StartScreen StartScreen;
     [SerializeField] public GameOverScreen GameOverScreen;
     [SerializeField] public InGameScreen InGameScreen;
+    [SerializeField] public WinScreen WinScreen;
     private HashSet<UIBase> uiSet;
 
     private void Awake()

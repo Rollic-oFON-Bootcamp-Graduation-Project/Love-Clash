@@ -75,7 +75,7 @@ public class BattleArena : MonoBehaviour
                 //UPDATE COLLECTABLE BAR
                 timer += Time.deltaTime;
                 closestCollectable.CollectableUI.UpdateLoveBar(timer);
-                if (!collectables.Contains(closestCollectable)) break;
+                //if (!collectables.Contains(closestCollectable)) break;
                 yield return null;
             }
             if (collectables.Contains(closestCollectable))

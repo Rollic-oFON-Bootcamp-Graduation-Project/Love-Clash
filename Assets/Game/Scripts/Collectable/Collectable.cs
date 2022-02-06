@@ -18,6 +18,12 @@ public class Collectable : MonoBehaviour
     {
         collectableCollider.enabled = true;
     }
+    private void OnDisable()
+    {
+        Debug.Log("destroyed");
+        Observer.StartBattle -= CollectableVisual.PlayBattle;
+        Observer.StopBattle -= CollectableVisual.StopBattle;
+    }
 
     //Subscribes CollectableUI to battle
     private void SubscribeToBattleEvent()

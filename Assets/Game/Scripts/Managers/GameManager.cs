@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,6 +23,8 @@ public class GameManager : MonoSingleton<GameManager>
 
     private IEnumerator StartGameRoutine()
     {
+        CanEnterBattle = false;
+        areCollectablesInPositions = false;
         CameraManager.Instance.SwitchCam("PlayerCam");
         UIManager.Instance.StartScreen.DisablePanel();
         UIManager.Instance.InGameScreen.EnablePanel();
@@ -42,6 +44,29 @@ public class GameManager : MonoSingleton<GameManager>
         CurrentGameState = GameState.BATTLE;
         CameraManager.Instance.SwitchCam("BattleCam");
         StartCoroutine(StartBattleRoutine());
+    }
+
+    public void StartFinal()
+    {
+        //CurrentGameState = GameState.FINAL;
+        StartCoroutine(StartFinalRoutine());
+    }
+
+    private IEnumerator StartFinalRoutine()
+    {
+        //PRE FINAL
+        Observer.PreFinal?.Invoke();
+        CurrentGameState = GameState.FINAL;
+        while (true)
+        {
+            //THIS WILL NOT WORK IF EVERY COLLECTABLE MOVES WITH DIFFERENT SPEED!!
+            //THEY MUST REACH THEIR TARGETS AT THE SAME TIME!
+            //BATTLE WILL START WHEN COLLECTABLES ARE IN POSITION
+            if (areCollectablesInPositions) break;
+            yield return null;
+        }
+        //BATTLE STARTING
+        Observer.StartFinal?.Invoke();
     }
 
     public Vector3 GetAPointFromActiveArena()
@@ -67,6 +92,14 @@ public class GameManager : MonoSingleton<GameManager>
     {
         areCollectablesInPositions = true;
     }
+    public void FinalGame()
+    {
+        activeArena = null;
+        areCollectablesInPositions = false;
+        CurrentGameState = GameState.FINAL;
+        UIManager.Instance.InGameScreen.DisablePanel();
+        //TODO
+    }
 
     public void GameOver()
     {
@@ -90,6 +123,8 @@ public class GameManager : MonoSingleton<GameManager>
         Observer.PreBattle?.Invoke();
         while (true)
         {
+            //THIS WILL NOT WORK IF EVERY COLLECTABLE MOVES WITH DIFFERENT SPEED!!
+            //THEY MUST REACH THEIR TARGETS AT THE SAME TIME!
             //BATTLE WILL START WHEN COLLECTABLES ARE IN POSITION
             if (areCollectablesInPositions) break;
             yield return null;

@@ -18,6 +18,16 @@ public class Observer
     //This is for setting random collectable positions on arena.
     public static UnityAction PreBattle;
 
+    public static UnityAction StartFinal;
+    //Event that occurs when ending the battle.
+    public static UnityAction StopFinal;
+    //This is for setting random collectable positions on arena.
+    public static UnityAction PreFinal;
+
+    public static UnityAction<List<Vector3>> HandlePlayerFinalPath;
+
+    
+
 
     public static UnityAction SetActiveArena;
     //Removes collectable from arena's reach.
@@ -26,7 +36,8 @@ public class Observer
     public static UnityAction<Collectable> AddToStack;
     //Sets collectables position from stack to the points that are randomly created positions by ArenaSetPositions.
     public static UnityAction<List<Vector3>, List<Collectable>> StackHandleBattle;
-
+    //Sets collectables position from stack to final points
+    public static UnityAction<List<Vector3>> StackHandleFinal;
     //Removes a collectable from stack and returns it
     public delegate Collectable RemoveFromStackDelegate();
     public static RemoveFromStackDelegate RemoveFromStack;

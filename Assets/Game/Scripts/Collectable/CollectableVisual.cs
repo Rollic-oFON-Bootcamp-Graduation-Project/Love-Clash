@@ -105,11 +105,13 @@ public class CollectableVisual : MonoBehaviour
 
     public void PlayBattle()
     {
-
+        //TODO
+        //Debug.Log($"{gameObject.name} asdasdsa");
     }
 
     public void StopBattle()
     {
-        UpdateAnimState(MaleAnimState.OFFBATTLE);
+        //TODO
+        //UpdateAnimState(MaleAnimState.OFFBATTLE);
     }
 }

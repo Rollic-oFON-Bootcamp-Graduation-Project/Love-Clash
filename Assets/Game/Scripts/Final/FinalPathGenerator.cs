@@ -15,10 +15,11 @@ public class FinalPathGenerator : MonoBehaviour
     [SerializeField] private FinalPlatform prefabFinalPlatform;
     [SerializeField] private CollectableMale prefabCollectableMale;
     [BoxGroup("Road Settings"), OnValueChanged(nameof(UpdatePlatformCount)), Range(0, 10)]
-    public int platformCount;
+    public int PlatformCount;
     private int prevPlatformCount;
 
-    public Vector3[] FinalPath => finalPath.Select(o => (o.position +Vector3.up * 0.3f)).ToArray();
+    public int PathNodeCount => (PlatformCount * (PlatformCount + 1)) / 2;
+    public List<Vector3> FinalPath => finalPath.Select(o => (o.position +Vector3.up * 0.1f)).ToList();
     private float nodeDistance = 2.2f;
     private Transform pencil;
 
@@ -77,6 +78,7 @@ public class FinalPathGenerator : MonoBehaviour
         for (int i = 0; i < nodeCount; i++)
         {
             node = CreateNode();
+            node.position += node.forward * (nodeDistance / 2);
             finalPath.Add(node);
             pencil.position += dir.normalized * nodeDistance;
             pencil.rotation = Quaternion.LookRotation(dir.normalized, Vector3.up);
@@ -110,7 +112,7 @@ public class FinalPathGenerator : MonoBehaviour
     }
     private void UpdatePlatformCount()
     {
-        var difference = (platformCount) - platforms.Count;
+        var difference = (PlatformCount) - platforms.Count;
         if (difference > 0)
         {
             for (int i = 0; i < difference; i++)
