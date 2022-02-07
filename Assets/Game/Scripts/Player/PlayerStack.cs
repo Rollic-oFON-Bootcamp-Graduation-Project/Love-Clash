@@ -94,12 +94,21 @@ public class PlayerStack : MonoBehaviour
     }
     public void CollectableSetFinalPosition(Vector3 newPos)
     {
+        StartCoroutine(CollectableSetFinalPositionRoutine(newPos));
+    }
+
+    private IEnumerator CollectableSetFinalPositionRoutine(Vector3 newPos)
+    {
         var index = stack.Count - 1;
-        stack[index].DisableCollider();
-        stack[index].transform.rotation = Quaternion.LookRotation(Vector3.back, Vector3.up);
-        stack[index].transform.position = newPos;
-        stack[index].CollectableVisual.UpdateAnimState(MaleAnimState.FINAL);
+        var collectable = stack[index];
+        collectable.CollectableParticle.UpdateParticle(ParticleType.FINAL);
+        collectable.DisableCollider();
         stack.RemoveAt(index);
+        yield return new WaitForSeconds(0.1f);
+        collectable.transform.rotation = Quaternion.LookRotation(Vector3.back, Vector3.up);
+        collectable.transform.position = newPos;
+        collectable.CollectableVisual.UpdateAnimState(MaleAnimState.FINAL);
+        
     }
     private IEnumerator SetFinalPath(List<Vector3> positions)
     {

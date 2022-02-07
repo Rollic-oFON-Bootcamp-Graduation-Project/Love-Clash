@@ -17,6 +17,9 @@ public class CollectableParticle : MonoBehaviour
             case ParticleType.HATE:
                 PlayParticle(particles[(int)type]);
                 break;
+            case ParticleType.FINAL:
+                PlayParticle(particles[(int)type]);
+                break;
         }
     }
 
