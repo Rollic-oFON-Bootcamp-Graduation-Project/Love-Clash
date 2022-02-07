@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     private float leftLimitX => leftLimit.localPosition.x;
     private float rightLimitX => rightLimit.localPosition.x;
     private float forwardSpeed => SettingsManager.GameSettings.forwardSpeed;
+    private float finalSpeed => SettingsManager.GameSettings.finalSpeed;
     private float sideMovementSensivity => SettingsManager.GameSettings.sideMovementSensivity;
 
     private void Start()
@@ -129,11 +130,49 @@ public class PlayerController : MonoBehaviour
 
     private void FinalGame(List<Vector3> path)
     {
-        var pathToFollow = path.ToArray();
-        var duration = 1f * pathToFollow.Length;
-        transform.DOPath(pathToFollow, duration)
-            .SetEase(Ease.Linear)
-            .OnComplete(() => UIManager.Instance.WinScreen.EnablePanel());
+        StartCoroutine(MoveToFinalRoutine(path));
+       //var pathToFollow = path.ToArray();
+       //var duration = 1f * pathToFollow.Length;
+       //transform.DOPath(pathToFollow, duration)
+       //    .SetEase(Ease.Linear)
+       //    .OnComplete(() => UIManager.Instance.WinScreen.EnablePanel());
+    }
+
+    private IEnumerator MoveToFinalRoutine(List<Vector3> path)
+    {
+        var offset = transform.forward * 4f;
+        Debug.Log($" path = {path.Count} stack = {stack.StackCount}");
+
+        stack.CollectableSetFinalPosition(path[0]);
+        sideMovementRoot.transform.DOLocalMoveX(0, 1f);
+        for (int i = 0; i < path.Count-1; i++) 
+        {
+            stack.CollectableSetFinalPosition(path[i+1]);
+            //yield return new WaitForSeconds(0.2f);
+            while (true)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, path[i], Time.deltaTime *finalSpeed);
+                float distanceLeft = (transform.position - path[i]).sqrMagnitude;
+                if (distanceLeft < 0.001f* 0.001f)
+                {
+                    break;
+                }
+                yield return null;
+            }
+            //stack.CollectableSetFinalPosition(path[i+1]);
+        }
+        while (true)
+        {
+            var moveTo = path[path.Count - 1] + offset;
+            transform.position = Vector3.MoveTowards(transform.position, moveTo, Time.deltaTime * finalSpeed);
+            float distanceLeft = (transform.position - moveTo).sqrMagnitude;
+            if (distanceLeft < 0.001f * 0.001f)
+            {
+                break;
+            }
+            yield return null;
+        }
+        GameManager.Instance.Win();
     }
 
 
@@ -165,10 +204,6 @@ public class PlayerController : MonoBehaviour
             playerParticle.PlayHitParticle();
             myCollectable?.TakenByEnemy(HitType.OBSTACLE, other.transform.position);
             HandleObstacleHit();
-        }
-        else if (other.CompareTag("Final"))
-        {
-            GameManager.Instance.FinalGame();
         }
     }
 }

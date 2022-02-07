@@ -34,7 +34,7 @@ public class Weapon : MonoBehaviour
         weaponDamage += value * 0.5f;
 
         ClampWeaponValue(weaponLevel, fireRate, weaponDamage);
-        Debug.Log($"WeaponLevel{weaponLevel}, FireRate{fireRate}, WeaponDamage{weaponDamage}");
+        //Debug.Log($"WeaponLevel{weaponLevel}, FireRate{fireRate}, WeaponDamage{weaponDamage}");
 
     }
 
@@ -65,7 +65,6 @@ public class Weapon : MonoBehaviour
         var projectile = MyObjectPooler.Instance.GetProjectileFromPool(weaponLevel.ToString());
         if(projectile != null)
         {
-            Debug.Log("Shoot");
             projectile.IsShooting = true;
             projectile.transform.position = shootPoint.position;
         }

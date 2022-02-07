@@ -15,12 +15,10 @@ public class GameManager : MonoSingleton<GameManager>
         CurrentGameState = GameState.MENU;
         Debug.Log("awake game manager");
     }
-
     public void StartGame()
     {
         StartCoroutine(StartGameRoutine());
     }
-
     private IEnumerator StartGameRoutine()
     {
         CanEnterBattle = false;
@@ -29,11 +27,9 @@ public class GameManager : MonoSingleton<GameManager>
         UIManager.Instance.StartScreen.DisablePanel();
         UIManager.Instance.InGameScreen.EnablePanel();
         yield return new WaitForSeconds(2);
-        Debug.Log(CameraManager.Instance.GetInstanceID());
         CurrentGameState = GameState.GAMEPLAY;
         Observer.StartGame?.Invoke();
     }
-
     public void StartBattle(BattleArena arena)
     {
         CanEnterBattle = false;
@@ -48,30 +44,20 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void StartFinal()
     {
-        //CurrentGameState = GameState.FINAL;
-        StartCoroutine(StartFinalRoutine());
-    }
-
-    private IEnumerator StartFinalRoutine()
-    {
-        //PRE FINAL
-        Observer.PreFinal?.Invoke();
         CurrentGameState = GameState.FINAL;
-        while (true)
-        {
-            //THIS WILL NOT WORK IF EVERY COLLECTABLE MOVES WITH DIFFERENT SPEED!!
-            //THEY MUST REACH THEIR TARGETS AT THE SAME TIME!
-            //BATTLE WILL START WHEN COLLECTABLES ARE IN POSITION
-            if (areCollectablesInPositions) break;
-            yield return null;
-        }
-        //BATTLE STARTING
-        Observer.StartFinal?.Invoke();
+        Observer.PreFinal?.Invoke();
     }
-
+    public void Win()
+    {
+        Observer.StopBattle = null;
+        activeArena = null;
+        areCollectablesInPositions = false;
+        CurrentGameState = GameState.FINAL;
+        UIManager.Instance.InGameScreen.DisablePanel();
+        UIManager.Instance.WinScreen.EnablePanel();
+    }
     public Vector3 GetAPointFromActiveArena()
     {
-        Debug.Log("Get a point");
         for (int i = 0; i < activeArena.PlayerCollectablePositions.Count; i++)
         {
             if (!activeArena.IsPositionTakenByCollectable[i])
@@ -86,21 +72,10 @@ public class GameManager : MonoSingleton<GameManager>
     {
         activeArena = arena;
     }
-
-
     public void CollectablesAreReady()
     {
         areCollectablesInPositions = true;
     }
-    public void FinalGame()
-    {
-        activeArena = null;
-        areCollectablesInPositions = false;
-        CurrentGameState = GameState.FINAL;
-        UIManager.Instance.InGameScreen.DisablePanel();
-        //TODO
-    }
-
     public void GameOver()
     {
         activeArena = null;
@@ -108,7 +83,6 @@ public class GameManager : MonoSingleton<GameManager>
         UIManager.Instance.GameOverScreen.EnablePanel();
         CurrentGameState = GameState.MENU;
     }
-
     public void StopBattle()
     {
         areCollectablesInPositions = false;
@@ -116,7 +90,6 @@ public class GameManager : MonoSingleton<GameManager>
         CameraManager.Instance.SwitchCam("PlayerCam");
         Observer.StopBattle?.Invoke();
     }
-
     private IEnumerator StartBattleRoutine()
     {
         //PRE BATTLE

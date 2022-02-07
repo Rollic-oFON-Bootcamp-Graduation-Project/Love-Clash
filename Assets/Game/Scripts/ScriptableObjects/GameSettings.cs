@@ -7,4 +7,5 @@ public class GameSettings : ScriptableObject
 {
     public float forwardSpeed;
     public float sideMovementSensivity;
+    public float finalSpeed;
 }

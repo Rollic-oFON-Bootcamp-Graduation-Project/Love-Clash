@@ -21,14 +21,14 @@ public class PlayerStack : MonoBehaviour
         Observer.AddToStack += AddToStack;
         Observer.RemoveFromStack += RemoveFromStack;
         Observer.StackHandleBattle += HandleBattlePositions;
-        Observer.StackHandleFinal += HandleFinalPositions;
+        Observer.StackHandleFinal += HandleFinalPath;
     }
     private void OnDisable()
     {
         Observer.AddToStack -= AddToStack;
         Observer.RemoveFromStack -= RemoveFromStack;
         Observer.StackHandleBattle -= HandleBattlePositions;
-        Observer.StackHandleFinal -= HandleFinalPositions;
+        Observer.StackHandleFinal -= HandleFinalPath;
     }
 
     // Update is called once per frame
@@ -49,27 +49,27 @@ public class PlayerStack : MonoBehaviour
     }
     private void HandleStackMovement()
     {
-        if (stack.Count == 0 || GameManager.Instance.CurrentGameState != GameState.GAMEPLAY) return;
+        if (stack.Count == 0 || (GameManager.Instance.CurrentGameState != GameState.GAMEPLAY && 
+            GameManager.Instance.CurrentGameState != GameState.FINAL)) return;
         stack[StackCount - 1].transform.position = Vector3.Lerp(transform.position + offsetFirst, playerSideMovementRoot.transform.position, 0.8f);
         for (int i = StackCount - 2; i >= 0; i--)
         {
             stack[i].transform.position = Vector3.Lerp(stack[i + 1].transform.position + offset, stack[i].transform.position, 0.8f);
         }
     }
-    private void HandleFinalPositions(List<Vector3> finalPositions)
+    private void HandleFinalPath(List<Vector3> finalPositions)
     {
         //Check if there are more collectables in stack than positions
         if(stack.Count != 0)
         {
             if (finalPositions.Count - 1 < stack.Count) return;
 
-            StartCoroutine(SetFinalPositions(finalPositions));
+            StartCoroutine(SetFinalPath(finalPositions));
         }
         else
         {
             GameManager.Instance.GameOver();
-        }
-        
+        } 
     }
     private bool CheckIfNumberIsTriangular(int n)
     {
@@ -92,7 +92,16 @@ public class PlayerStack : MonoBehaviour
     {
         return (n * (n + 1)) / 2;
     }
-    private IEnumerator SetFinalPositions(List<Vector3> positions)
+    public void CollectableSetFinalPosition(Vector3 newPos)
+    {
+        var index = stack.Count - 1;
+        stack[index].DisableCollider();
+        stack[index].transform.rotation = Quaternion.LookRotation(Vector3.back, Vector3.up);
+        stack[index].transform.position = newPos;
+        stack[index].CollectableVisual.UpdateAnimState(MaleAnimState.FINAL);
+        stack.RemoveAt(index);
+    }
+    private IEnumerator SetFinalPath(List<Vector3> positions)
     {
         List<Vector3> path = new List<Vector3>();
         int collectableCount = stack.Count;
@@ -100,7 +109,6 @@ public class PlayerStack : MonoBehaviour
         {
             collectableCount = TriangleNumber(ClosestRoot(stack.Count));
         }
-        Debug.Log(collectableCount);
 
         //STATE ENTER
         while(collectableCount > 0)
@@ -108,21 +116,13 @@ public class PlayerStack : MonoBehaviour
             //STATE
             for (int i = collectableCount - 1; i >= 0; i--)
             {
-                stack[i].DisableCollider();
-                StartCoroutine(MoveToPosition(stack[i], positions[i], MaleAnimState.FINAL, false));
                 path.Add(positions[i]);
-                stack.RemoveAt(i);
                 collectableCount--;
                 yield return null;
             }
         }
-
         path.Reverse();
-        Observer.StartFinal += () => Observer.HandlePlayerFinalPath?.Invoke(path);
-        //Observer.HandlePlayerFinalPath?.Invoke(path);
-
-        //Trigger player movement
-        //STATE EXIT
+        Observer.HandlePlayerFinalPath?.Invoke(path);
     }
     private void HandleBattlePositions(List<Vector3> positions, List<Collectable> collectables)
     {
@@ -149,20 +149,19 @@ public class PlayerStack : MonoBehaviour
             throw new System.ArgumentException("Index is out of range", nameof(positions.Count), ex);
         }
     }
-    private IEnumerator MoveToPosition(Collectable collectable, Vector3 newPos, MaleAnimState state = MaleAnimState.ONBATTLE, bool enableCollider = true)
+    private IEnumerator MoveToPosition(Collectable collectable, Vector3 newPos)
     {
         Debug.Log("start");
         collectable.DisableCollider();
         yield return collectable.transform.DOMove(newPos, 2f)
-                .OnComplete(() => OnCompleteMoving(collectable, state, enableCollider))
+                .OnComplete(() => OnCompleteMoving(collectable))
                 .WaitForCompletion();
-
     }
-    private void OnCompleteMoving(Collectable collectable, MaleAnimState state, bool enableCollider)
+    private void OnCompleteMoving(Collectable collectable)
     {
         Debug.Log("complete");
-        collectable.CollectableVisual.UpdateAnimState(state);
-        if(enableCollider) collectable.EnableCollider();
+        collectable.CollectableVisual.UpdateAnimState(MaleAnimState.ONBATTLE);
+        collectable.EnableCollider();
         collectable.IsCollected = false;
         GameManager.Instance.CollectablesAreReady();
     }

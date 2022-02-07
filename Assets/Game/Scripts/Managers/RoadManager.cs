@@ -15,6 +15,16 @@ public class RoadManager : SceneBasedMonoSingleton<RoadManager>
     private int roadWidth = 1;
     public int RoadCount => roads.Count;
     public int RoadWidth => roadWidth;
+
+    private void UpdateRoadFormat()
+    {
+        roads[0].transform.localScale = new Vector3(roadWidth, 1f, roadLength);
+        for (int i = 1; i < roads.Count; i++)
+        {
+            roads[i].transform.localScale = new Vector3(roadWidth, 1f, roadLength);
+            roads[i].transform.position = roads[i - 1].transform.position + (Vector3.forward * roadLength);
+        }
+    }
 #if UNITY_EDITOR
     [BoxGroup("Objects")]
     [SerializeField] private GameObject myRoad;
@@ -37,15 +47,7 @@ public class RoadManager : SceneBasedMonoSingleton<RoadManager>
         roads.Add(newRoad);
         MoveFinal();
     }
-    private void UpdateRoadFormat()
-    {
-        roads[0].transform.localScale = new Vector3(roadWidth, 1f, roadLength);
-        for (int i = 1;i< roads.Count; i++)
-        {
-            roads[i].transform.localScale = new Vector3(roadWidth, 1f, roadLength);
-            roads[i].transform.position = roads[i - 1].transform.position + (Vector3.forward * roadLength);
-        }
-    }
+    
     private void DeleteRoad()
     {
         if (roads.Count == 0) return;

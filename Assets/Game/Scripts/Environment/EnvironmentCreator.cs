@@ -18,9 +18,7 @@ public class EnvironmentCreator : MonoBehaviour
     private float roadBound => (roadWidth / 2) + 2;
     private void Start()
     {
-        //envSize = new Vector3(200, 1, RoadManager.Instance.RoadCount * 20f);
         myQuad.transform.localScale = 5*envSize;
-        Debug.Log(RoadManager.Instance.RoadCount);
         var offset = myQuad.transform.position;
         offset.x = -envSize.x / 2;
         envPoints = PoissonDiscSampling.GeneratePoints(radius, envSize, out pointCount,offset);

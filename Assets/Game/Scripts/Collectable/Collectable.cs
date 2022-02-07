@@ -18,18 +18,18 @@ public class Collectable : MonoBehaviour
     {
         collectableCollider.enabled = true;
     }
-    private void OnDisable()
+    private void OnDestroy()
     {
         Debug.Log("destroyed");
-        Observer.StartBattle -= CollectableVisual.PlayBattle;
+        //Observer.StartBattle -= CollectableVisual.PlayBattle;
         Observer.StopBattle -= CollectableVisual.StopBattle;
     }
 
     //Subscribes CollectableUI to battle
     private void SubscribeToBattleEvent()
     {
-        Observer.StartBattle += CollectableVisual.PlayBattle;
-        Observer.StopBattle += CollectableVisual.StopBattle;
+        //Observer.StartBattle += CollectableVisual.PlayBattle;
+        //Observer.StopBattle += CollectableVisual.StopBattle;
     }
 
     public void AddToStack()
@@ -38,7 +38,8 @@ public class Collectable : MonoBehaviour
         IsCollected = true;
         //Subscribes to the start and end event for the collectables that 
         //enter the battle not every collectable
-        SubscribeToBattleEvent();
+        //SubscribeToBattleEvent();
+        Observer.StopBattle += CollectableVisual.StopBattle;
         CollectableVisual.StackAnimation();
         CollectableParticle.UpdateParticle(ParticleType.LOVE);
         Observer.AddToStack?.Invoke(this);
@@ -85,7 +86,7 @@ public class Collectable : MonoBehaviour
                 break;
         }
 
-        Observer.StartBattle -= CollectableVisual.PlayBattle;
+        //Observer.StartBattle -= CollectableVisual.PlayBattle;
         Observer.StopBattle -= CollectableVisual.StopBattle;
 
     }

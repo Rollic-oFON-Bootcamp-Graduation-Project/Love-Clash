@@ -14,12 +14,14 @@ public class FinalPathGenerator : MonoBehaviour
     [SerializeField] private List<Transform> finalPath;
     [SerializeField] private FinalPlatform prefabFinalPlatform;
     [SerializeField] private CollectableMale prefabCollectableMale;
+#if UNITY_EDITOR
     [BoxGroup("Road Settings"), OnValueChanged(nameof(UpdatePlatformCount)), Range(0, 10)]
+#endif
     public int PlatformCount;
     private int prevPlatformCount;
 
     public int PathNodeCount => (PlatformCount * (PlatformCount + 1)) / 2;
-    public List<Vector3> FinalPath => finalPath.Select(o => (o.position +Vector3.up * 0.1f)).ToList();
+    public List<Vector3> FinalPath => finalPath.Select(o => (o.position +Vector3.up * 0.05f)).ToList();
     private float nodeDistance = 2.2f;
     private Transform pencil;
 
@@ -84,6 +86,16 @@ public class FinalPathGenerator : MonoBehaviour
             pencil.rotation = Quaternion.LookRotation(dir.normalized, Vector3.up);
         }
     }
+    private Transform CreateNode()
+    {
+        var node = new GameObject().transform;
+        node.SetParent(pathParent);
+        node.position = pencil.position;
+        node.rotation = pencil.rotation;
+
+        return node;
+    }
+#if UNITY_EDITOR
     private void CreatePlatform()
     {
         var index = platforms.Count == 0 ? 0 : platforms.Count;
@@ -101,15 +113,7 @@ public class FinalPathGenerator : MonoBehaviour
         platforms.RemoveAt(platforms.Count - 1);
     }
 
-    private Transform CreateNode()
-    {
-        var node = new GameObject().transform;
-        node.SetParent(pathParent);
-        node.position = pencil.position;
-        node.rotation = pencil.rotation;
-
-        return node;
-    }
+    
     private void UpdatePlatformCount()
     {
         var difference = (PlatformCount) - platforms.Count;
@@ -128,4 +132,5 @@ public class FinalPathGenerator : MonoBehaviour
             }
         }
     }
+#endif
 }

@@ -112,6 +112,6 @@ public class CollectableVisual : MonoBehaviour
     public void StopBattle()
     {
         //TODO
-        //UpdateAnimState(MaleAnimState.OFFBATTLE);
+        UpdateAnimState(MaleAnimState.OFFBATTLE);
     }
 }

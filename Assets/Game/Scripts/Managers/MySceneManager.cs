@@ -16,7 +16,7 @@ public class MySceneManager : MonoSingleton<MySceneManager>
 
     void Start()
     {
-        //if (SceneManager.sceneCount != SceneManager.sceneCountInBuildSettings) FirstLoad();
+        if (SceneManager.sceneCount != 4) FirstLoad();
     }
     [Button]
     public void RestartActiveScene()
@@ -56,7 +56,8 @@ public class MySceneManager : MonoSingleton<MySceneManager>
     {
         var gameScene = SceneManager.LoadSceneAsync(currentLevelIndex, LoadSceneMode.Additive);
         var uiScene = SceneManager.LoadSceneAsync((int)SceneIndexes.UI, LoadSceneMode.Additive);
-
+        var envScene = SceneManager.LoadSceneAsync((int)SceneIndexes.ENVIRONMENT, LoadSceneMode.Additive);
+        scenesLoading.Add(envScene);
         scenesLoading.Add(gameScene);
         scenesLoading.Add(uiScene);
         //var mainScene = SceneManager.LoadSceneAsync((int)SceneIndexes.MAINSCENE, LoadSceneMode.Additive);
