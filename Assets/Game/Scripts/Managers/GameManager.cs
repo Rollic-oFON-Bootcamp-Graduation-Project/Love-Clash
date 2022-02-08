@@ -45,6 +45,7 @@ public class GameManager : MonoSingleton<GameManager>
     public void StartFinal()
     {
         CurrentGameState = GameState.FINAL;
+        CameraManager.Instance.SwitchCam("FinalCam");
         Observer.PreFinal?.Invoke();
     }
     public void Win()

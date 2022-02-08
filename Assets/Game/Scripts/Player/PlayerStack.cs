@@ -64,7 +64,7 @@ public class PlayerStack : MonoBehaviour
         {
             if (finalPositions.Count - 1 < stack.Count) return;
 
-            StartCoroutine(SetFinalPath(finalPositions));
+            SetFinalPath(finalPositions);
         }
         else
         {
@@ -95,6 +95,7 @@ public class PlayerStack : MonoBehaviour
     public void CollectableSetFinalPosition(Vector3 newPos)
     {
         StartCoroutine(CollectableSetFinalPositionRoutine(newPos));
+
     }
 
     private IEnumerator CollectableSetFinalPositionRoutine(Vector3 newPos)
@@ -110,27 +111,32 @@ public class PlayerStack : MonoBehaviour
         collectable.CollectableVisual.UpdateAnimState(MaleAnimState.FINAL);
         
     }
-    private IEnumerator SetFinalPath(List<Vector3> positions)
+    private void SetFinalPath(List<Vector3> positions)
     {
         List<Vector3> path = new List<Vector3>();
+        //Vector3[][] collectablePath = new Vector3[][] { };
         int collectableCount = stack.Count;
         if (!CheckIfNumberIsTriangular(stack.Count))
         {
             collectableCount = TriangleNumber(ClosestRoot(stack.Count));
         }
 
-        //STATE ENTER
-        while(collectableCount > 0)
+        //STATE
+        for (int i = 0; i < collectableCount; i++)
         {
-            //STATE
-            for (int i = collectableCount - 1; i >= 0; i--)
-            {
-                path.Add(positions[i]);
-                collectableCount--;
-                yield return null;
-            }
+           //for(int k = 0; k < i; k++)
+           //{
+           //    for (int l = 0; l <= k;l++)
+           //    {
+           //        collectablePath[k][l] = positions[i];
+           //    }   
+           //}
+            path.Add(positions[i]);
+            //collectableCount++;
         }
-        path.Reverse();
+
+        //path.Reverse();
+        //Debug.Log(collectablePath);
         Observer.HandlePlayerFinalPath?.Invoke(path);
     }
     private void HandleBattlePositions(List<Vector3> positions, List<Collectable> collectables)
