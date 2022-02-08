@@ -13,7 +13,7 @@ public class EnvironmentCreator : MonoBehaviour
     [SerializeField, ReadOnly] private int pointCount;
     public float displayRadius = 1;
     private float envSizeX = 100;
-    private Vector3 envSize => new Vector3(envSizeX, 1, RoadManager.Instance.RoadCount * 20f);
+    private Vector3 envSize => new Vector3(envSizeX, 1, RoadManager.Instance.RoadCount * 40f);
     private float roadWidth = 8;
     private float roadBound => (roadWidth / 2) + 2;
     private void Start()

@@ -8,6 +8,7 @@ public class PlayerStack : MonoBehaviour
 {
     [SerializeField] private Transform playerSideMovementRoot;
     [SerializeField, ReadOnly] private List<Collectable> stack = new List<Collectable>();
+    [SerializeField, ReadOnly] private Vector3[,] collectablePath = new Vector3[10, 10];
 
 
     public int StackCount => stack.Count;
@@ -57,86 +58,77 @@ public class PlayerStack : MonoBehaviour
             stack[i].transform.position = Vector3.Lerp(stack[i + 1].transform.position + offset, stack[i].transform.position, 0.8f);
         }
     }
-    private void HandleFinalPath(List<Vector3> finalPositions)
+    private void HandleFinalPath(List<Vector3> finalPositions, int platformCount)
     {
         //Check if there are more collectables in stack than positions
         if(stack.Count != 0)
         {
             if (finalPositions.Count - 1 < stack.Count) return;
 
-            SetFinalPath(finalPositions);
+            SetFinalPath(finalPositions, platformCount);
         }
         else
         {
             GameManager.Instance.GameOver();
         } 
     }
-    private bool CheckIfNumberIsTriangular(int n)
+    public void SetFinalPosition(int index)
     {
-        var value = (8 * n) + 1;
-
-        for(int i=1; i*i < value; i++)
+        //StartCoroutine(TestSetFinalPositionRoutine(index));
+        var finalCount = TriangularNumber.TriangleNumber(index + 1);
+        for (int i = 0; i < index +1; i++)
         {
-            if((value % i == 0) && (value / i == i))
-            {
-                return true;
-            }
+            var lastIndex = stack.Count - 1;
+            var collectable = stack[lastIndex];
+            collectable.CollectableParticle.UpdateParticle(ParticleType.FINAL);
+            collectable.DisableCollider();
+            stack.RemoveAt(lastIndex);
+            collectable.transform.rotation = Quaternion.LookRotation(Vector3.back, Vector3.up);
+            collectable.transform.position = collectablePath[index, i];
+            collectable.CollectableVisual.UpdateAnimState(MaleAnimState.FINAL);
+
         }
-        return false;
     }
-    private int ClosestRoot(int n)
-    {
-        return Mathf.FloorToInt((Mathf.Sqrt((8 * n + 1)) - 1) / 2);
-    }
-    private int TriangleNumber(int n)
-    {
-        return (n * (n + 1)) / 2;
-    }
-    public void CollectableSetFinalPosition(Vector3 newPos)
-    {
-        StartCoroutine(CollectableSetFinalPositionRoutine(newPos));
-
-    }
-
-    private IEnumerator CollectableSetFinalPositionRoutine(Vector3 newPos)
-    {
-        var index = stack.Count - 1;
-        var collectable = stack[index];
-        collectable.CollectableParticle.UpdateParticle(ParticleType.FINAL);
-        collectable.DisableCollider();
-        stack.RemoveAt(index);
-        yield return new WaitForSeconds(0.1f);
-        collectable.transform.rotation = Quaternion.LookRotation(Vector3.back, Vector3.up);
-        collectable.transform.position = newPos;
-        collectable.CollectableVisual.UpdateAnimState(MaleAnimState.FINAL);
-        
-    }
-    private void SetFinalPath(List<Vector3> positions)
+    //OLD
+    //public void CollectableSetFinalPosition(Vector3 newPos)
+    //{
+    //    StartCoroutine(CollectableSetFinalPositionRoutine(newPos));
+    //
+    //}
+    //private IEnumerator CollectableSetFinalPositionRoutine(Vector3 newPos)
+    //{
+    //    var index = stack.Count - 1;
+    //    var collectable = stack[index];
+    //    collectable.CollectableParticle.UpdateParticle(ParticleType.FINAL);
+    //    collectable.DisableCollider();
+    //    stack.RemoveAt(index);
+    //    yield return new WaitForSeconds(0.1f);
+    //    collectable.transform.rotation = Quaternion.LookRotation(Vector3.back, Vector3.up);
+    //    collectable.transform.position = newPos;
+    //    collectable.CollectableVisual.UpdateAnimState(MaleAnimState.FINAL);
+    //    
+    //}
+    private void SetFinalPath(List<Vector3> positions, int platformCount)
     {
         List<Vector3> path = new List<Vector3>();
-        //Vector3[][] collectablePath = new Vector3[][] { };
         int collectableCount = stack.Count;
-        if (!CheckIfNumberIsTriangular(stack.Count))
+        var finalCount = TriangularNumber.ClosestRoot(stack.Count);
+        if (!TriangularNumber.CheckIfNumberIsTriangular(stack.Count))
         {
-            collectableCount = TriangleNumber(ClosestRoot(stack.Count));
+            Debug.Log("it is not a triangular");
+            collectableCount = TriangularNumber.TriangleNumber(finalCount);
         }
-
-        //STATE
-        for (int i = 0; i < collectableCount; i++)
+        int a = 0;
+        for(int i = 0; i < finalCount; i++)
         {
-           //for(int k = 0; k < i; k++)
-           //{
-           //    for (int l = 0; l <= k;l++)
-           //    {
-           //        collectablePath[k][l] = positions[i];
-           //    }   
-           //}
-            path.Add(positions[i]);
-            //collectableCount++;
+            for(int j = 0; j <= i; j++)
+            {
+                //Debug.Log($"{i} {j} position = {positions[a]}" );
+                collectablePath[i, j] = positions[a];
+                path.Add(positions[a]);
+                a++;
+            }
         }
-
-        //path.Reverse();
-        //Debug.Log(collectablePath);
         Observer.HandlePlayerFinalPath?.Invoke(path);
     }
     private void HandleBattlePositions(List<Vector3> positions, List<Collectable> collectables)

@@ -131,11 +131,6 @@ public class PlayerController : MonoBehaviour
     private void FinalGame(List<Vector3> path)
     {
         StartCoroutine(MoveToFinalRoutine(path));
-       //var pathToFollow = path.ToArray();
-       //var duration = 1f * pathToFollow.Length;
-       //transform.DOPath(pathToFollow, duration)
-       //    .SetEase(Ease.Linear)
-       //    .OnComplete(() => UIManager.Instance.WinScreen.EnablePanel());
     }
 
     private IEnumerator MoveToFinalRoutine(List<Vector3> path)
@@ -143,12 +138,16 @@ public class PlayerController : MonoBehaviour
         var offset = transform.forward * 4f;
         Debug.Log($" path = {path.Count} stack = {stack.StackCount}");
 
-        stack.CollectableSetFinalPosition(path[0]);
+        int index = 0;
         sideMovementRoot.transform.DOLocalMoveX(0, 1f);
         for (int i = 0; i < path.Count-1; i++) 
         {
-            stack.CollectableSetFinalPosition(path[i+1]);
-            //yield return new WaitForSeconds(0.2f);
+           if (TriangularNumber.CheckIfNumberIsTriangular(i))
+           {
+               stack.SetFinalPosition(index);
+               index++;
+           }
+
             while (true)
             {
                 transform.position = Vector3.MoveTowards(transform.position, path[i], Time.deltaTime *finalSpeed);

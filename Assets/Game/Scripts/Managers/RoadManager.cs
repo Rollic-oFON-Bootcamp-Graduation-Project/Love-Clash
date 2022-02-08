@@ -22,7 +22,7 @@ public class RoadManager : SceneBasedMonoSingleton<RoadManager>
         for (int i = 1; i < roads.Count; i++)
         {
             roads[i].transform.localScale = new Vector3(roadWidth, 1f, roadLength);
-            roads[i].transform.position = roads[i - 1].transform.position + (Vector3.forward * roadLength);
+            roads[i].transform.position = offSet + roads[i - 1].transform.position + (roadParent.forward * roadLength);
         }
     }
 #if UNITY_EDITOR
@@ -31,6 +31,7 @@ public class RoadManager : SceneBasedMonoSingleton<RoadManager>
     [BoxGroup("Parent")]
     [SerializeField] private Transform roadParent;
     [SerializeField] private FinalRoad finalRoad;
+    private Vector3 offSet => roadParent.position;
     
     [BoxGroup("Road Settings"), OnValueChanged(nameof(UpdateRoadCount)), Range(0, 999)]
     public int roadCount;
@@ -39,7 +40,7 @@ public class RoadManager : SceneBasedMonoSingleton<RoadManager>
     private void CreateRoad()
     {
         var index = roads.Count == 0 ? 0 : roads.Count;
-        var roadPosition = index * (Vector3.forward * roadLength);
+        var roadPosition = index * (roadParent.forward * roadLength) + offSet;
         var roadToCreate = myRoad;
         roadToCreate.transform.localScale = new Vector3(roadWidth, 1f, roadLength);
         var newRoad = PrefabUtility.InstantiatePrefab(roadToCreate, roadParent) as GameObject;
@@ -84,7 +85,7 @@ public class RoadManager : SceneBasedMonoSingleton<RoadManager>
 
     private void MoveFinal()
     {
-        finalRoad.transform.position = (Vector3.forward * roadLength)+ roads[roads.Count - 1].transform.position;
+        finalRoad.transform.position = (roadParent.forward * roadLength)+ roads[roads.Count - 1].transform.position;
     }
 #endif
 

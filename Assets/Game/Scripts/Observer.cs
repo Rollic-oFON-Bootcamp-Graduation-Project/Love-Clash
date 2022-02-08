@@ -37,7 +37,7 @@ public class Observer
     //Sets collectables position from stack to the points that are randomly created positions by ArenaSetPositions.
     public static UnityAction<List<Vector3>, List<Collectable>> StackHandleBattle;
     //Sets collectables position from stack to final points
-    public static UnityAction<List<Vector3>> StackHandleFinal;
+    public static UnityAction<List<Vector3>, int> StackHandleFinal;
     //Removes a collectable from stack and returns it
     public delegate Collectable RemoveFromStackDelegate();
     public static RemoveFromStackDelegate RemoveFromStack;

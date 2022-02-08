@@ -15,13 +15,21 @@ public class FinalPathGenerator : MonoBehaviour
     [SerializeField] private FinalPlatform prefabFinalPlatform;
     [SerializeField] private CollectableMale prefabCollectableMale;
 #if UNITY_EDITOR
-    [BoxGroup("Road Settings"), OnValueChanged(nameof(UpdatePlatformCount)), Range(0, 10)]
+    [BoxGroup("Platform Settings"), OnValueChanged(nameof(UpdatePlatformCount)), Range(0, 10)]
 #endif
     public int PlatformCount;
     private int prevPlatformCount;
+#if UNITY_EDITOR
+    [BoxGroup("Platform Settings"), OnValueChanged(nameof(UpdatePlatformColor))]
+#endif
+    [SerializeField] private List<Color> colors;
+#if UNITY_EDITOR
+    [BoxGroup("Platform Settings"), OnValueChanged(nameof(UpdatePlatformText))]
+#endif
+    [SerializeField] private List<string> platformTexts;
 
     public int PathNodeCount => (PlatformCount * (PlatformCount + 1)) / 2;
-    public List<Vector3> FinalPath => finalPath.Select(o => (o.position +Vector3.up * 0.05f)).ToList();
+    public List<Vector3> FinalPath => finalPath.Select(o => (o.position +Vector3.up * 0.5f)).ToList();
     private float nodeDistance = 2.2f;
     private Transform pencil;
 
@@ -73,7 +81,7 @@ public class FinalPathGenerator : MonoBehaviour
         var dir = (to.position - from.position);
 
         var nodeCount = ((int)dir.magnitude / (int)(nodeDistance));
-        Debug.Log(nodeCount);
+        //Debug.Log(nodeCount);
         var node = CreateNode();
         //finalPath.Add(node);
 
@@ -86,6 +94,7 @@ public class FinalPathGenerator : MonoBehaviour
             pencil.rotation = Quaternion.LookRotation(dir.normalized, Vector3.up);
         }
     }
+    
     private Transform CreateNode()
     {
         var node = new GameObject().transform;
@@ -103,17 +112,34 @@ public class FinalPathGenerator : MonoBehaviour
         var offset = (Vector3.forward * (8f)) + (nodeDistance * index) * Vector3.forward;
         var obj = PrefabUtility.InstantiatePrefab(prefabFinalPlatform, platformParent) as FinalPlatform;
         obj.transform.position = index !=0 ? platforms[index-1].transform.position+offset : platformPos;
+        colors.Add(Color.black);
+        platformTexts.Add("New");
         platforms.Add(obj);
     }
     private void DeletePlatform()
     {
-
         if (platforms.Count == 0) return;
         DestroyImmediate(platforms[platforms.Count - 1].gameObject);
         platforms.RemoveAt(platforms.Count - 1);
+        colors.RemoveAt(colors.Count - 1);
+        platformTexts.RemoveAt(platformTexts.Count - 1);
     }
 
-    
+    [Button]
+    private void UpdatePlatformColor()
+    {
+        for(int i = 0; i < PlatformCount; i++)
+        {
+            platforms[i].SetColor(colors[i]);   
+        }
+    }
+    private void UpdatePlatformText()
+    {
+        for (int i = 0; i < PlatformCount; i++)
+        {
+            platforms[i].SetPlatformText(platformTexts[i]);
+        }
+    }
     private void UpdatePlatformCount()
     {
         var difference = (PlatformCount) - platforms.Count;

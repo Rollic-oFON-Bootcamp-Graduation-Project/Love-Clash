@@ -9,7 +9,7 @@
 		_Blend1 ("Blend mode 1", int) = 0
 		[Enum(ZWrite)] _ZWrite ("Z-Buffer", int) = 1.0
 		_Cutoff ("Alpha cutoff", Range(0,1)) = 0.5
-		_Color ("Color", Color) = (1,1,1,1)
+		[PerRendererData]_Color ("Color", Color) = (1,1,1,1)
 		_MainTex ("Color (RGB)", 2D) = "white" {}
 		[Toggle] _AlbedoMap ("Color source map", int) = 0
 

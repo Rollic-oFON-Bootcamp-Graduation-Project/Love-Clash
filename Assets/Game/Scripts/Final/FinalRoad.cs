@@ -17,7 +17,7 @@ public class FinalRoad : MonoBehaviour
 
     private void SetCollectablePositions()
     {
-        Observer.StackHandleFinal?.Invoke(finalPathGenerator.FinalPath);
+        Observer.StackHandleFinal?.Invoke(finalPathGenerator.FinalPath, finalPathGenerator.PlatformCount);
     }
     private void OnTriggerEnter(Collider other)
     {
