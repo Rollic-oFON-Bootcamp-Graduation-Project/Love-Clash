@@ -15,7 +15,10 @@ public class RoadManager : SceneBasedMonoSingleton<RoadManager>
     private int roadWidth = 1;
     public int RoadCount => roads.Count;
     public int RoadWidth => roadWidth;
-
+    [BoxGroup("Parent")]
+    [SerializeField] private Transform roadParent;
+    [SerializeField] private FinalRoad finalRoad;
+    private Vector3 offSet => roadParent.position;
     private void UpdateRoadFormat()
     {
         roads[0].transform.localScale = new Vector3(roadWidth, 1f, roadLength);
@@ -28,10 +31,6 @@ public class RoadManager : SceneBasedMonoSingleton<RoadManager>
 #if UNITY_EDITOR
     [BoxGroup("Objects")]
     [SerializeField] private GameObject myRoad;
-    [BoxGroup("Parent")]
-    [SerializeField] private Transform roadParent;
-    [SerializeField] private FinalRoad finalRoad;
-    private Vector3 offSet => roadParent.position;
     
     [BoxGroup("Road Settings"), OnValueChanged(nameof(UpdateRoadCount)), Range(0, 999)]
     public int roadCount;
