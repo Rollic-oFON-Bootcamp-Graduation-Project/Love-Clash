@@ -63,7 +63,7 @@ public class PlayerStack : MonoBehaviour
         //Check if there are more collectables in stack than positions
         if(stack.Count != 0)
         {
-            if (finalPositions.Count - 1 < stack.Count) return;
+            //if (finalPositions.Count - 1 < stack.Count) return;
 
             SetFinalPath(finalPositions, platformCount);
         }
@@ -110,14 +110,17 @@ public class PlayerStack : MonoBehaviour
     //}
     private void SetFinalPath(List<Vector3> positions, int platformCount)
     {
+        //Debug.Log($"{stack.Count}");
         List<Vector3> path = new List<Vector3>();
         int collectableCount = stack.Count;
-        var finalCount = TriangularNumber.ClosestRoot(stack.Count);
+        var finalCount = positions.Count - 1 < stack.Count ? platformCount -1 : TriangularNumber.ClosestRoot(stack.Count);
+        //finalCount = finalCount >= platformCount ? platformCount : finalCount;
         if (!TriangularNumber.CheckIfNumberIsTriangular(stack.Count))
         {
             Debug.Log("it is not a triangular");
             collectableCount = TriangularNumber.TriangleNumber(finalCount);
         }
+        Debug.Log($"{stack.Count} {finalCount}");
         int a = 0;
         for(int i = 0; i < finalCount; i++)
         {
@@ -197,6 +200,13 @@ public class PlayerStack : MonoBehaviour
         foreach (Collectable collectable in stack)
         {
             collectable.CollectableVisual.UpdateAnimState(MaleAnimState.HITREACTION);
+        }
+    }
+    public void DanceCollectables()
+    {
+        for(int i = 0; i < stack.Count; i++)
+        {
+            stack[i].CollectableVisual.UpdateAnimState(MaleAnimState.DANCE);
         }
     }
 }

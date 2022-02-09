@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour
         Observer.StopBattle += StopBattle;
         Observer.StartBattle += StartBattle;
         Observer.StartGame += StartGame;
+        Observer.GameOver += GameOver;
     }
     private void OnDisable()
     {
@@ -39,6 +40,7 @@ public class PlayerController : MonoBehaviour
         Observer.StopBattle -= StopBattle;
         Observer.StartBattle -= StartBattle;
         Observer.StartGame -= StartGame;
+        Observer.GameOver -= GameOver;
     }
 
     // Update is called once per frame
@@ -140,6 +142,7 @@ public class PlayerController : MonoBehaviour
 
         int index = 0;
         sideMovementRoot.transform.DOLocalMoveX(0, 1f);
+        sideMovementRoot.transform.DORotate(Vector3.zero, 1f);
         for (int i = 0; i < path.Count-1; i++) 
         {
            if (TriangularNumber.CheckIfNumberIsTriangular(i))
@@ -171,7 +174,14 @@ public class PlayerController : MonoBehaviour
             }
             yield return null;
         }
+        playerVisual.PlayDanceAnim();
+        stack.DanceCollectables();
         GameManager.Instance.Win();
+    }
+
+    private void GameOver()
+    {
+        playerVisual.PlayGameOver();
     }
 
 

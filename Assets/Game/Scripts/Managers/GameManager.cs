@@ -82,10 +82,12 @@ public class GameManager : MonoSingleton<GameManager>
         activeArena = null;
         UIManager.Instance.InGameScreen.DisablePanel();
         UIManager.Instance.GameOverScreen.EnablePanel();
+        Observer.GameOver?.Invoke();
         CurrentGameState = GameState.MENU;
     }
     public void StopBattle()
     {
+        activeArena = null;
         areCollectablesInPositions = false;
         CurrentGameState = GameState.GAMEPLAY;
         CameraManager.Instance.SwitchCam("PlayerCam");

@@ -246,8 +246,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 1861f8106607e3c41afa9a61c0c274cb, type: 2}
-  m_sharedMaterial: {fileID: 1695138144561093442, guid: 1861f8106607e3c41afa9a61c0c274cb, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 25217418fa729684da25332a447313f4, type: 2}
+  m_sharedMaterial: {fileID: 1695138144561093442, guid: 25217418fa729684da25332a447313f4, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -749,7 +749,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a083c8da9caf9a644a70e131cb3cde0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireRate: 5
+  fireRate: 1
   weaponLevel: 1
   weaponDamage: 20
   shootPoint: {fileID: 4647157398694216573}

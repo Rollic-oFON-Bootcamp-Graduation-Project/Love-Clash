@@ -21,6 +21,7 @@ public class MySceneManager : MonoSingleton<MySceneManager>
     [Button]
     public void RestartActiveScene()
     {
+
         UnloadCurrentLevel();
         var sceneToLoad = LoadLevel(currentLevelIndex);
         StartCoroutine(WaitForAllScenes(sceneToLoad));
@@ -29,6 +30,11 @@ public class MySceneManager : MonoSingleton<MySceneManager>
     [Button]
     public void LoadNextLevel()
     {
+        if (currentLevelIndex == SceneManager.sceneCountInBuildSettings - 1)
+        {
+            RestartActiveScene();
+            return;
+        }
         UnloadCurrentLevel();
         currentLevelIndex++;
         var sceneToLoad = LoadLevel(currentLevelIndex);

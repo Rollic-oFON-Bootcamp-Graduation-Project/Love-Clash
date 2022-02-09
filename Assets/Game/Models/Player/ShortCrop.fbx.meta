@@ -26,7 +26,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: hair
-    second: {fileID: 2100000, guid: 75aaaf1028c29e7468bd4d212f0b11b4, type: 2}
+    second: {fileID: 2100000, guid: 624160a3d6649bf4eb19e4d212673d0d, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
@@ -41,7 +41,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: skin
-    second: {fileID: 2100000, guid: 262f1b57b28bc354fad37ec0e032bb17, type: 2}
+    second: {fileID: 2100000, guid: 5157e950f7c3a874ba89529950292103, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

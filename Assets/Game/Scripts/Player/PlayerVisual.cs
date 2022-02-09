@@ -57,6 +57,18 @@ public class PlayerVisual : MonoBehaviour
         playerAnimator.SetTrigger("PreBattle");
     }
 
+    public void PlayDanceAnim()
+    {
+        var rand = Random.Range(0, 4);
+        playerAnimator.SetFloat("DanceType", rand);
+        ChangeAnimState("Dance", true);
+    }
+
+    public void PlayGameOver()
+    {
+        ChangeAnimState("GameOver", true);
+    }
+
     public void PlayShooting()
     {
         playerAnimator.SetBool("Shooting", true);

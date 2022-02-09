@@ -25,6 +25,7 @@ public class Observer
     public static UnityAction PreFinal;
 
     public static UnityAction<List<Vector3>> HandlePlayerFinalPath;
+    public static UnityAction GameOver;
 
     
 

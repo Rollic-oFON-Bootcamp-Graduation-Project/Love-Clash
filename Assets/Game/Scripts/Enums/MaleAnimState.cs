@@ -7,5 +7,6 @@ public enum MaleAnimState
     TAKEN,
     WIN,
     FINAL,
-    HITREACTION
+    HITREACTION,
+    DANCE
 }

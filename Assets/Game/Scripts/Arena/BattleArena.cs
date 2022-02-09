@@ -142,6 +142,7 @@ public class BattleArena : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            
             if (!GameManager.Instance.CanEnterBattle)
             {
                 GameManager.Instance.GameOver();

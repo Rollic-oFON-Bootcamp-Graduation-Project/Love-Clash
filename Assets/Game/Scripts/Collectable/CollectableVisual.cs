@@ -40,6 +40,10 @@ public class CollectableVisual : MonoBehaviour
             case MaleAnimState.HITREACTION:
                 StartCoroutine(PlayHitReaction());
                 break;
+            case MaleAnimState.DANCE:
+                PlayRandomDance();
+                ChangeAnimState("Dance", true);
+                break;
             default:
                 break;
         }
@@ -66,6 +70,12 @@ public class CollectableVisual : MonoBehaviour
     private void ChangeAnimState(string name, bool value)
     {
         collectableAnimator.SetBool(name, value);
+    }
+
+    private void PlayRandomDance()
+    {
+        var rand = Random.Range(0, 4);
+        collectableAnimator.SetFloat("DanceType", rand);
     }
 
     private void PlayRandomIdle()
