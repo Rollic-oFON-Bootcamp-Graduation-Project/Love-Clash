@@ -145,8 +145,9 @@ public class BattleArena : MonoBehaviour
             
             if (!GameManager.Instance.CanEnterBattle)
             {
-                GameManager.Instance.GameOver();
-                return;
+                //GameManager.Instance.CollectablesAreReady();
+                //GameManager.Instance.GameOver();
+                //return;
             }
             Observer.RemoveFromArena += RemoveFromArenaCollectables;
             Observer.StartBattle += StartBattle;

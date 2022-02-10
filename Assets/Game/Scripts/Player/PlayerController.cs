@@ -65,6 +65,7 @@ public class PlayerController : MonoBehaviour
     {
         if (GameManager.Instance.CurrentGameState != GameState.BATTLE) return;
         HandlePlayerAnimation();
+        sideMovementRoot.localRotation = Quaternion.identity;
         weapon.StartShooting();
     }
 

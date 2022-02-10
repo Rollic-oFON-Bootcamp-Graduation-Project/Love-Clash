@@ -102,6 +102,11 @@ public class GameManager : MonoSingleton<GameManager>
             //THIS WILL NOT WORK IF EVERY COLLECTABLE MOVES WITH DIFFERENT SPEED!!
             //THEY MUST REACH THEIR TARGETS AT THE SAME TIME!
             //BATTLE WILL START WHEN COLLECTABLES ARE IN POSITION
+            if(!areCollectablesInPositions && !CanEnterBattle)
+            {
+                yield return new WaitForSeconds(2);
+                break;
+            }
             if (areCollectablesInPositions) break;
             yield return null;
         }

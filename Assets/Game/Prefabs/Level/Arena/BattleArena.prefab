@@ -243,7 +243,7 @@ MonoBehaviour:
   createCenter: {fileID: 4463431561700128517}
   lovePoint: {fileID: 4401244095286252631}
   arenaCollider: {fileID: 5811419081333832118}
-  loveTimer: 1
+  loveTimer: 2
   collectables:
   - {fileID: 7396435944934016676}
   - {fileID: 7032761588625409345}
@@ -251,7 +251,7 @@ MonoBehaviour:
   - {fileID: 3485342743396660654}
   radius: 1.47
   displayRadius: 1
-  pointCount: 27
+  pointCount: 32
   playerPoints: {fileID: 6699874790078734286}
   RegionSize: {x: 12, y: 1, z: 8}
 --- !u!65 &5811419081333832118
