@@ -8,6 +8,8 @@ public class PlayerUI : MonoBehaviour
 {
     [SerializeField] private TMP_Text feedbackText;
     [SerializeField] private GateData data;
+    [SerializeField] private int textLevel = -1;
+
     private void OnEnable()
     {
         Observer.PlayerUpdate += PlayFeedback;
@@ -19,14 +21,26 @@ public class PlayerUI : MonoBehaviour
 
     private void PlayFeedback(int value)
     {
-        var feedbacks = (value > 0) ? data.UpgradeFeedback : data.DowngradeFeedback;
-        var randFeedback = feedbacks[Random.Range(0, feedbacks.Length)];
-        StartCoroutine(FeedbackRoutine(randFeedback));
+        if (value > 0)
+        {
+            var feedbacks = data.UpgradeFeedback;
+            var textColor = data.UpgradeTextColor;
+
+            textLevel++;
+            textLevel = Mathf.Clamp(textLevel, 0, feedbacks.Length);
+            StartCoroutine(FeedbackRoutine(feedbacks[textLevel], textColor[textLevel]));
+
+        }
+        else
+        {
+            textLevel--;
+        }
     }
 
-    IEnumerator FeedbackRoutine(string text)
+    IEnumerator FeedbackRoutine(string text, Color newColor)
     {
         feedbackText.SetText(text);
+        // feedbackText.color = newColor;
         yield return new WaitForSeconds(1f);
         feedbackText.SetText("");
     }

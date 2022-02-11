@@ -179,6 +179,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   feedbackText: {fileID: 928048222}
   data: {fileID: 11400000, guid: e3ddb591daaeadc48bf8f30b5ee1a5ed, type: 2}
+  textLevel: 0
 --- !u!1 &928048220
 GameObject:
   m_ObjectHideFlags: 0
@@ -254,7 +255,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4291256319
-  m_fontColor: {r: 1, g: 0.37169808, b: 0.7808248, a: 1}
+  m_fontColor: {r: 1, g: 0.8235295, b: 0.93725497, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
