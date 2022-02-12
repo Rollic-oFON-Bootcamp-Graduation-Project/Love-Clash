@@ -23,8 +23,13 @@ MonoBehaviour:
   - SEXY
   - HOT
   UpgradeTextColor:
-  - {r: 1, g: 0.8235295, b: 0.93725497, a: 0}
-  - {r: 0.94117653, g: 0.47058827, b: 0.54901963, a: 0}
-  - {r: 0.8745099, g: 0.18039216, b: 0.3254902, a: 0}
-  - {r: 0.7372549, g: 0.050980397, b: 0.20392159, a: 0}
-  - {r: 0.63529414, g: 0.050980397, b: 0.1137255, a: 0}
+  - serializedVersion: 2
+    rgba: 4293907199
+  - serializedVersion: 2
+    rgba: 4287396080
+  - serializedVersion: 2
+    rgba: 4283443935
+  - serializedVersion: 2
+    rgba: 3411388
+  - serializedVersion: 2
+    rgba: 4280094114

@@ -6,9 +6,9 @@ using TMPro;
 
 public class PlayerUI : MonoBehaviour
 {
-    [SerializeField] private TMP_Text feedbackText;
+    [SerializeField] private TextMeshProUGUI feedbackText;
     [SerializeField] private GateData data;
-    [SerializeField] private int textLevel = -1;
+    private int textLevel = -1;
 
     private void OnEnable()
     {
@@ -37,10 +37,10 @@ public class PlayerUI : MonoBehaviour
         }
     }
 
-    IEnumerator FeedbackRoutine(string text, Color newColor)
+    IEnumerator FeedbackRoutine(string text, Color32 newColor)
     {
         feedbackText.SetText(text);
-        // feedbackText.color = newColor;
+        feedbackText.color = newColor;
         yield return new WaitForSeconds(1f);
         feedbackText.SetText("");
     }

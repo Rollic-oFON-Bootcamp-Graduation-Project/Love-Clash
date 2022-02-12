@@ -8,5 +8,5 @@ public class GateData : ScriptableObject
     public Sprite[] UpgradeSprites;
     public Sprite[] DowngradeSprites;
     public string[] UpgradeFeedback;
-    public List<Color> UpgradeTextColor;    
+    public List<Color32> UpgradeTextColor;    
 }
