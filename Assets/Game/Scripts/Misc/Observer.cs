@@ -7,7 +7,6 @@ public class Observer
     //These events are for updating weapon and player.
     public static UnityAction<int> WeaponUpdate;
     public static UnityAction<int> PlayerUpdate;
-
     //This event is for starting the game.
     //We are setting player animations etc, can add UI to this event too
     public static UnityAction StartGame;
@@ -17,19 +16,15 @@ public class Observer
     public static UnityAction StopBattle;
     //This is for setting random collectable positions on arena.
     public static UnityAction PreBattle;
-
     public static UnityAction StartFinal;
     //Event that occurs when ending the battle.
     public static UnityAction StopFinal;
     //This is for setting random collectable positions on arena.
     public static UnityAction PreFinal;
-
+    //Final path event for the player.
     public static UnityAction<List<Vector3>> HandlePlayerFinalPath;
+    //Game over event
     public static UnityAction GameOver;
-
-    
-
-
     public static UnityAction SetActiveArena;
     //Removes collectable from arena's reach.
     public static UnityAction<Collectable> RemoveFromArena;
@@ -42,5 +37,4 @@ public class Observer
     //Removes a collectable from stack and returns it
     public delegate Collectable RemoveFromStackDelegate();
     public static RemoveFromStackDelegate RemoveFromStack;
-
 }

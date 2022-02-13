@@ -58,6 +58,7 @@ public class PlayerStack : MonoBehaviour
             stack[i].transform.position = Vector3.Lerp(stack[i + 1].transform.position + offset, stack[i].transform.position, 0.8f);
         }
     }
+    //Final path for stack
     private void HandleFinalPath(List<Vector3> finalPositions, int platformCount)
     {
         //Check if there are more collectables in stack than positions
@@ -72,6 +73,7 @@ public class PlayerStack : MonoBehaviour
             GameManager.Instance.GameOver();
         } 
     }
+    //Sets collectables positions, animations from stack to their final state.
     public void SetFinalPosition(int index)
     {
         //StartCoroutine(TestSetFinalPositionRoutine(index));

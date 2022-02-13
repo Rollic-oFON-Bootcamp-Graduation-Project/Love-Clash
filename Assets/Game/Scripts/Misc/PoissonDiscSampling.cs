@@ -4,6 +4,16 @@ using UnityEngine;
 
 public static class PoissonDiscSampling 
 {
+    /// <summary>
+    /// Generates random points without colliding within given region size. 
+    /// </summary>
+    /// <param name="radius">At least distance between points</param>
+    /// <param name="regionSize">Size of the area that points are going to generated.</param>
+    /// <param name="pointCount">Out parameter for how many points that are generated.</param>
+    /// <param name="offset">Optional offset parameter for points.</param>
+    /// <param name="circleRadius">If you want to have a circular area, radius of that circle.</param>
+    /// <param name="k">Limit of samples to choose before rejection in the algorithm. Default is 30</param>
+    /// <returns>Random generated points position as a Vector3 list</returns>
     public static List<Vector3> GeneratePoints(float radius, Vector3 regionSize, out int pointCount, Vector3? offset = null, float circleRadius = 0f, int k = 30)
     {
         if(offset == null)

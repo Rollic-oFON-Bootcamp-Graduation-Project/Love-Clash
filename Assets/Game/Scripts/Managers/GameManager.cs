@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class GameManager : MonoSingleton<GameManager>
 {
+    //Current game state
     public GameState CurrentGameState;
+    //If player can enter battle or not.
     public bool CanEnterBattle = false;
     private PlayerStack playerStack;
+    //This is a boolean for when to start the battle. 
     private bool areCollectablesInPositions = false;
-    
+    //Active arena that player is in battle.
     [SerializeField] private BattleArena activeArena;
     private void Awake()
     {

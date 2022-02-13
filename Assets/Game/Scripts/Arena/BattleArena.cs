@@ -24,6 +24,8 @@ public class BattleArena : MonoBehaviour
 
     private bool isTriggered = false;
     private List<Vector3> stackPoints;
+
+    //Unsubscribes from the events when destroying the arena.
     private void OnDestroy()
     {
         Observer.RemoveFromArena -= RemoveFromArenaCollectables;
@@ -31,10 +33,7 @@ public class BattleArena : MonoBehaviour
         Observer.StopBattle -= StopBattle;
         Observer.StartBattle -= StartBattle;
     }
-
-    private void Start()
-    {
-    }
+    //Random generated points for collectables.
     private void OnValidate()
     {
         stackPoints = PoissonDiscSampling.GeneratePoints(radius, RegionSize, out pointCount, offset);
@@ -59,7 +58,7 @@ public class BattleArena : MonoBehaviour
         }
     }
 
-    //THIS IS FOR REMOVING COLLECTABLES FOR PLAYER TO SHOOT/COLLECT
+    //Gets a collectable from the player. Based on loveTimer. 
     private IEnumerator GetCollectableFromPlayer()
     {
         while (collectables.Count > 0)
@@ -89,19 +88,19 @@ public class BattleArena : MonoBehaviour
         //STATE EXIT
         if (isTriggered && collectables.Count == 0)
         {
-            //TODO
-
             GameManager.Instance.StopBattle();
         }
     }
 
+    //Removes a collectable from arena collectable list. This will work when player gets back a collectable
+    //from the arena.
     private void RemoveFromArenaCollectables(Collectable collectable)
     {
         if (collectables.Count == 0) return;
         collectables.Remove(collectable);
     }
 
-
+    //Stop battle event
     private void StopBattle()
     {
         arenaCollider.enabled = false;
@@ -112,6 +111,7 @@ public class BattleArena : MonoBehaviour
         //Destroy(gameObject);
     }
 
+    //Sets stack collectable positions when entering the battle.
     private void SetCollectablePositions()
     {
         if (isTriggered) return;
@@ -121,16 +121,20 @@ public class BattleArena : MonoBehaviour
         //Observer.UpdatePlayerLimit?.Invoke(-bottomLimit.localPosition.x, bottomLimit.localPosition.x);
 
     }
+    //For the start battle event.
+    //Starts to get collectable from player based on love timer.
     private void StartBattle()
     {
         StartShooting();
     }
 
+    //Arena will get a collectable from when this is activated.
     private void StartShooting()
     {
         battleRoutine = StartCoroutine(GetCollectableFromPlayer());
     }
 
+    //Random points for stack
     private List<Vector3> GenerateRandomPoints()
     {
         var generatedPoints = PoissonDiscSampling.GeneratePoints(radius, RegionSize, out pointCount, offset);
